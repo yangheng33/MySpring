@@ -6,9 +6,6 @@
   <packaging>war</packaging>
    
    
-   
- 
-   
   	<properties>
 		<springframework.version>3.1.0.RELEASE</springframework.version>
 		<mina.version>2.0.4</mina.version>
@@ -17,6 +14,11 @@
 		<jackson.mapper.version>1.9.7</jackson.mapper.version>
 		<cxf.version>2.7.0</cxf.version>
 	</properties>
+ 
+ 
+ 
+ 
+ 
  
 <dependencies> 
 	<dependency>  
