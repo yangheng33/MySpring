@@ -1,0 +1,91 @@
+====加载图片====
+{{{
+protected function button3_clickHandler(event:MouseEvent):void
+{
+	var _loader:Loader = new Loader();
+	_loader.load( new URLRequest(encodeURI( path3.text )));
+	_loader.contentLoaderInfo.addEventListener( Event.COMPLETE , loadMainPic );
+	
+	
+}
+protected function loadMainPic( event:Event):void
+{
+	main.setStyle("backgroundImage", event.currentTarget.content);
+        var bmd:BitmapData = Bitmap(event.currentTarget.content).bitmapData;
+}
+}}}
+
+
+====接收jms消息 [http://bbs.9ria.com/thread-70768-1-1.html 参考文献]====
+{{{
+
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   applicationComplete="logon()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Producer id="producer"
+					 destination="my-topic"
+					 acknowledge="acknowledgeHandler(event);"
+					 fault="faultHandler(event)"/>
+		
+		<mx:Consumer id="consumer"
+					 destination="my-topic"
+					 message="messageHandler(event)"
+					 acknowledge="acknowledgeHandler(event);"
+					 fault="faultHandler(event)"/>
+		 
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.events.FaultEvent;
+			import mx.messaging.*;
+			import mx.messaging.messages.*;
+			import mx.messaging.events.*;
+			import mx.controls.Alert;
+			
+			private function messageHandler(event:MessageEvent):void
+			{
+				receiveTextArea.text=event.message.body + "\n" + receiveTextArea.text;
+			}
+			
+			private function acknowledgeHandler(event:MessageAckEvent):void
+			{
+			}
+			
+			private function faultHandler(event:MessageFaultEvent):void
+			{
+				Alert.show('Fault: '+event.faultString, 'Alert Box', mx.controls.Alert.OK);
+			}
+			
+			
+			private function logon():void
+			{
+				consumer.subscribe();
+			}
+			
+			private function sendMessage():void
+			{
+				var message:AsyncMessage=new AsyncMessage();
+				message.body=sendTextArea.text;
+				producer.send(message);
+				sendTextArea.text="";
+			}
+	
+		]]>
+	</fx:Script>
+	 
+	<mx:HBox>
+	</mx:HBox> 
+	
+	<mx:TextArea id="receiveTextArea" x="11" y="35" width="50%" height="200"/>
+	<mx:TextInput id="sendTextArea" x="12" y="248"/>
+	<mx:Button x="185" y="252" label="Send" click="sendMessage();"/>
+	
+</s:Application>
+
+
+}}}

@@ -1,0 +1,5 @@
+====根据ID查找元素====
+{{{
+根据ID查找元素
+document.getElementById('payFrame');
+}}}

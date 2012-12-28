@@ -1,0 +1,475 @@
+﻿<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+
+		<script type="text/javascript"
+			src="/MySpring/javascript/chart/swfobject.js">
+		</script>
+		<script type="text/javascript" src="/MySpring/javascript/json2.js"> </script>
+		<script type="text/javascript"
+			src="/MySpring/javascript/chart/chartExampleData.js">
+			
+</script>
+
+
+		<script type="text/javascript">
+
+
+			function ofc_ready(){
+				
+			}
+			
+			function open_flash_chart_data(){
+				return JSON.stringify(area_1);
+			}
+			
+			function loadChart(obj, name) {
+				tmp = findSWF("my_chart");
+				x = tmp.load(JSON.stringify(obj));
+			
+				var pay = document.getElementById('chartName');
+				pay.value=name;
+				
+			}
+
+			function findSWF(movieName) {
+				if (navigator.appName.indexOf("Microsoft") != -1) {
+					return window[movieName];
+				} else {
+					return document[movieName];
+				}
+			}
+</script>
+
+	</head>
+	<body>
+		<table width='100%' >
+			<tr>
+				<td width="600">
+					<div id="my_chart"></div>
+				</td>
+				<td align="left">
+
+					<INPUT TYPE=text VALUE="area_1" id="chartName" />
+					<br/>
+					<textarea rows="10" cols="40"></textarea>
+					
+				</td>
+			</tr>
+		</table>
+
+
+		<script type="text/javascript">
+			swfobject.embedSWF("/MySpring/javascript/chart/open-flash-chart.swf","my_chart", "600", "450", "9.0.0");
+</script>
+
+
+		<div>
+
+			<br>
+			<INPUT TYPE=BUTTON OnClick="loadChart(area_1,'area_1');"
+				VALUE="area_1" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(area_line_dash,'area_line_dash');"
+				VALUE="area_line_dash" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(area_line,'area_line');"
+				VALUE="area_line" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(area_point_objects,'area_point_objects');"
+				VALUE="area_point_objects" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_2,'bar_2');" VALUE="bar_2" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_3d_2_BUG,'bar_3d_2_BUG');"
+				VALUE="bar_3d_2_BUG" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_3d,'bar_3d');"
+				VALUE="bar_3d" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_4,'bar_4');" VALUE="bar_4" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(bar_all_onclick,'bar_all_onclick');"
+				VALUE="bar_all_onclick" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_alpha,'bar_alpha');"
+				VALUE="bar_alpha" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_cylinder,'bar_cylinder');"
+				VALUE="bar_cylinder" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_filled,'bar_filled');"
+				VALUE="bar_filled" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(bar_floating_2,'bar_floating_2');"
+				VALUE="bar_floating_2" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_floating,'bar_floating');"
+				VALUE="bar_floating" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_glass_2,'bar_glass_2');"
+				VALUE="bar_glass_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(bar_glass_height_0,'bar_glass_height_0');"
+				VALUE="bar_glass_height_0" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_glass,'bar_glass');"
+				VALUE="bar_glass" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(bar_groups_with_nulls,'bar_groups_with_nulls');"
+				VALUE="bar_groups_with_nulls" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(bar_on_show_cascade,'bar_on_show_cascade');"
+				VALUE="bar_on_show_cascade" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(bar_on_show_pop,'bar_on_show_pop');"
+				VALUE="bar_on_show_pop" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_on_show,'bar_on_show');"
+				VALUE="bar_on_show" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_sketch,'bar_sketch');"
+				VALUE="bar_sketch" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bar_test_all,'bar_test_all');"
+				VALUE="bar_test_all" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(bug_1,'bug_1');" VALUE="bug_1" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(candle,'candle');"
+				VALUE="candle" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(combined_chart_bar_line_scatter,'combined_chart_bar_line_scatter');"
+				VALUE="combined_chart_bar_line_scatter" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(comparisons,'comparisons');"
+				VALUE="comparisons" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(exp,'exp');" VALUE="exp" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(horizontal_bar_chart_2,'horizontal_bar_chart_2');"
+				VALUE="horizontal_bar_chart_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(horizontal_bar_chart_3,'horizontal_bar_chart_3');"
+				VALUE="horizontal_bar_chart_3" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(horizontal_bar_chart,'horizontal_bar_chart');"
+				VALUE="horizontal_bar_chart" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(keys_1,'keys_1');"
+				VALUE="keys_1" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(languages_chinese,'languages_chinese');"
+				VALUE="languages_chinese" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_2,'line_2');"
+				VALUE="line_2" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_anchor,'line_anchor');"
+				VALUE="line_anchor" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_bow,'line_bow');"
+				VALUE="line_bow" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(line_bug_report,'line_bug_report');"
+				VALUE="line_bug_report" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_dash,'line_dash');"
+				VALUE="line_dash" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_dot,'line_dot');"
+				VALUE="line_dot" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_hollow,'line_hollow');"
+				VALUE="line_hollow" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(line_null_bug,'line_null_bug');"
+				VALUE="line_null_bug" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(line_on_click,'line_on_click');"
+				VALUE="line_on_click" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_on_show,'line_on_show');"
+				VALUE="line_on_show" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line_star,'line_star');"
+				VALUE="line_star" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(line,'line');" VALUE="line" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(menu,'menu');" VALUE="menu" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(on_show_area_drop,'on_show_area_drop');"
+				VALUE="on_show_area_drop" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(on_show_area_explode,'on_show_area_explode');"
+				VALUE="on_show_area_explode" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(on_show_area_fade_in,'on_show_area_fade_in');"
+				VALUE="on_show_area_fade_in" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(on_show_area_mid_slide,'on_show_area_mid_slide');"
+				VALUE="on_show_area_mid_slide" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(on_show_area_pop_up,'on_show_area_pop_up');"
+				VALUE="on_show_area_pop_up" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(on_show_area_shrink_in,'on_show_area_shrink_in');"
+				VALUE="on_show_area_shrink_in" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(on_show_line,'on_show_line');"
+				VALUE="on_show_line" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(on_show_scatter_explode,'on_show_scatter_explode');"
+				VALUE="on_show_scatter_explode" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(pie_1,'pie_1');" VALUE="pie_1" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(pie_2,'pie_2');" VALUE="pie_2" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(pie_3,'pie_3');" VALUE="pie_3" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(pie_4,'pie_4');" VALUE="pie_4" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(pie_bug_green,'pie_bug_green');"
+				VALUE="pie_bug_green" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(pie_colours,'pie_colours');"
+				VALUE="pie_colours" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(pie_fixed_radius,'pie_fixed_radius');"
+				VALUE="pie_fixed_radius" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(pie_label_colours,'pie_label_colours');"
+				VALUE="pie_label_colours" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(pie_many_slices_fixed,'pie_many_slices_fixed');"
+				VALUE="pie_many_slices_fixed" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(pie_many_slices,'pie_many_slices');"
+				VALUE="pie_many_slices" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(radar_2,'radar_2');"
+				VALUE="radar_2" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(radar_area,'radar_area');"
+				VALUE="radar_area" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_axis_and_grid_style,'radar_axis_and_grid_style');"
+				VALUE="radar_axis_and_grid_style" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_axis_labels_2,'radar_axis_labels_2');"
+				VALUE="radar_axis_labels_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_axis_labels,'radar_axis_labels');"
+				VALUE="radar_axis_labels" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_axis_tooltip_closest,'radar_axis_tooltip_closest');"
+				VALUE="radar_axis_tooltip_closest" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_axis_tooltip_hover,'radar_axis_tooltip_hover');"
+				VALUE="radar_axis_tooltip_hover" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_chart_minus_numbers,'radar_chart_minus_numbers');"
+				VALUE="radar_chart_minus_numbers" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_line_loop,'radar_line_loop');"
+				VALUE="radar_line_loop" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(radar_steps,'radar_steps');"
+				VALUE="radar_steps" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(radar_test_keys,'radar_test_keys');"
+				VALUE="radar_test_keys" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(scatter_2,'scatter_2');"
+				VALUE="scatter_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(scatter_anchors,'scatter_anchors');"
+				VALUE="scatter_anchors" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(scatter_line_2,'scatter_line_2');"
+				VALUE="scatter_line_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(scatter_line_area,'scatter_line_area');"
+				VALUE="scatter_line_area" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(scatter_line_step_horizontal,'scatter_line_step_horizontal');"
+				VALUE="scatter_line_step_horizontal" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(scatter_line_step_vertical,'scatter_line_step_vertical');"
+				VALUE="scatter_line_step_vertical" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(scatter_line,'scatter_line');"
+				VALUE="scatter_line" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(scatter_on_click,'scatter_on_click');"
+				VALUE="scatter_on_click" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(scatter_step_all,'scatter_step_all');"
+				VALUE="scatter_step_all" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(scatter,'scatter');"
+				VALUE="scatter" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(shape,'shape');" VALUE="shape" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(stack_bar_1,'stack_bar_1');"
+				VALUE="stack_bar_1" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(stack_bar_2,'stack_bar_2');"
+				VALUE="stack_bar_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(stack_bar_on_click,'stack_bar_on_click');"
+				VALUE="stack_bar_on_click" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(stack_bar_on_show,'stack_bar_on_show');"
+				VALUE="stack_bar_on_show" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(stack_bar_tooltip_hover,'stack_bar_tooltip_hover');"
+				VALUE="stack_bar_tooltip_hover" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(tags,'tags');" VALUE="tags" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(title_1,'title_1');"
+				VALUE="title_1" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(tooltip_1,'tooltip_1');"
+				VALUE="tooltip_1" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(tooltip_2,'tooltip_2');"
+				VALUE="tooltip_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_bar_floating,'tooltip_bar_floating');"
+				VALUE="tooltip_bar_floating" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_clash_scatter_2,'tooltip_clash_scatter_2');"
+				VALUE="tooltip_clash_scatter_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_clash_scatter_hover,'tooltip_clash_scatter_hover');"
+				VALUE="tooltip_clash_scatter_hover" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_clash_scatter,'tooltip_clash_scatter');"
+				VALUE="tooltip_clash_scatter" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_clash,'tooltip_clash');"
+				VALUE="tooltip_clash" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_hover,'tooltip_hover');"
+				VALUE="tooltip_hover" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_mixed_1,'tooltip_mixed_1');"
+				VALUE="tooltip_mixed_1" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_mixed_2,'tooltip_mixed_2');"
+				VALUE="tooltip_mixed_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_rounded,'tooltip_rounded');"
+				VALUE="tooltip_rounded" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_x_radar_clash_proximity,'tooltip_x_radar_clash_proximity');"
+				VALUE="tooltip_x_radar_clash_proximity" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(tooltip_x_radar_clash,'tooltip_x_radar_clash');"
+				VALUE="tooltip_x_radar_clash" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(utf8_1,'utf8_1');"
+				VALUE="utf8_1" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(x_axis_1,'x_axis_1');"
+				VALUE="x_axis_1" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_auto_range,'x_axis_auto_range');"
+				VALUE="x_axis_auto_range" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(x_axis_big,'x_axis_big');"
+				VALUE="x_axis_big" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_2,'x_axis_labels_2');"
+				VALUE="x_axis_labels_2" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_3,'x_axis_labels_3');"
+				VALUE="x_axis_labels_3" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_4,'x_axis_labels_4');"
+				VALUE="x_axis_labels_4" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_5,'x_axis_labels_5');"
+				VALUE="x_axis_labels_5" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_6,'x_axis_labels_6');"
+				VALUE="x_axis_labels_6" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_7,'x_axis_labels_7');"
+				VALUE="x_axis_labels_7" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_angle_no_offset,'x_axis_labels_angle_no_offset');"
+				VALUE="x_axis_labels_angle_no_offset" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels_angle_offset,'x_axis_labels_angle_offset');"
+				VALUE="x_axis_labels_angle_offset" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_labels,'x_axis_labels');"
+				VALUE="x_axis_labels" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_no_offset,'x_axis_no_offset');"
+				VALUE="x_axis_no_offset" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_range_scatter_minus,'x_axis_range_scatter_minus');"
+				VALUE="x_axis_range_scatter_minus" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_range_scatter_plus,'x_axis_range_scatter_plus');"
+				VALUE="x_axis_range_scatter_plus" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_axis_steps_zero_check,'x_axis_steps_zero_check');"
+				VALUE="x_axis_steps_zero_check" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_auto_dates,'x_labels_auto_dates');"
+				VALUE="x_labels_auto_dates" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_auto_min5_3rd_visible,'x_labels_auto_min5_3rd_visible');"
+				VALUE="x_labels_auto_min5_3rd_visible" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_auto_min5,'x_labels_auto_min5');"
+				VALUE="x_labels_auto_min5" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_auto_rev,'x_labels_auto_rev');"
+				VALUE="x_labels_auto_rev" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_auto,'x_labels_auto');"
+				VALUE="x_labels_auto" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_invisible_user_labels,'x_labels_invisible_user_labels');"
+				VALUE="x_labels_invisible_user_labels" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_invisible,'x_labels_invisible');"
+				VALUE="x_labels_invisible" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_user_labels_br,'x_labels_user_labels_br');"
+				VALUE="x_labels_user_labels_br" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_user_labels,'x_labels_user_labels');"
+				VALUE="x_labels_user_labels" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(x_labels_user_x,'x_labels_user_x');"
+				VALUE="x_labels_user_x" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_auto_steps,'y_axis_auto_steps');"
+				VALUE="y_axis_auto_steps" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(y_axis_big,'y_axis_big');"
+				VALUE="y_axis_big" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_fix_this_bug,'y_axis_fix_this_bug');"
+				VALUE="y_axis_fix_this_bug" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_format_labels,'y_axis_format_labels');"
+				VALUE="y_axis_format_labels" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_labels_step,'y_axis_labels_step');"
+				VALUE="y_axis_labels_step" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_labels_user_y,'y_axis_labels_user_y');"
+				VALUE="y_axis_labels_user_y" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_no_grid,'y_axis_no_grid');"
+				VALUE="y_axis_no_grid" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_no_title_no_offset_right,'y_axis_no_title_no_offset_right');"
+				VALUE="y_axis_no_title_no_offset_right" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_no_title_no_offset,'y_axis_no_title_no_offset');"
+				VALUE="y_axis_no_title_no_offset" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_no_title_offset,'y_axis_no_title_offset');"
+				VALUE="y_axis_no_title_offset" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_offset_tiny_numbers,'y_axis_offset_tiny_numbers');"
+				VALUE="y_axis_offset_tiny_numbers" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_right_all_bars,'y_axis_right_all_bars');"
+				VALUE="y_axis_right_all_bars" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_right_all_lines_10_20,'y_axis_right_all_lines_10_20');"
+				VALUE="y_axis_right_all_lines_10_20" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_right_all_lines,'y_axis_right_all_lines');"
+				VALUE="y_axis_right_all_lines" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(y_axis_right,'y_axis_right');"
+				VALUE="y_axis_right" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_rotate_labels,'y_axis_rotate_labels');"
+				VALUE="y_axis_rotate_labels" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_upside_down_offset,'y_axis_upside_down_offset');"
+				VALUE="y_axis_upside_down_offset" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_axis_upside_down,'y_axis_upside_down');"
+				VALUE="y_axis_upside_down" />
+			<INPUT TYPE=BUTTON OnClick="loadChart(y_axis,'y_axis');"
+				VALUE="y_axis" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_labels_auto_formatted,'y_labels_auto_formatted');"
+				VALUE="y_labels_auto_formatted" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_labels_auto_labelstyle,'y_labels_auto_labelstyle');"
+				VALUE="y_labels_auto_labelstyle" />
+			<INPUT TYPE=BUTTON
+				OnClick="loadChart(y_labels_auto,'y_labels_auto');"
+				VALUE="y_labels_auto" />
+
+
+
+		</div>
+
+	</body>
+</html>

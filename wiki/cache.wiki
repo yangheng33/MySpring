@@ -1,0 +1,11 @@
+====ehcache====
+
+注意:如果使用的参数是对象,那么必须重载这个对象的hashCode和equals方法(否则不能进行缓存),或者使用
+{{{
+@Cacheable(cacheName="weatherCache",keyGenerator=@KeyGenerator (  name="StringCacheKeyGenerator" ) ) 进行注解。
+keyGenerator参数有几种: HashCodeCacheKeyGenerator (默认值) , 
+StringCacheKeyGenerator , ListCacheKeyGenerator , MessageDigestCacheKeyGenerator
+}}}
+[http://code.google.com/p/ehcache-spring-annotations/wiki/CacheKeyGenerators ehcacheKey的具体参考]
+
+====其他====

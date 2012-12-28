@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<title>Senamion.com - multiselect2side (multiple select double side) plugin: documentation and demo page</title>
+	<link rel="stylesheet" href="css/jquery.multiselect2side.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="js/jquery.js" ></script>
+	<script type="text/javascript" src="js/jquery.multiselect2side.js" ></script>
+	<script type="text/javascript">
+		$().ready(function() 
+		{
+			$('#searchable').multiselect2side({
+				minSize:30,
+				search: "Search: "
+			});
+		});
+
+		function go1()
+		{
+			
+			alert($('#searchable').val());
+		}
+
+		function test2()
+		{
+			//  alert( $('#div1').html());	
+			//  alert( $('#info').html());	
+			//alert( $('#searchablems2side__sx').html());	
+			//alert( $('#div1').html() );
+			//	$('#info').html( $('#div1').html() );
+			//$('#info').html( $('#div1').html() );
+			//$('#div1').html( "" );
+			
+			$('#searchablems2side__sx').html( $('#div1').html() );
+
+			var html = $('#searchable').html();
+			
+			$('#searchable').html( html+ $('#searchablems2side__sx').html() );
+
+		}
+
+		function test3()
+		{
+			alert("#searchable\n"+$("#searchable").html());
+			alert("left\n"+$("#searchablems2side__sx").html());
+			alert("roght\n"+$("#searchablems2side__dx").html());
+		}
+
+		function mysort()
+		{
+			var src= "1,3,4,3,2,7,8,5,4,9";
+			var s = new Array("a4","a2","a1","a4","a3","a2");
+
+			s = src.split(",");
+
+			alert( s );
+			s.sort();
+
+			var news = new Array();
+
+			var pos="";
+			for( var  i=0;i<s.length;i++)
+			{
+				if( s[i]==pos)
+				{
+
+				}
+				else
+				{
+					news.push(s[i] );
+					pos = s[i];
+				}
+				
+			}
+
+			
+			alert( news );
+		}
+
+	</script>
+
+
+
+
+</head>
+<body>
+
+	<button onclick="go1()">go1()</button>
+	<button onclick="test2()">test2()</button>
+	<button onclick="test3()">test3()</button>
+	<button onclick="mysort()">mysort()</button>
+		
+
+<table   border= "1 "   width= "1000" height="600">
+    <tr>
+        <td   width= "100% ">
+       
+    
+<div id="info">
+				<select name="searchable[]" id='searchable' multiple='multiple' style= "width:100% ">
+					
+					<option value='1'>Option strawberry 1 - India</option>
+					<option value='2'>Option apricot 2 - Italy</option>
+					<option value='3'>Option cherry 3 - USA</option>
+					<option value='4'>Option pineapple 4 - Holland</option>
+					<option value='5'>Option pineapple 5 - Mexico</option>
+					<option value='6'>Option pineapple 6 - Holland</option>
+					<option value='7'>Option pineapple 7 - USA</option>
+					<option value='8'>Option apricot 8 - India</option>
+					<option value='9'>Option pear 9 - Japan</option>
+					<option value='10'>Option melon 10 - Canada</option>
+					<option value='11'>Option melon 11 - Canada</option>
+					
+					
+				</select>
+</div>
+				
+</td>
+    </tr>
+</table> 
+			
+				
+				<br>
+	<div id="div1">
+						<option value='49'>Option pineapple 49 - Germany</option>
+					<option value='50'>Option pear 50 - India</option>
+					<option value='51'>Option cherry 51 - Germany</option>
+					<option value='52'>Option apple 52 - India</option>
+					<option value='53'>Option melon 53 - France</option>
+					<option value='54'>Option melon 54 - Italy</option>
+					<option value='55'>Option orange 55 - France</option>
+					<option value='56'>Option pear 56 - China</option>
+					<option value='57'>Option orange 57 - Holland</option>
+					<option value='58'>Option melon 58 - USA</option>
+					<option value='59'>Option cherry 59 - USA</option>
+	</div>	
+</body>
+</html>

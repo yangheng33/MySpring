@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.Metarnet_visitDAO">
+
+<select id="findMetarnet_visit" parameterType="metarnet_visit" resultType="metarnet_visit">
+SELECT id,protocol,Inside_global_ip,Inside_global_port,Inside_local_ip,Inside_local_port,Outside_local_ip,Outside_local_port,Outside_global_ip,Outside_global_port,recorddate
+ FROM Metarnet_visit
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" protocol != null">
+ AND protocol = #{protocol}
+</if>
+<if test=" inside_global_ip != null">
+ AND inside_global_ip = #{inside_global_ip}
+</if>
+<if test=" inside_global_port != null">
+ AND inside_global_port = #{inside_global_port}
+</if>
+<if test=" inside_local_ip != null">
+ AND inside_local_ip = #{inside_local_ip}
+</if>
+<if test=" inside_local_port != null">
+ AND inside_local_port = #{inside_local_port}
+</if>
+<if test=" outside_local_ip != null">
+ AND outside_local_ip = #{outside_local_ip}
+</if>
+<if test=" outside_local_port != null">
+ AND outside_local_port = #{outside_local_port}
+</if>
+<if test=" outside_global_ip != null">
+ AND outside_global_ip = #{outside_global_ip}
+</if>
+<if test=" outside_global_port != null">
+ AND outside_global_port = #{outside_global_port}
+</if>
+</where>
+</select>
+
+<insert id="addMetarnet_visit" parameterType="metarnet_visit" >
+insert into Metarnet_visit
+(
+protocol,inside_global_ip,inside_global_port,inside_local_ip,inside_local_port,outside_local_ip,outside_local_port,outside_global_ip,outside_global_port,recorddate
+) values (
+#{protocol,jdbcType=VARCHAR},#{inside_global_ip,jdbcType=VARCHAR},#{inside_global_port,jdbcType=VARCHAR},#{inside_local_ip,jdbcType=VARCHAR},#{inside_local_port,jdbcType=VARCHAR},#{outside_local_ip,jdbcType=VARCHAR},#{outside_local_port,jdbcType=VARCHAR},#{outside_global_ip,jdbcType=VARCHAR},#{outside_global_port,jdbcType=VARCHAR},#{recorddate,jdbcType=DATE}
+)
+</insert>
+
+<update id="editMetarnet_visit" parameterType="metarnet_visit">
+update Metarnet_visit<set>
+<if test=" protocol != null">
+protocol=#{protocol},
+</if>
+<if test=" inside_global_ip != null">
+inside_global_ip=#{inside_global_ip},
+</if>
+<if test=" inside_global_port != null">
+inside_global_port=#{inside_global_port},
+</if>
+<if test=" inside_local_ip != null">
+inside_local_ip=#{inside_local_ip},
+</if>
+<if test=" inside_local_port != null">
+inside_local_port=#{inside_local_port},
+</if>
+<if test=" outside_local_ip != null">
+outside_local_ip=#{outside_local_ip},
+</if>
+<if test=" outside_local_port != null">
+outside_local_port=#{outside_local_port},
+</if>
+<if test=" outside_global_ip != null">
+outside_global_ip=#{outside_global_ip},
+</if>
+<if test=" outside_global_port != null">
+outside_global_port=#{outside_global_port},
+</if>
+<if test=" recorddate != null ">
+recorddate=#{recorddate,jdbcType=DATE},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteMetarnet_visit" parameterType="metarnet_visit" >
+DELETE FROM Metarnet_visit 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+<delete id="deleteAllMetarnet_visit" >
+DELETE FROM Metarnet_visit 
+</delete>
+
+<select id="findMetarnetVisitStatisticsByZhounan" resultType="hashmap">
+select count(*) as counts,inside_local_ip from Metarnet_visit group by inside_local_ip having count(*)>1 order by count(*) desc
+</select>
+
+<select id="findMetarnetVisitOrderByZhounan" resultType="metarnet_visit">
+select * from Metarnet_visit order by inside_global_ip,outside_global_ip,outside_global_port
+</select>
+
+</mapper>

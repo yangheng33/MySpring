@@ -1,0 +1,102 @@
+====闪回表====
+{{{
+ select a.name,a.log_mode,a.FLASHBACK_ON from v$database a;
+ 如FLASHBACK_ON 不为YES,请进行以下操作打开此功能
+  
+sqlplus "sys/metarnet as sysdba";
+shutdown immediate;
+startup mount;
+alter database archivelog;
+alter database flashback on; 
+alter database open;
+
+准备完毕后,开始恢复,执行： 
+flashback table equipment to timestamp(to_date('2012-12-26 11:00:00','yyyy-mm-dd hh24:mi:ss'));
+
+ 执行上述语句如提示，“因未启动行移动功能,不能闪回表”，执行：
+alter table equipment enable row movement;
+}}}
+
+
+====生成树状数据====
+{{{
+select * from (
+SELECT orgid,sys_connect_by_path(name,'>') as groupname  FROM sec_org 
+start with orgid ='1'
+connect by prior orgid  =  parentid
+) aa
+where aa.orgid='1350104'
+}}}
+
+====索引====
+{{{
+建立
+create index ind_sec_user_bak on sec_user_bak(userid);
+删除
+drop index ind_sec_user_bak;
+}}}
+====oracle取随机数据====
+{{{
+ select * from (
+           select ne_id from xxx order by dbms_random.random
+    ) where rownum <= 10
+}}}    
+
+====关于主键====
+{{{
+建表时加主键
+create table TEST3
+(
+NID int PRIMARY KEY，
+NAME VARCHAR2(20) constraint chk_isBase CHECK (NAME in ( 'Y', 'N')) 
+)
+
+加入主键约束
+alter table TEST3 add constraint SYS_C0071256 PRIMARY KEY (nid);
+
+删除主键约束
+alter table TEST3  drop constraint SYS_C0071256 cascade
+
+}}} 
+
+====创建序列====
+{{{
+create sequence mybatis_sequence
+increment by 1
+start with 1
+minvalue 1 nomaxvalue
+}}}
+
+====获取数据库中所有表的结构信息====
+{{{
+SELECT 
+	AA.TABLE_NAME, AA.COLUMN_NAME,AA.DATA_TYPE,AA.NULLABLE,BB.CONSTRAINT_TYPE AS ISKEY,
+	AA.DATA_SCALE
+FROM USER_TAB_COLUMNS AA,
+(
+	SELECT 
+		CU.TABLE_NAME,CU.COLUMN_NAME ,AU.CONSTRAINT_TYPE 
+	FROM 
+		USER_CONS_COLUMNS CU, USER_CONSTRAINTS AU 
+	WHERE 
+		CU.CONSTRAINT_NAME = AU.CONSTRAINT_NAME 
+	AND 
+		AU.CONSTRAINT_TYPE='P'
+) BB
+WHERE 
+	AA.TABLE_NAME IN
+(
+	SELECT TABLE_NAME FROM USER_TABLES
+) 
+AND 
+	AA.TABLE_NAME = BB.TABLE_NAME (+)
+AND AA.COLUMN_NAME = BB.COLUMN_NAME(+)
+	ORDER BY AA.TABLE_NAME, AA.COLUMN_NAME
+}}}
+====时间列表====
+{{{
+select 
+to_char(to_date('2012-03-01','yyyy-mm-dd') + rownum -1,'yyyy-mm-dd') de
+from all_objects where rownum <  to_date('2012-04-01','yyyy-mm-dd') 
+- to_date('2012-03-01','yyyy-mm-dd') + 1
+}}}

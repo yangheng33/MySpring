@@ -1,0 +1,44 @@
+====设置导入数据大小限制====
+{{{
+windows:
+在mysql的安装路径下的my.ini中，加入max_allowed_packet = 10M
+
+linux:
+"mysql.exe" -h192.168.8.186 -uroot -p123456
+
+重启mysql后使用show VARIABLES like '%max_allowed_packet%'; 查看是否生效。
+}}}    
+
+====更改mysql数据路径====
+{{{
+假设新的数据存储路径为/test/mysql/data 
+1.更改新路径宿主 chown mysql:mysql -R /test/mysql/data 
+2.将原数据全部拷贝到新路径 cp  -a /var/lib/mysql/*  /test/mysql/data/ 
+3.更改启动命令中的配置 vi /etc/rc.d/init.d/mysqld
+
+#get_mysql_option mysqld datadir "/var/lib/mysql"
+get_mysql_option mysqld datadir "/home/soft/data/db/mysql"
+#datadir="$result"
+datadir="/home/soft/data/db/mysql"
+
+4.service mysqld start
+}}}
+
+====mysql建表语句====
+{{{
+#drop table user
+#create table user( userid int auto_increment,username VARCHAR(20) ,pw VARCHAR(30), PRIMARY KEY(userid))
+#INSERT user (username ,pw) values('amar','123456');
+#SELECT * FROM user
+}}}
+
+====查看数据结构====
+{{{
+#desc 表名
+#show tables //查询当前库中所有表的名称
+}}}
+
+====启动mysql====
+{{{
+/etc/rc.d/init.d/mysqld start
+}}}

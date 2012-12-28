@@ -1,0 +1,1028 @@
+﻿<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+
+<script type="text/javascript" src="/MySpring/javascript/chart/swfobject.js"></script>
+
+<script type="text/javascript">
+
+function ofc_ready()
+{
+	//alert('ofc_ready');
+	//load();
+}
+
+function open_flash_chart_data()
+{
+    //alert( 'reading data' );
+    return JSON.stringify(pie6);
+}
+
+function load_1()
+{
+	tmp = findSWF("my_chart");
+	x = tmp.load( JSON.stringify(chart) );
+}
+
+function load_2()
+{
+	tmp = findSWF("my_chart");
+	x = tmp.load( JSON.stringify(chart2) );
+}
+
+function loadPie(name)
+{
+	tmp = findSWF("my_chart");
+	x = tmp.load( JSON.stringify(name) );
+
+}
+
+function findSWF(movieName) {
+  if (navigator.appName.indexOf("Microsoft")!= -1) {
+    return window[movieName];
+  } else {
+    return document[movieName];
+  }
+}
+
+var chart = {
+  "title":{
+    "text":  "Many data lines",
+    "style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"
+  },
+ 
+  "y_legend":{
+    "text": "Open Flash Chart",
+    "style": "{color: #736AFF; font-size: 12px;}"
+  },
+ 
+  "elements":[
+    {
+      "type":      "bar",
+      "alpha":     0.5,
+      "colour":    "#9933CC",
+      "text":      "Page views",
+      "font-size": 10,
+      "values" :   [9,6,7,9,5,7,6,9,7]
+    },
+    {
+      "type":      "bar",
+      "alpha":     0.5,
+      "colour":    "#CC9933",
+      "text":      "Page views 2",
+      "font-size": 10,
+      "values" :   [6,7,9,5,7,6,9,7,3]
+    }
+  ],
+ 
+  "x_axis":{
+    "stroke":1,
+    "tick_height":10,
+    "colour":"#d000d0",
+    "grid_colour":"#00ff00",
+    "labels": ["January","February","March","April","May","June","July","August","Spetember"]
+   },
+ 
+  "y_axis":{
+    "stroke":      4,
+    "tick_length": 3,
+    "colour":      "#d000d0",
+    "grid_colour": "#00ff00",
+    "offset":      0,
+    "max":         20
+  }
+};
+ 
+ 
+var chart2 = {
+  "title":{
+    "text":  "Sketch",
+    "style": "{font-size:35px; color: #567300}"
+  },
+
+  "elements":[
+    {
+      "type":            "bar_sketch",
+      "colour":          "#81AC00",
+      "outline-colour":  "#567300",
+      "text":            "Sketch",
+      "font-size":       10,
+      "offset":          6,
+      "values" :   [
+        3,
+        8,
+       -5,
+        {"top":5,"outline-colour": "#7030A0", "tip": "outline"},
+       4,
+       {"top":5, "colour": "#99FF00", "tip": "colour"},
+       {"top":-3,"colour": "#99FF00", "outline-colour": "#7030A0", "tip": "colour + outline"},
+       2,
+       7.5]
+    }
+  ],
+
+  "x_axis":{
+    "labels": ["January","February","March","April","May","June","July","August","Spetember"]
+   },
+
+  "y_axis":{
+    "min": -10,
+    "max":  10
+  },
+
+  "tooltip":{
+    "text": "My Tip<br>#top#,#bottom# = #val#"
+  }
+
+};
+
+
+var pie1=
+{
+
+  "title":{
+    "text":"Pie for you sir?",
+    "style":"{font-size: 30px;}"
+  },
+
+  "elements":[
+    {
+      "type":      "pie",
+      "colours":   ["#d01f3c","#356aa0","#C79810"],
+      "alpha":     0.6,
+      "border":    2,
+      "start-angle": 35,
+      "values" :   [
+        2,
+        3,
+        {"value":6.5,"label":"hello (#val#)", "tip":"99 bottles of beer","on-click":"http://eden"},
+        {"value":6.5,"on-click":"my_function"}
+      ]
+    }
+  ]
+};
+
+var pie2=
+{
+
+  "elements":[
+    {
+      "type":      "pie",
+      "colours":   ["#d01f3c","#356aa0","#C79810"],
+      "alpha":     0.2,
+      "border":    2,
+      "animate":		[ { "type": "fade" }],
+      "start-angle": 45,
+      "tip":         "#val#<br>#total#<br>#percent#<br>#label#",
+      "gradient-fill" :  true,
+      "label-colour":    "#0000d0",
+      "values" :
+        [
+		10,
+		23,
+		{"value":30,"label":"hello(#val#)","font-size":20,"colour":"#00FF00","label-colour":"#00FFFF"},
+		10,
+		{"value":40,"label":"hello(#val#)","font-size":15},
+		{"value":40,"label":"hello(#val#)","font-size":15}
+		]
+    }
+  ]
+};
+
+var pie3=
+{
+  "bg_colour": 	"#ffffff",
+  "elements":[
+    {
+      "type":          "pie",
+      "tip":           "#label#<br>$#val# (#percent#)",
+      "colours":       ["#00ff00","#ff0000","#0000ff"],
+      "alpha":         0.3,
+      "animate":		[ { "type": "fade" }],
+      "start-angle":   90,      
+      "gradient-fill": true,
+      "no-labe-ls":     true,
+      "values": [
+        {"value":13400,"label":"Income"},{"value":9344,"label":"Expense"},{"value":4066,"label":"Profit"}
+      ]
+    }
+  ]
+};
+
+var pie4=
+{
+  "elements" : [
+    {
+      "tip" : "#val# of #total# messages<br>#percent#",
+      "colours" : [
+        "#000000",
+        "#4693B8"
+      ],
+      "alpha" : "0.8",
+      "start_angle" : 135,
+      "animate" : false,
+      "values" : [
+        {
+          "value" : 135,
+          "label" : "spam deliveries"
+        },
+        {
+          "value" : 103,
+          "label" : "normal deliveries"
+        }
+      ],
+      "type" : "pie",
+      "border" : "2"
+    }
+  ],
+  "bg_colour" : "#FAFAFA",
+  "title" : {
+    "text" : "mail distribution for b@b.com",
+    "style" : "{font-size: 14px; color:#0000ff; font-family: Verdana; text-align: center;}"
+  }
+};
+
+var pie5=
+{
+    "bg_colour": "#ffffff", 
+    "elements": [
+        {
+            "alpha": 0.5,
+			"animate":[{"type":"bounce","distance":5},{"type":"fade"}],
+            "border": 2, 
+            "colours": [
+                "#0247fe", 
+                "#3d01a4", 
+                "#8601af", 
+                "#a7194b", 
+                "#fe2712", 
+                "#fd5308", 
+                "#fb9902", 
+                "#fabc02", 
+                "#fefe33", 
+                "#d0ea2b", 
+                "#66b032", 
+                "#0392ce"
+            ], 
+            "label-colour": "#432baf", 
+            "start-angle": 0, 
+            "tip": "#val# of #total#<br>#percent# of 100%", 
+            "type": "pie", 
+            "values": [
+                {
+                    "label": "New Zealand", 
+                    "value": 52236
+                }, 
+                {
+                    "label": "Vodafone Mobile", 
+                    "value": 9560
+                }, 
+                {
+                    "label": "Airedale Street", 
+                    "value": 6367
+                }, 
+                {
+                    "label": "Ellerslie", 
+                    "value": 5870
+                }, 
+                {
+                    "label": "Auckland LICA", 
+                    "value": 2627
+                }, 
+                {
+                    "label": "Manukau City", 
+                    "value": 2360
+                }, 
+                {
+                    "label": "Telecom Mobile", 
+                    "value": 2068
+                }, 
+                {
+                    "label": "Remuera", 
+                    "value": 1747
+                }, 
+                {
+                    "label": "Henderson", 
+                    "value": 1231
+                }, 
+                {
+                    "label": "East Tamaki / Otara", 
+                    "value": 1187
+                }
+            ]
+        }
+    ], 
+    "title": {
+        "style": "{color: #888888; font-size: 16; text-align: center}", 
+        "text": "Top 10 Caller Locations by OGA"
+    }
+};
+
+var pie6=
+{
+
+	"title":{
+		"text":"Pie for you sir?",
+		"style":"{font-size: 30px;}"
+	},
+	"bg_colour": "#000000",
+
+	"elements":[
+		{
+			"type":      "pie",
+			"colours":   ["#d01f3c","#356aa0","#C79810"],
+			"alpha":     0.6,
+			"border":    2,
+			"ani-mate":   0,
+			"start-angle": 35,
+			"values" :   [
+				2,
+				3,
+				{"value":65,"label":"hello (#val#)", "tip":"99 bottles of beer","on-click":"http://eden"},
+				{"value":65,"on-click":"my_function"}
+			]
+		}
+	]
+};
+var pie7=
+{
+
+	"title":{
+		"text":"Pie for you sir?",
+		"style":"{font-size: 30px;}"
+	},
+	"bg_colour": "#FFFFFF",
+
+	"elements":[
+		{
+			"type":      "pie",
+			"colours":   ["#d01f3c","#356aa0","#C79810"],
+			"alpha":     0.6,
+			"start-angle": 35,
+			"radius":	55,
+			"values" :   [
+				2,
+				3,
+				{"value":65,"label":"hello (#val#)", "tip":"99 bottles of beer","on-click":"http://eden"},
+				{"value":65,"on-click":"my_function"}
+			]
+		}
+	]
+};
+
+var pie8=
+{
+  "elements" : [
+    {
+      "tip" : "#val# of #total#<br>#percent#\npie radius = #radius#",
+	  
+      "colours" : [
+		"0x336699", "0x88AACC", "0x999933", "0x666699",
+		"0xCC9933", "0x006666", "0x3399FF", "0x993300",
+		"0xAAAA77", "0x666666", "0xFFCC66", "0x6699CC",
+		"0x663366", "0x9999CC", "0xAAAAAA", "0x669999",
+		"0xBBBB55", "0xCC6600", "0x9999FF", "0x0066CC",
+		"0x99CCCC", "0x999999", "0xFFCC00", "0x009999",
+		"0x99CC33", "0xFF9900", "0x999966", "0x66CCCC",
+		"0x339966", "0xCCCC33"      ],
+		
+      "alpha" : 0.2,
+      "start_angle" : 135,
+	  "radius":200,
+	  "no-labels":false,
+      "ani--mate" : true,
+	  //"label-colour":0,  // leave out or set to null for auto-colour labels
+      "values" : [
+        {
+          "value" : 135,
+          "label" : "Label Num 1 - click to google",
+		  "label-colour":"0xFF0000",         // Override the label colour
+		  "on-click":"http://www.google.com",
+		  "animate":[{"type":"bounce","distance":5}]
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 2",
+		  "animate":[{"type":"bounce","distance":5}]
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 3",
+		  "animate":[{"type":"bounce","distance":5},{"type":"fade"}]
+        },
+        {
+          "value" : 135,
+          "label" : ""      // Do not display a label for this slice
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 6"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 7"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 8"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 9"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 10"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 11"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 12"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 13"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 14"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 15"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 16"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 17"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 18"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 19"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 20"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 21"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 22"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 23"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 24"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 25"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 26"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 27"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 28"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 29"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 30"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 31"
+        },
+        {
+          "value" : 0,
+          "label" : "zero slice 32"
+        },
+        {
+          "value" : 0,
+          "label" : "zero slice 33"
+        },
+        {
+          "value" : 0,
+          "label" : "zero slice 34"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 35"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 36"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 37"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 38"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 40"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 42"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 43"
+        },
+        {
+          "value" : 103,
+          "label" : "Label Num 44"
+        }
+      ],
+      "type" : "pie",
+      "border" : "2"
+    }
+  ],
+  "bg_colour" : "#FAFAFA",
+  "title" : {
+    "text" : "Auto-size Pie and Label Adjustment",
+    "style" : "{font-size: 14px; color:#0000ff; font-family: Verdana; text-align: center;}"
+  }
+};
+
+var pie9=
+{
+  "elements" : [
+    {
+      "tip" : "#val# of #total# messages<br>#percent#\npie radius = #radius#",
+      "colours" : [
+        "#000000",
+        "#4693B8"
+      ],
+      "alpha" : "0.8",
+      "start_angle" : 135,
+//	  "radius":200,
+	  "no-labels":false,
+      "animate" : false,
+      "values" : [
+        {
+          "value" : 135,
+          "label" : "Label Num 1"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 2"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 3"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 6"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 7"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 1"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 2"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 3"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice4 "
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 5"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 8"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 9"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 10"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 11"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 12"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 13"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 14"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 15"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 16"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 17"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 18"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 19"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 20"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 21"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 22"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 23"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 24"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 25"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 26"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 27"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 28"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 29"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 30"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 31"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 32"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 33"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 35"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 36"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 37"
+        },
+        {
+          "value" : 103,
+          "label" : "Label Num 38"
+        }
+      ],
+      "type" : "pie",
+      "border" : "2"
+    }
+  ],
+  "bg_colour" : "#FAFAFA",
+  "title" : {
+    "text" : "Auto-size Pie and Label Adjustment",
+    "style" : "{font-size: 14px; color:#0000ff; font-family: Verdana; text-align: center;}"
+  }
+};
+
+var pie10=
+{
+  "elements" : [
+    {
+      "tip" : "#val# of #total# messages<br>#percent#\npie radius = #radius#",
+      "colours" : [
+        "#000000",
+        "#4693B8"
+      ],
+      "alpha" : "0.8",
+      "start_angle" : 135,
+	  "radius":200,
+	  "no-labels":false,
+      "animate" : false,
+      "values" : [
+        {
+          "value" : 135,
+          "label" : "Label Num 1"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 2"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 3"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 6"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 7"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 1"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 2"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 3"
+        },
+        {
+          "value" : 4,
+          "label" : "small slice4 "
+        },
+        {
+          "value" : 4,
+          "label" : "small slice 5"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 8"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 9"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 10"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 11"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 12"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 13"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 14"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 15"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 16"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 17"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 18"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 19"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 20"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 21"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 22"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 23"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 24"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 25"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 26"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 27"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 28"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 29"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 30"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 31"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 32"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 33"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 35"
+        },
+        {
+          "value" : 135,
+          "label" : ""
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 36"
+        },
+        {
+          "value" : 135,
+          "label" : "Label Num 37"
+        },
+        {
+          "value" : 103,
+          "label" : "Label Num 38"
+        }
+      ],
+      "type" : "pie",
+      "border" : "2"
+    }
+  ],
+  "bg_colour" : "#FAFAFA",
+  "title" : {
+    "text" : "Fixed Radius Pie and Auto Label Adjustment",
+    "style" : "{font-size: 14px; color:#0000ff; font-family: Verdana; text-align: center;}"
+  }
+};
+
+
+
+</script>
+
+</head>
+<body>
+    
+<div id="my_chart"></div>
+ 	
+<script type="text/javascript">
+	swfobject.embedSWF("/MySpring/javascript/chart/open-flash-chart.swf", "my_chart", "600", "450", "9.0.0");
+</script>
+
+
+	
+<div>
+<INPUT TYPE=BUTTON OnClick="load_1();" VALUE="Chart 1">
+<INPUT TYPE=BUTTON OnClick="load_2();" VALUE="Chart 2">
+
+<br>
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie1);" VALUE="pie1">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie2);" VALUE="pie2">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie3);" VALUE="pie3">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie4);" VALUE="pie4">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie5);" VALUE="pie5">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie6);" VALUE="pie6">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie7);" VALUE="pie7">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie8);" VALUE="pie8">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie9);" VALUE="pie9">
+	<INPUT TYPE=BUTTON OnClick="loadPie(pie10);" VALUE="pie10">
+</div>
+
+</body>
+</html>

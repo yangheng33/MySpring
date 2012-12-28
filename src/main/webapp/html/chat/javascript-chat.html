@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Simple DWR Chat Version 2.0</title>
+  <script type='text/javascript' src='/MySpring/dwr/engine.js'> </script>
+  <script type='text/javascript' src='/MySpring/dwr/interface/SendMessage.js'> </script>
+  <script type='text/javascript' src='/MySpring/dwr/util.js'> </script>
+  <link rel="stylesheet" type="text/css" href="/generic.css" />
+</head>
+
+<body onload="init()">
+
+<script type="text/javascript">
+	function init() {
+	  dwr.engine.setActiveReverseAjax(true);
+	}
+	
+	function sendMessage() {
+	  var text = dwr.util.getValue("text");
+	  dwr.util.setValue("text", "");
+	  SendMessage.addMessage(text);
+	}
+	
+	function receiveMessages(messages) {
+	  var chatlog = "";
+	  for (var data in messages) {
+	    chatlog = "<div>" + dwr.util.escapeHtml(messages[data].text) + "</div>" + chatlog;
+	  }
+	  dwr.util.setValue("chatlog", chatlog, { escapeHtml:false });
+	}
+</script>
+
+<div id="page-title">[
+  <a href="http://getahead.org/dwr/">DWR Website</a> |
+  <a href="..">Web Application Index</a>
+]</div>
+
+<h1>Javascript Chat</h1>
+
+<p>This is a very simple chat demo that uses reverse ajax to collect messages
+and Javascript to manipulate the pages with the results.</p>
+
+<p>
+  Your Message:
+  <input id="text" onkeypress="dwr.util.onReturn(event, sendMessage)"/>
+  <input type="button" value="Send" onclick="sendMessage()"/>
+</p>
+<hr/>
+
+<div id="chatlog"></div>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+==== snmp====
+{{{
+snmpwalk -v 2c -c public localhost
+}}}
+
+安装mysql
+{{{
+yum -y install mysql-server
+}}}
+[http://www.hackbase.com/tech/2011-09-09/65234.html 其他配置参考]
+
+====yum install报错====
+提示Another app is currently holding the yum lock
+{{{
+rm -rf /var/run/yum.pid
+/sbin/service yum-updatesd restart
+}}}
+
+====安装telnet====
+{{{
+需要网络连接
+yum install telnet-server
+chkconfig telnet on
+service xinetd restart
+再关闭防火墙
+
+允许root登录
+vi /etc/pam.d/remote
+将“auth  required  pam_securetty.so”注释掉
+}}}
+
+
+
+====安装 xinetd====
+{{{
+yum install xinetd
+}}}
+
+====设置用户变量====
+{{{
+vi ~/.bashrc
+}}}
+
+====环境变量 ====
+{{{
+编辑环境变量
+vi /etc/profile
+
+立即生效
+source /etc/profile
+
+例如：
+export JAVA_HOME=/usr/java/jdk1.6.0_30
+export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$PATH:$JAVA_HOME/bin
+}}}
+
+====防火墙设置====
+{{{
+1、编辑iptables配置文件
+vi /etc/sysconfig/iptables
+加入：
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 23 -j ACCEPT
+2、重启iptables服务
+service iptables restart
+}}}
+
+
+====ftp服务====
+{{{
+cd /etc/xinetd.d
+vi gsftp                       # 编辑ftp服务的配置文件gssftp的设置
+server_args = -l –a    # 去掉-a 改为server_args = -l
+disable=yes改为disable=no
+
+sestatus -b | grep ftp
+setsebool ftpd_disable_trans 1 
+setsebool allow_ftpd_full_access 1
+service vsftpd restart
+}}}
+
+====安装jdk====
+{{{
+vi /etc/profile
+export JAVA_HOME=/usr/java/jdk1.6.0_30
+export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$PATH:$JAVA_HOME/bin
+}}}
+
+====安装ssh====
+{{{
+安装SSH
+yum install ssh
+启动SSH
+service sshd start
+设置开机运行
+chkconfig sshd on
+}}}
+[http://apps.hi.baidu.com/share/detail/24759120 其他配置参考]
+
+
+==== 查看文件大小====
+{{{
+查看当前文件大小（单位M），并排序
+du -sm * | sort -n 
+}}}
+
+
+
+
+
+
+
+====常用解压和压缩命令====
+*.tar
+{{{
+解包：tar xvf FileName.tar
+打包：tar cvf FileName.tar DirName
+（注：tar是打包，不是压缩！）
+}}}
+*.gz
+{{{
+解压1：gunzip FileName.gz
+解压2：gzip -d FileName.gz
+压缩：gzip FileName
+}}}
+*.tar.gz 和 .tgz
+{{{
+解压：tar zxvf FileName.tar.gz
+压缩：tar zcvf FileName.tar.gz DirName
+}}}
+*.zip
+{{{
+解压：unzip FileName.zip
+压缩：zip -r FileName.zip DirName
+}}}
+*.rar
+{{{
+解压：rar a FileName.rar
+压缩：rar e FileName.rar
+}}}
+
+Linux下查看CPU、内存和硬盘型号及相关信息命令  
+{{{
+查看CPU信息
+#cat /proc/cpuinfo
+查看内存信息
+#cat /proc/meminfo
+查看硬盘的型号信息
+#cat /proc/scsi/scsi
+}}}
+
+查看路由
+{{{
+Tracert ip
+}}}

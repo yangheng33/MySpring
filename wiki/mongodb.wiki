@@ -1,0 +1,27 @@
+====[http://www.mongodb.org/pages/viewpage.action?pageId=20742417 mongodb官方网站]====
+
+
+====常用命令====
+ * 命令启动数据库mongod.exe --dbpath d:/data/mongo
+ * 启动数据库 mongod run
+ * 建表db.createCollection("Myuser1", {capped:true, size:100000})
+ * 插入db.Myuser1.insert({a:1,b:1})
+ * 更新db.uMyuser1.update({uid:2},{$set:{age:100}}) ;
+ * 删除db.Myuser1.remove({uid:1});
+ * 查询db.Myuser1.remove({uid:1});
+ * 建立唯一索引db.Myuser1.ensureIndex({a:1},{unique: true});
+ * 查看索引db.Myuser1.getIndexes()
+ * 删除索引db.M  yuser1.dropIndexes()
+ * 排序db.Myuser1.find().sort({name:-1})
+ * 分页db.Myuser1.find().limit(10).skip(20)
+ * 查看所有库 show dbs
+ * 查看所有表 show collections
+ * 删除表db.Myuser1.drop()
+ * 新建用户db.addUser('test','123456') 
+ * 删除用户db.system.users.remove({'user':'test'})
+ * 导出数据库,全库 mongodump -h 127.0.0.1:27017 -d fish -o /路径
+ * 导出数据库,单表 mongodump -h 127.0.0.1:27017 -d 数据库名 -c 表名 -o /路径
+ * 从备份文件恢复数据库,全库 mongorestore -d carvediary /路径
+ * 从备份文件恢复数据库,单表 mongorestore -d carvediary -c 表名 /carvediary  注意:备份文件必须唯一
+ * 导出csv文件,mongoexport -d carvediary -c User -f _id,info._t,info.lLogIp,info.dOut --csv -o user.csv -q "{'info.dOut':{'$gt':0}}"
+ * 关闭数据库db.shutdownServer()

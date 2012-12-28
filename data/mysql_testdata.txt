@@ -1,0 +1,40 @@
+create database spring;
+
+use spring;
+set names gbk;
+drop table if exists area;
+create table area
+(
+id int not null,
+belongto int,
+postcode varchar(8),
+areatype varchar(4),
+name varchar(100)
+);
+
+insert into area(id,postcode,belongto,areatype,name) values(1,'100029',0,'000','中国');
+insert into area(id,postcode,belongto,areatype,name) values(2,'100029',1,'001','北京');
+insert into area(id,postcode,belongto,areatype,name) values(3,'020',1,'002','贵州');
+insert into area(id,postcode,belongto,areatype,name) values(4,'030',3,'003','贵阳');
+insert into area(id,postcode,belongto,areatype,name) values(5,'558000',3,'004','都匀');
+
+select * from area;
+
+create table metarnet_visit
+(
+id int auto_increment,
+protocol VARCHAR(20) ,
+Inside_global_ip VARCHAR(20) ,
+Inside_global_port VARCHAR(20) ,
+Inside_local_ip VARCHAR(20) ,
+Inside_local_port VARCHAR(20) ,
+Outside_local_ip  VARCHAR(20)   ,
+Outside_local_port VARCHAR(20) ,
+Outside_global_ip VARCHAR(20) ,
+Outside_global_port VARCHAR(20) ,
+recorddate datetime,
+PRIMARY KEY(id)
+);
+
+insert into metarnet_visit (recorddate)values (now());
+

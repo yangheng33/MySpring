@@ -1,0 +1,61 @@
+﻿<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+
+<script type="text/javascript" src="/MySpring/javascript/chart/swfobject.js"></script>
+
+<script type="text/javascript">
+
+function ofc_ready()
+{
+}
+
+function open_flash_chart_data()
+{
+    return JSON.stringify(pie6);
+}
+
+
+
+function loadChart(name)
+{
+	tmp = findSWF("my_chart");
+	x = tmp.load( JSON.stringify(name) );
+
+}
+
+function findSWF(movieName) {
+  if (navigator.appName.indexOf("Microsoft")!= -1) {
+    return window[movieName];
+  } else {
+    return document[movieName];
+  }
+}
+
+var area1 = "";
+
+</script>
+
+</head>
+<body>
+    
+<div id="my_chart"></div>
+ 	
+<script type="text/javascript">
+	swfobject.embedSWF("/MySpring/javascript/chart/open-flash-chart.swf", "my_chart", "600", "450", "9.0.0");
+</script>
+
+
+	
+<div>
+
+<br>
+	<INPUT TYPE=BUTTON OnClick="loadChart(area);" VALUE="area">
+	<INPUT TYPE=BUTTON OnClick="loadChart(area);" VALUE="area">
+	<INPUT TYPE=BUTTON OnClick="loadChart(area);" VALUE="area">
+	<INPUT TYPE=BUTTON OnClick="loadChart(area);" VALUE="area">
+	
+</div>
+
+</body>
+</html>

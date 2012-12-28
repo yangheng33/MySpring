@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/MySpring">
+
+<Resource name="jms/messageTopic"
+  type="org.apache.activemq.command.ActiveMQTopic"
+  description="a simple topic"
+  factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+  brokerURL="tcp://localhost:61616"
+  physicalName="messageTopic"/>
+
+<Resource name="jms/flex/TopicConnectionFactory"
+  type="org.apache.activemq.ActiveMQConnectionFactory"
+  description="JMS Connection Factory"
+  factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+  brokerURL="tcp://localhost:61616"
+  brokerName="myBroker"/>
+
+</Context>
