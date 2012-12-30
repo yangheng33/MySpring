@@ -4,10 +4,10 @@
   name="MySpring"
   id="myeclipse.1319302775513"
   context-root="/MySpring"
-  j2ee-spec="5.0"
+  j2ee-spec="6.0"
   archive="MySpring.war">
   <attributes>
-    <attribute name="webrootdir" value="/src/main/webapp" />
+    <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>
 </project-module>
 

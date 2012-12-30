@@ -3,7 +3,6 @@
 #################
 
 *.pydevproject
-.project
 .metadata
 bin/
 tmp/
@@ -12,9 +11,14 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.classpath
 .settings/
 .loadpath
+*.class
+*.war
+target/
+#.classpath
+#.project
+
 
 # External tool builders
 .externalToolBuilders/
