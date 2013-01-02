@@ -33,21 +33,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	
   	function go()
   	{
-  		document.forms[0].submit();
+  		if( $("#file").val() =="" )
+  		{
+  			alert("请选择要分析的日志文件...");
+  		}
+  		else
+  		{
+  			
+  			document.forms[0].submit();
+  		}
+  		
   	}
   </script>
   
   <body>
     <h1>访问次数统计日志上传</h1>  
-  	<c:if test="${status!='no'}">
-  		<h1><font color="red">上次完毕，用时${status}毫秒<a href="zhounan.amar?method=exportExcel">点击下载</a></font></h1>
-  		
+    <h1><font color="red">
+  	<c:if test="${time=='time'}">
+  		上次完毕，用时${time}毫秒
   	</c:if>
+  	<c:if test="${status=='ok'}">
+  		<a href="zhounan.amar?method=exportExcel">点击下载最新数据
+  	</c:if>
+  	</a></font></h1>
     <form action="zhounan.amar?method=analyze" method="post" enctype="multipart/form-data">  
   
-        <input type="file" name="file"/>  
+        <input type="file" name="file" id="file"/>  
   
-        <input type="submit" value="upload"/>  
+        <input type="button" onclick="go()" value="upload"/>  
   
     </form>  
     

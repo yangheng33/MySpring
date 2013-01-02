@@ -64,16 +64,16 @@ public class FacebookController
 			log.info( request_ids );
 		}
 
-		/*
-		try
-		{
-			response.sendRedirect( "http://www.baidu.com" );
-		}
-		catch ( IOException e1 )
-		{
-			e1.printStackTrace();
-		}
-		*/
+		
+		//try
+		//{
+		//	response.sendRedirect( "http://www.baidu.com" );
+		//}
+		//catch ( IOException e1 )
+		//{
+		//	e1.printStackTrace();
+		//}
+	
 
 		if ( ! auth ) return new ModelAndView( "facebook/auth" );
 		else return new ModelAndView( "facebook/index" );
@@ -165,4 +165,5 @@ public class FacebookController
 
 		return "facebook/welcome";
 	}
+	
 }

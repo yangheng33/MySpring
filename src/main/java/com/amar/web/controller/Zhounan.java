@@ -10,11 +10,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFHeader;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Header;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,9 +43,17 @@ public class Zhounan
 	@RequestMapping( params = "method=toAnalyze" )
 	public String toAnalyze( HttpServletRequest request , HttpServletResponse response )
 	{
-		metarnet_visitDAO.deleteAllMetarnet_visit();
-		
-		request.setAttribute( "status" , "no" );
+		@SuppressWarnings( "rawtypes" )
+		List<Map> list = metarnet_visitDAO.findMetarnetVisitStatisticsByZhounan();
+
+		if ( list != null && list.size() > 0 )
+		{
+			request.setAttribute( "status" , "ok" );
+		}
+		else
+		{
+			request.setAttribute( "status" , "no" );
+		}
 		return "zhounan/analyze";
 	}
 
@@ -52,34 +61,43 @@ public class Zhounan
 	@RequestMapping( params = "method=analyze" )
 	public String analyze( HttpServletRequest request , HttpServletResponse response ) throws IOException , IllegalStateException
 	{
-		Date startDate = new Date(); 
-		metarnet_visitDAO.deleteAllMetarnet_visit();
+		Date startDate = new Date();
 
-		MultipartHttpServletRequest multipartRequest = ( MultipartHttpServletRequest ) request;
-
-		MultipartFile multipartFile = multipartRequest.getFile( "file" );
-
-		BufferedReader read = new BufferedReader( new InputStreamReader( multipartFile.getInputStream() ) );
-
-		String line = "";
-		int i = 1;
-		while ( ( line = read.readLine() ) != null )
+		if ( request instanceof MultipartHttpServletRequest )
 		{
-			Metarnet_visit visit = analyzeMetarnetFile( line.trim() );
+			metarnet_visitDAO.deleteAllMetarnet_visit();
 
-			if ( visit != null )
+			MultipartHttpServletRequest multipartRequest = ( MultipartHttpServletRequest ) request;
+
+			MultipartFile multipartFile = multipartRequest.getFile( "file" );
+
+			BufferedReader read = new BufferedReader( new InputStreamReader( multipartFile.getInputStream() ) );
+
+			String line = "";
+
+			while ( ( line = read.readLine() ) != null )
 			{
-				metarnet_visitDAO.addMetarnet_visit( visit );
+				Metarnet_visit visit = analyzeMetarnetFile( line.trim() );
+
+				if ( visit != null )
+				{
+					metarnet_visitDAO.addMetarnet_visit( visit );
+				}
+
 			}
-			i ++ ;
+
+			Date endDate = new Date();
+
+			float time = ( endDate.getTime() - startDate.getTime() );
+
+			request.setAttribute( "status" , "ok" );
+			request.setAttribute( "time" , time + "" );
+			return "zhounan/analyze";
 		}
-		
-		Date endDate = new Date();
-		
-		float time = (endDate.getTime()- startDate.getTime());
-		
-		request.setAttribute( "status" , time+"" );
-		return "zhounan/analyze";
+		else
+		{
+			return "zhounan/analyze";
+		}
 	}
 
 	/***
@@ -132,6 +150,26 @@ public class Zhounan
 		return visit;
 	}
 
+	@RequestMapping( params = "method=exportExcel4Test" )
+	public void exportExcel4Test( HttpServletRequest request , HttpServletResponse response ) throws IOException
+	{
+		String fileName = "周楠陶毅访问列表统计";
+		XSSFWorkbook demoWorkBook = new XSSFWorkbook();
+		Sheet demoSheet = demoWorkBook.createSheet( "明细表" );
+
+		Row headerRow = demoSheet.createRow( 1 );
+		for( int i = 0 ; i < 10 ; i ++ )
+		{
+			Cell headerCell = headerRow.createCell( i );
+			headerCell.setCellValue( "a" );
+		}
+
+		// response.setContentType( "application/ms-excel" );
+		response.setContentType( "application/binary;" );
+		response.setHeader( "Content-Disposition" , "attachment;filename=" + new String( ( fileName ).getBytes() , "iso8859-1" ) + ".xlsx" );
+		demoWorkBook.write( response.getOutputStream() );
+	}
+
 	@SuppressWarnings( "rawtypes" )
 	@RequestMapping( params = "method=exportExcel" )
 	public void exportExcel( HttpServletRequest request , HttpServletResponse response ) throws IOException , IllegalStateException
@@ -147,22 +185,22 @@ public class Zhounan
 			String [] tableHeader = { "协议", "Inside global ip", "Inside global port", "Inside local ip", "Inside local port", "Outside local ip", "Outside local port", "Outside global ip",
 					"Outside global port" };
 
-			HSSFWorkbook demoWorkBook = new HSSFWorkbook();
+			XSSFWorkbook demoWorkBook = new XSSFWorkbook();
 
-			HSSFSheet demoSheet = demoWorkBook.createSheet( "明细表" );
+			Sheet demoSheet = demoWorkBook.createSheet( "明细表" );
 
 			// 表头的单元格个数目
 			short cellNumber = ( short ) tableHeader.length;
 
-			HSSFHeader header = demoSheet.getHeader();
+			Header header = demoSheet.getHeader();
 
 			header.setCenter( fileName );
 
 			int rowNumber = 0;
-			HSSFRow headerRow = demoSheet.createRow( rowNumber );
+			Row headerRow = demoSheet.createRow( rowNumber );
 			for( int i = 0 ; i < cellNumber ; i ++ )
 			{
-				HSSFCell headerCell = headerRow.createCell( i );
+				Cell headerCell = headerRow.createCell( i );
 				headerCell.setCellValue( tableHeader[ i ] );
 			}
 
@@ -171,59 +209,59 @@ public class Zhounan
 				int column = 0;
 				Metarnet_visit visit = visitlist.get( i );
 
-				HSSFRow contentRow = demoSheet.createRow( ++ rowNumber );
-				HSSFCell protocol_cell = contentRow.createCell( column ++ );
+				Row contentRow = demoSheet.createRow( ++ rowNumber );
+				Cell protocol_cell = contentRow.createCell( column ++ );
 				protocol_cell.setCellValue( visit.getProtocol() );
 
-				HSSFCell inside_global_ip_cell = contentRow.createCell( column ++ );
+				Cell inside_global_ip_cell = contentRow.createCell( column ++ );
 				inside_global_ip_cell.setCellValue( visit.getInside_global_ip() );
 
-				HSSFCell inside_global_port_cell = contentRow.createCell( column ++ );
+				Cell inside_global_port_cell = contentRow.createCell( column ++ );
 				inside_global_port_cell.setCellValue( visit.getInside_global_port() );
 
-				HSSFCell inside_local_ip_cell = contentRow.createCell( column ++ );
+				Cell inside_local_ip_cell = contentRow.createCell( column ++ );
 				inside_local_ip_cell.setCellValue( visit.getInside_local_ip() );
 
-				HSSFCell inside_local_port_cell = contentRow.createCell( column ++ );
+				Cell inside_local_port_cell = contentRow.createCell( column ++ );
 				inside_local_port_cell.setCellValue( visit.getInside_local_port() );
 
-				HSSFCell outside_local_ip_cell = contentRow.createCell( column ++ );
+				Cell outside_local_ip_cell = contentRow.createCell( column ++ );
 				outside_local_ip_cell.setCellValue( visit.getOutside_local_ip() );
 
-				HSSFCell outside_local_port_cell = contentRow.createCell( column ++ );
+				Cell outside_local_port_cell = contentRow.createCell( column ++ );
 				outside_local_port_cell.setCellValue( visit.getOutside_local_port() );
 
-				HSSFCell outside_global_ip_cell = contentRow.createCell( column ++ );
+				Cell outside_global_ip_cell = contentRow.createCell( column ++ );
 				outside_global_ip_cell.setCellValue( visit.getOutside_global_ip() );
 
-				HSSFCell outside_global_port_cell = contentRow.createCell( column ++ );
+				Cell outside_global_port_cell = contentRow.createCell( column ++ );
 				outside_global_port_cell.setCellValue( visit.getOutside_global_port() );
 
 			}
 
 			String [] tableHeader2 = { "次数", "ip地址" };
-			HSSFSheet demoSheet2 = demoWorkBook.createSheet( "总表" );
+			Sheet demoSheet2 = demoWorkBook.createSheet( "总表" );
 			rowNumber = 0;
 			cellNumber = ( short ) tableHeader2.length;
-			HSSFRow headerRow2 = demoSheet2.createRow( rowNumber );
-			
+			Row headerRow2 = demoSheet2.createRow( rowNumber );
+
 			for( int i = 0 ; i < cellNumber ; i ++ )
 			{
-				HSSFCell headerCell = headerRow2.createCell( i );
+				Cell headerCell = headerRow2.createCell( i );
 				headerCell.setCellValue( tableHeader2[ i ] );
 			}
 			for( int i = 0 ; i < statisticslist.size() ; i ++ )
 			{
 				int column = 0;
 				Map statistics = statisticslist.get( i );
-				
-				HSSFRow contentRow = demoSheet2.createRow( ++ rowNumber );
-				HSSFCell count = contentRow.createCell( column ++ );
+
+				Row contentRow = demoSheet2.createRow( ++ rowNumber );
+				Cell count = contentRow.createCell( column ++ );
 				count.setCellValue( statistics.get( "counts" ).toString() );
-				HSSFCell ip = contentRow.createCell( column ++ );
+				Cell ip = contentRow.createCell( column ++ );
 				ip.setCellValue( statistics.get( "inside_local_ip" ).toString() );
 			}
-			
+
 			if ( demoWorkBook != null )
 			{
 				response.setContentType( "application/ms-excel" );

@@ -203,13 +203,22 @@
 	<dependency> 
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-log4j12</artifactId>
-		<version>1.6.0</version>  
+		<version>1.7.2</version>  
 	</dependency> 
+
+	<!-- poi操作excel2007 -->	
 	<dependency>  
 		<groupId>org.apache.poi</groupId>
 		<artifactId>poi</artifactId> 
-		<version>3.6</version>  
+		<version>3.9</version>  
 	</dependency> 
+	<dependency>  
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId> 
+		<version>3.9</version>  
+	</dependency>
+	<!-- poi操作excel2007 -->
+	
 	<dependency>
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
@@ -251,9 +260,9 @@
 		<version>5.5.1</version>
 	</dependency>
 	<dependency>
-		<groupId>xstream</groupId>
+		<groupId>com.thoughtworks.xstream</groupId>
 		<artifactId>xstream</artifactId>
-		<version>1.2</version>
+		<version>1.4</version>
 	</dependency>    
 	
 	<!-- mina -->
@@ -429,7 +438,7 @@
 </dependencies>
 	
   <build>
-		<finalName>MySpring</finalName>
+		<finalName>myspring</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		
