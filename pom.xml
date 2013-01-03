@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.amar.web</groupId>
-  <artifactId>amar-web</artifactId>
+  <artifactId>myspring</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
    
@@ -12,6 +12,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jackson.mapper.version>1.9.7</jackson.mapper.version>
 		<cxf.version>2.7.0</cxf.version>
+		<org.lib>/src/main/webapp/WEB-INF/lib</org.lib>
+		<cargo.container.manager.url>http://192.168.1.107:8080/manager/html</cargo.container.manager.url>
+		<cargo.container.username>tomcat</cargo.container.username>
+		<cargo.container.password>tomcat</cargo.container.password>
+		<cargo.wait>false</cargo.wait>
 	</properties>
  
 <dependencies> 
@@ -106,7 +111,7 @@
 	  <artifactId>ojdbc</artifactId>  
 	  <version>14</version>   
 	  <scope>system</scope>
-	  <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc14_g.jar</systemPath> 
+	  <systemPath>${project.basedir}${org.lib}/ojdbc14_g.jar</systemPath> 
 	</dependency>
 	
 	<!-- blazeDS -->
@@ -164,7 +169,7 @@
 	  <artifactId>morphia</artifactId>  
 	  <version>0.99</version>  
 	  <scope>system</scope>
-	  <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/morphia-0.99.jar</systemPath>  
+	  <systemPath>${project.basedir}${org.lib}/morphia-0.99.jar</systemPath>  
 	</dependency>
 	
 	<!--
@@ -441,9 +446,9 @@
 		<finalName>myspring</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-		
 		<pluginManagement>
 			<plugins>
+				<!--  
 				<plugin>
 					<artifactId>maven-war-plugin</artifactId>
 					<configuration>
@@ -454,7 +459,18 @@
           				<target>1.6</target> 
           				<encoding>UTF-8</encoding> 
 					</configuration>
-				</plugin>	
+				</plugin>
+				-->
+				<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>  
+				<version>2.0</version>
+				<configuration>
+				<url>http://192.168.0.33:80/manager/text</url>   
+				<server>tomcat7</server>
+				<update>true</update>
+				</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
