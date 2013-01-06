@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.RemindplanDAO">
+
+<select id="findRemindplan" parameterType="remindplan" resultType="remindplan">
+SELECT id,userid,title,type,cycle,cycleparam,exectime,content,state,modifytime
+ FROM Remindplan
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" userid > 0 ">
+ AND userid = #{userid}
+</if>
+<if test=" title != null">
+ AND title = #{title}
+</if>
+<if test=" type != null">
+ AND type = #{type}
+</if>
+<if test=" cycle != null">
+ AND cycle = #{cycle}
+</if>
+<if test=" cycleparam != null">
+ AND cycleparam = #{cycleparam}
+</if>
+<if test=" content != null">
+ AND content = #{content}
+</if>
+<if test=" state != null">
+ AND state = #{state}
+</if>
+</where>
+</select>
+
+<insert id="addRemindplan" parameterType="remindplan" >
+<selectKey keyProperty="id" order="AFTER" resultType="int">
+    SELECT @@IDENTITY AS id
+</selectKey>
+insert into Remindplan
+(
+id,userid,title,type,cycle,cycleparam,exectime,content,state,modifytime
+) values (
+#{id},#{userid,jdbcType=NUMERIC},#{title,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{cycle,jdbcType=VARCHAR},#{cycleparam,jdbcType=VARCHAR},#{exectime},#{content,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{modifytime}
+)
+</insert>
+
+<update id="editRemindplan" parameterType="remindplan">
+update Remindplan<set>
+<if test=" userid > 0 ">
+userid=#{userid},
+</if>
+<if test=" title != null">
+title=#{title},
+</if>
+<if test=" type != null">
+type=#{type},
+</if>
+<if test=" cycle != null">
+cycle=#{cycle},
+</if>
+<if test=" cycleparam != null">
+cycleparam=#{cycleparam},
+</if>
+<if test=" exectime != null ">
+exectime=#{exectime},
+</if>
+<if test=" content != null">
+content=#{content},
+</if>
+<if test=" state != null">
+state=#{state},
+</if>
+<if test=" modifytime != null ">
+modifytime=#{modifytime},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteRemindplan" parameterType="remindplan" >
+DELETE FROM Remindplan 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>
