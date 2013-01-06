@@ -84,13 +84,10 @@ public class ModitfyData
 		{
 			reader = new BufferedReader( new FileReader( file ) );
 			String tempString = null;
-			int line = 1;
 
 			while ( ( tempString = reader.readLine() ) != null )
 			{
-
 				System.out.println( tempString );
-				line ++ ;
 			}
 			reader.close();
 		}

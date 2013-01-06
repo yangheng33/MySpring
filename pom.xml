@@ -210,12 +210,17 @@
 		<artifactId>slf4j-log4j12</artifactId>
 		<version>1.7.2</version>  
 	</dependency> 
-
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>  
+	</dependency>
+ 
 	<!-- poi操作excel2007 -->	
 	<dependency>  
 		<groupId>org.apache.poi</groupId>
-		<artifactId>poi</artifactId> 
-		<version>3.9</version>  
+		<artifactId>poi</artifactId>
+		<version>3.9</version>
 	</dependency> 
 	<dependency>  
 		<groupId>org.apache.poi</groupId>
@@ -271,6 +276,34 @@
 	</dependency>    
 	
 	<!-- mina -->
+	<dependency> 
+         <groupId>org.apache.mina</groupId> 
+         <artifactId>mina-example</artifactId> 
+         <version>${mina.version}</version>
+         <exclusions> 
+             <exclusion> 
+                 <groupId>org.apache.mina</groupId> 
+                 <artifactId>mina-core</artifactId> 
+             </exclusion> 
+             <exclusion> 
+                 <groupId>org.apache.mina</groupId> 
+                 <artifactId>mina-integration-beans</artifactId> 
+             </exclusion> 
+             <exclusion> 
+                 <groupId>org.apache.mina</groupId> 
+                 <artifactId>mina-integration-ognl</artifactId> 
+             </exclusion>
+             <exclusion> 
+                 <groupId>org.apache.mina</groupId> 
+                 <artifactId>mina-integration-jmx</artifactId> 
+             </exclusion>
+             <exclusion> 
+                 <groupId>org.apache.mina</groupId> 
+                 <artifactId>mina-statemachine</artifactId> 
+             </exclusion> 
+         </exclusions> 
+     </dependency>
+     
 	<dependency> 
          <groupId>org.apache.mina</groupId> 
          <artifactId>mina-core</artifactId> 
