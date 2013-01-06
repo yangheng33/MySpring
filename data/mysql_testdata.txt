@@ -20,7 +20,7 @@ insert into area(id,postcode,belongto,areatype,name) values(5,'558000',3,'004','
 
 select * from area;
 
-create table metarnet_visit
+create table Metarnet_visit
 (
 id int auto_increment,
 protocol VARCHAR(20) ,
@@ -36,5 +36,53 @@ recorddate datetime,
 PRIMARY KEY(id)
 );
 
-insert into metarnet_visit (recorddate)values (now());
+insert into Metarnet_visit (recorddate)values (now());
+
+create table User
+(
+   id                   int not null auto_increment,
+   loginname            varchar(20),
+   realname             varchar(20),
+   pw                   varchar(20),
+   phone                varchar(20),
+   email                varchar(20),
+   qq                   varchar(20),
+   address              varchar(100),
+   regtime              datetime,
+   brithday             datetime,
+   lastlogintime        datetime,
+   primary key (id)
+);
+
+alter table User comment '用户表';
+
+create table Remindplan
+(
+   id                   int not null auto_increment,
+   userid               int not null comment '用户id',
+   title                varchar(40) comment '提醒标题',
+   type                 varchar(20) comment '任务类型,1提醒一次,2循环提醒',
+   cycle                varchar(20) comment '循环周期,1小时,2日,3周,4月',
+   cycleparam           varchar(100) comment '循环参数,以逗号间隔,小时周期取值0-59,日取值0-23,周取值1-7,月取值1-31',
+   exectime             datetime comment '提醒时间',
+   content              varchar(200) comment '提醒的内容',
+   state                varchar(2) default '1' comment '状态,1启动中,2停止中',
+   modifytime           datetime comment '最后更新时间',
+   primary key (id)
+);
+
+alter table Remindplan comment '提醒计划';
+
+create table Remindlog
+(
+   id                   int not null auto_increment,
+   remindplanid         int not null,
+   logtime              datetime not null,
+   state                varchar(2) not null comment '发送状态:1成功,2失败',
+   type                 varchar(2) not null comment '发送原因:1标准提醒,2失败重发',
+   primary key (id)
+);
+
+alter table Remindplan comment '提醒日志';
+
 

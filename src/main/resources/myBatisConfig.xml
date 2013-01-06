@@ -10,5 +10,9 @@
 		<typeAlias alias="area" type="com.amar.web.model.Area" />
 		<typeAlias alias="tableInfo" type="com.amar.app.autocode.TableInfo" />
 		<typeAlias alias="metarnet_visit" type="com.amar.web.model.Metarnet_visit" />
+		<typeAlias alias="user" type="com.amar.web.model.User" />
+		<typeAlias alias="remindplan" type="com.amar.web.model.Remindplan" />
+		<typeAlias alias="remindlog" type="com.amar.web.model.Remindlog" />
+		
 	</typeAliases>
 </configuration>

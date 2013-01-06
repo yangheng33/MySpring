@@ -1,5 +1,9 @@
 package com.amar.web.controller;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,10 +12,19 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.amar.db.ibatis.dao.UserDAO;
+import com.amar.util.ServletUtil;
+import com.amar.util.TimeDateUtil;
+import com.amar.web.model.User;
+
 @Controller
 @RequestMapping( "login.amar" )
 public class Login
 {
+
+	@Resource( name = "userDAO" )
+	private UserDAO userDAO;
+
 	@RequestMapping( params = "method=logintest" )
 	public void toAddArea( HttpServletRequest request , HttpServletResponse response ) throws Exception
 	{
@@ -19,35 +32,85 @@ public class Login
 		JSONObject json = new JSONObject();
 		String name = request.getParameter( "name" );
 		String pw = request.getParameter( "pw" );
-		
+
 		json.put( "name" , name );
 		json.put( "pw" , pw );
-		
+
 		response.getWriter().write( json.toString() );
 	}
-	
+
 	@RequestMapping( params = "method=tologin" )
-	public String tologin( HttpServletRequest request , HttpServletResponse response ) throws Exception
+	public String toLogin( HttpServletRequest request , HttpServletResponse response ) throws Exception
 	{
-		
-		
+
 		return "login/login";
 	}
-	
+
+	@RequestMapping( params = "method=toRegist" )
+	public String toRegist( HttpServletRequest request , HttpServletResponse response ) throws Exception
+	{
+
+		return "login/regist";
+	}
+
+	@RequestMapping( params = "method=regist" )
+	public String regist( HttpServletRequest request , HttpServletResponse response )
+	{
+		boolean result = false;
+
+		try
+		{
+			User user = ServletUtil.request2Bean( request , User.class );
+
+			user.setRegtime( new Date() );
+
+			user.setLastlogintime( new Date() );
+
+			String brithdays = request.getParameter( "brithdays" );
+
+			Date brithday = new Date( TimeDateUtil.getLongDay( brithdays ) );
+
+			user.setBrithday( brithday );
+
+			userDAO.addUser( user );
+
+			request.getSession().setAttribute( "user" , user );
+
+			result = true;
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+		}
+
+		if ( result )
+		{
+			return "main";
+		}
+		else
+		{
+			request.setAttribute( "errorinfo" , "<font color='red'>error</font>" );
+			return "login/regist";
+		}
+	}
+
 	@RequestMapping( params = "method=login" )
 	public String login( HttpServletRequest request , HttpServletResponse response ) throws Exception
 	{
-		
-		String username = request.getParameter( "username" );
-		request.getSession().setAttribute( "username" , username );
-		return "login/success";
+		User user = ServletUtil.request2Bean( request , User.class );
+
+		List<User> userList = userDAO.findUser( user );
+
+		if ( userList != null && userList.size() > 0 )
+		{
+			request.getSession().setAttribute( "user" , userList.get( 0 ) );
+			return "main";
+		}
+		else
+		{
+			request.setAttribute( "error" , "用户名或密码错误" );
+			return "login/login";
+		}
 	}
-	
-	@RequestMapping( params = "method=query" )
-	public String query( HttpServletRequest request , HttpServletResponse response ) throws Exception
-	{
-		request.setAttribute( "username" , request.getSession().getAttribute( "username" ) ) ;
-		
-		return "login/query";
-	}
+
 }

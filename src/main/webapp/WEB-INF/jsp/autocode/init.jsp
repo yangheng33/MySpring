@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script >
   	function goback()
   	{
-  		document.forms[0].action="?t=init";
+  		document.forms[0].action="?method=init";
   		document.forms[0].submit();
   	}
   	
@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     This is my JSP page. <br>
     
     add<br/>
-  	<form action="autocode.amar?t=generate" method="post">
+  	<form action="<%=request.getContextPath()%>/autocode.amar?method=generate" method="post">
   	
   	数据库类型:	<select name="dbtype">
   					<option value="oracle">ORACLE</option>
@@ -49,9 +49,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				</select><br/>
   	数据库名称:<input type="text" name="dbname" value="spring"><br/>
   	程序根路径:<input type="text" name="path" value="d:/autocode"><br/>
-  	model路径:<input type="text" name="modelPath" value="com/amar/model"><br/>
-  	xml配置文件路径:<input type="text" name="configPath" value="com/amar/config"><br/>
-  	dao的路径:<input type="text" name="daoPath" value="com/amar/dao"><br/>
+  	model路径:<input type="text" name="modelPath" value="com/amar/web/model"><br/>
+  	xml配置文件路径:<input type="text" name="configPath" value="mybatis"><br/>
+  	dao的路径:<input type="text" name="daoPath" value="com/amar/db/ibatis/dao"><br/>
   	
   	<input type="button" onclick="goback()" value="返回">&nbsp;&nbsp;
   	<input type="button" onclick="go()" value="提交">

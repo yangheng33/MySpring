@@ -61,7 +61,7 @@
   
 
   <!-- dwr -->
-  <!--  
+
   <listener>
     <listener-class>org.directwebremoting.servlet.EfficientShutdownServletContextAttributeListener</listener-class>
   </listener>
@@ -102,7 +102,7 @@
     <servlet-name>dwr-invoker</servlet-name>
     <url-pattern>/dwr/*</url-pattern>
   </servlet-mapping>
-	-->
+	
 	<listener>
         <listener-class>flex.messaging.HttpFlexSession</listener-class>
     </listener>
@@ -144,7 +144,7 @@
     -->
     
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
         <welcome-file>index.htm</welcome-file>
     </welcome-file-list>
 </web-app>

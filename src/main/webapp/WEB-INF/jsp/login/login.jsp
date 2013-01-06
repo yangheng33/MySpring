@@ -1,4 +1,6 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"  isELIgnored="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%
 String path = request.getContextPath();
 %>
@@ -16,29 +18,32 @@ String path = request.getContextPath();
 	
   </head>
   
-  <script >
+  <script type="text/javascript">
 	
-  	function goback()
+  	function login()
   	{
   		document.forms[0].submit();
   	}
   	
-  	function go()
+  	function toRegist()
   	{
+  		document.forms[0].action="?method=toRegist";
+  		
   		document.forms[0].submit();
   	}
   	
   </script>
   
   <body>
-  	add<br/>
-  	<form action="?method=login" method="post">
+  	登录咯<br/>
+  	<form action="<%=path%>/login.amar?method=login" method="post">
   	
-  	id:<input type="text" name="username"><br/>
+  	用户名:<input type="text" name="loginname"><br/>
+  	密码:<input type="password" name="pw"><br/>
   	
   	
-  	<input type="button" onclick="goback()" value="返回">&nbsp;&nbsp;
-  	<input type="button" onclick="go()" value="提交">
+  	<input type="button" onclick="login()" value="登录">&nbsp;&nbsp;
+  	<input type="button" onclick="toRegist()" value="去注册">
   	</form>
   	
   </body>

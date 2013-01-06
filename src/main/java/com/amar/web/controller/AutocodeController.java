@@ -33,7 +33,7 @@ public class AutocodeController
 	@Resource( name = "autocodeDAO" )
 	private AutocodeDAO autocodeDAO;
 
-	@RequestMapping( params = "t=init" )
+	@RequestMapping( params = "method=init" )
 	public String init( HttpServletRequest request , HttpServletResponse response ) throws IOException
 	{
 
@@ -41,7 +41,7 @@ public class AutocodeController
 	}
 
 	@SuppressWarnings( "unused" )
-	@RequestMapping( params = "t=generate" )
+	@RequestMapping( params = "method=generate" )
 	public void generate( HttpServletRequest request , HttpServletResponse response , OutputStream os ) throws Exception
 	{
 

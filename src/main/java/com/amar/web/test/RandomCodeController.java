@@ -24,7 +24,7 @@ import com.amar.web.framework.MyThrowsAdvice;
 public class RandomCodeController
 {
 
-	@RequestMapping( params = "a=random" )
+	@RequestMapping( params = "method=random" )
 	protected void doGet( HttpServletRequest request , HttpServletResponse response)
 	{
 		response.setContentType( "image/jpeg" );

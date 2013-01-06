@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"  isELIgnored="true"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"  isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%
@@ -29,7 +29,6 @@ String path = request.getContextPath();
 
   	function edit(id)
   	{
-  		//window.location.href = "?t=toEditArea"
   		document.forms[0].action= "?t=toEditArea&id="+id;       
 		document.forms[0].submit();
   	}
@@ -56,7 +55,7 @@ String path = request.getContextPath();
   	
 	</script>
   <body>
-  	
+  	${msg}
   	<form action="?t=list" method="post">
   	id:<input type="text" name="id">&nbsp;&nbsp;
   	<input type="button" onclick="go()" value="提交">&nbsp;&nbsp;
