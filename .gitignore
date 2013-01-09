@@ -6,7 +6,7 @@
 .metadata
 bin/
 tmp/
-src/main/webapp/WEB-INF/classes/
+src/main/webapp/WEB-INF/classes/*
 *.tmp
 *.bak
 *.swp
