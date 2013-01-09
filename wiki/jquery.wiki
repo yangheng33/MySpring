@@ -1,4 +1,0 @@
-====常用插件====
- * 图片显示插件
-  # jcarousel
-  # galleria
