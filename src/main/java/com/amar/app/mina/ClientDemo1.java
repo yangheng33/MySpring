@@ -8,8 +8,6 @@ public class ClientDemo1
 	 */
 	public static void main( String [] args )
 	{
-		@SuppressWarnings("unused")
-		org.apache.mina.example.chat.client.ChatClientSupport client;
 
 	}
 
