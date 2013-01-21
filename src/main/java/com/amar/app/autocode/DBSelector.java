@@ -28,4 +28,10 @@ public interface DBSelector
 
 	public String blob2JavaType( String type );
 
+	public String datetimeFunction( String value , String compareSign , String columnname );
+
+	public String keyFunction( String keyname );
+
+	public String dateType( String columnName );
+
 }

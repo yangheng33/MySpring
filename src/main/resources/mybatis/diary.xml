@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.DiaryDAO">
+
+<select id="findDiary" parameterType="diary" resultType="diary">
+SELECT id,userid,diarytime,content,type
+ FROM Diary
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" userid > 0 ">
+ AND userid = #{userid}
+</if>
+<if test=" content != null">
+ AND content = #{content}
+</if>
+<if test=" type != null">
+ AND type = #{type}
+</if>
+<if test="diarytime_start != null">
+AND unix_timestamp('${diarytime_start}') <![CDATA[ < ]]> unix_timestamp(diarytime)
+</if>
+<if test="diarytime_end != null">
+AND unix_timestamp(diarytime)<![CDATA[ < ]]>unix_timestamp('${diarytime_end}')  
+</if>
+</where>
+</select>
+
+<insert id="addDiary" parameterType="diary" >
+insert into Diary
+(
+id,userid,diarytime,content,type
+) values (
+mybatis_sequence.nextval,#{userid,jdbcType=NUMERIC},#{diarytime,jdbcType=DATE},#{content,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}
+)
+</insert>
+
+<update id="editDiary" parameterType="diary">
+update Diary<set>
+<if test=" userid > 0 ">
+userid=#{userid},
+</if>
+<if test=" diarytime != null ">
+diarytime=#{diarytime,jdbcType=DATE},
+</if>
+<if test=" content != null">
+content=#{content},
+</if>
+<if test=" type != null">
+type=#{type},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteDiary" parameterType="diary" >
+DELETE FROM Diary 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

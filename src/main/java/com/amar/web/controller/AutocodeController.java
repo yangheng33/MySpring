@@ -22,6 +22,7 @@ import com.amar.app.autocode.Parameter;
 import com.amar.app.autocode.TableInfo;
 import com.amar.app.compress.Compress;
 import com.amar.db.ibatis.dao.AutocodeDAO;
+import com.amar.util.DataTool;
 import com.amar.util.ServletUtil;
 
 @Controller
@@ -77,6 +78,11 @@ public class AutocodeController
 		codeZipName = java.net.URLEncoder.encode( codeZipName , "UTF-8" );
 		response.setHeader( "Content-Disposition" , "attachment; filename=" + codeZipName );
 
-		FileCopyUtils.copy( new FileInputStream( new File( para.getPath() + File.separatorChar + "../" + codeZipName ) ) , os );
+		File zipfile = new File( para.getPath() + File.separatorChar + "../" + codeZipName );
+
+		FileCopyUtils.copy( new FileInputStream( zipfile ) , os );
+		zipfile.delete();
+		DataTool.deleteFile( new File( para.getPath() ));
 	}
+	
 }

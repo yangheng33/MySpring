@@ -1,5 +1,7 @@
 package com.amar.util;
 
+import java.io.File;
+
 public class DataTool
 {
 	public static int bytesToInt( byte [] bytes )
@@ -30,15 +32,28 @@ public class DataTool
 		return abyte0;
 
 	}
-	
-	public static void main(String [] args )
+
+	public static void deleteFile( File file )
 	{
-		byte [] s = intToByte(1024);
-		
-		int data = bytesToInt(s);
-		
-		for( int i=0;i<s.length;i++)
-		System.out.print(s[i]+" ");
-		System.out.println(""+data);
+		if ( file.isDirectory() )
+		{
+			File [] files = file.listFiles();
+			for( File _file : files )
+			{
+				deleteFile( _file );
+			}
+		}
+		file.delete();
+	}
+
+	public static void main( String [] args )
+	{
+		byte [] s = intToByte( 1024 );
+
+		int data = bytesToInt( s );
+
+		for( int i = 0 ; i < s.length ; i ++ )
+			System.out.print( s[ i ] + " " );
+		System.out.println( "" + data );
 	}
 }

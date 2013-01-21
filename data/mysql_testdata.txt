@@ -86,3 +86,14 @@ create table Remindlog
 alter table Remindplan comment '提醒日志';
 
 
+create table Diary
+(
+   id                   int not null auto_increment,
+   userid         	    int not null,
+   diarytime            datetime not null,
+   content              varchar(2000) not null comment '日记内容',
+   type                 varchar(2) not null comment '日记类型,1公有,2私有',
+   primary key (id)
+);
+
+alter table Diary comment '日记表';

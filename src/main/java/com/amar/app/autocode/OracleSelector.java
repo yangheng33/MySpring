@@ -81,7 +81,7 @@ public class OracleSelector implements DBSelector
 	@Override
 	public String float2JavaType( String type )
 	{
-		
+
 		String result = "";
 		if ( isFloat( type ) )
 		{
@@ -112,4 +112,27 @@ public class OracleSelector implements DBSelector
 		return result;
 	}
 
+	@Override
+	public String datetimeFunction( String value , String compareSign , String columnname )
+	{
+		return columnname + " <![CDATA[" + compareSign + "]]> TO_DATE('" + value + "','yyyy-mm-dd hh24:mi:ss')";
+	}
+
+	@Override
+	public String keyFunction( String keyname )
+	{
+		StringBuilder sber = new StringBuilder();
+		sber.append( "<selectKey keyProperty=\"" + keyname + "\" order=\"BEFORE\" resultType=\"int\">" );
+		sber.append( "select mybatis_sequence.nextval from dual" );
+		sber.append( "</selectKey>" );
+		return sber.toString();
+	}
+
+	@Override
+	public String dateType( String columnName )
+	{
+		return new StringBuilder().append( "#{" ).append( columnName ).append( ",jdbcType=DATE}," ).toString();
+	}
+
+	
 }

@@ -111,4 +111,26 @@ public class MysqlSelector implements DBSelector
 		}
 		return result;
 	}
+
+	@Override
+	public String datetimeFunction( String value , String compareSign , String columnname )
+	{
+		return "unix_timestamp('${" + value + "}') <![CDATA[ " + compareSign + " ]]> unix_timestamp(" + columnname + ")";
+	}
+
+	@Override
+	public String keyFunction( String keyname )
+	{
+		StringBuilder sber = new StringBuilder();
+		sber.append( "<selectKey keyProperty=\"" + keyname + "\" order=\"BEFORE\" resultType=\"int\">" );
+		sber.append( "SELECT @@IDENTITY AS " + keyname );
+		sber.append( "</selectKey>" );
+		return sber.toString();
+	}
+
+	@Override
+	public String dateType( String columnName )
+	{
+		return new StringBuilder().append( "#{" ).append( columnName ).append( "}," ).toString();
+	}
 }

@@ -36,7 +36,7 @@ public class GeneralCode
 		Map<String,List<TableInfo>> tableMap = generateTableMap( tableInfoList );
 
 		checkPath( path , modelPath , configPath , daoPath );
-		
+
 		checkKey( tableMap , path );
 
 		generateJavaBean( tableMap , path , modelPath );
@@ -81,7 +81,7 @@ public class GeneralCode
 	private void checkPath( String path , String modelPath , String configPath , String daoPath )
 	{
 		File root_src = new File( path );
-		
+
 		rmdirs( root_src );
 
 		File root = new File( path );
@@ -97,7 +97,7 @@ public class GeneralCode
 		daoFile.mkdirs();
 
 	}
-	
+
 	public void rmdirs( File file )
 	{
 		if ( file.isDirectory() )
@@ -109,7 +109,7 @@ public class GeneralCode
 		}
 		file.delete();
 	}
-	
+
 	private void generateDAO( Map<String,List<TableInfo>> tableMap , String path , String daoPath , String modelPath )
 	{
 		try
@@ -314,6 +314,15 @@ public class GeneralCode
 				sber.append( " AND " ).append( columnName ).append( " = #{" ).append( columnName ).append( "}\n" );
 				sber.append( "</if>\n" );
 			}
+			else if ( selectorDB.isDate( type ) )
+			{
+				sber.append( "<if test=\" " + columnName + "Start" + " !=null \">\n" );
+				sber.append( " AND " ).append( selectorDB.datetimeFunction( columnName + "Start" , "<" , columnName ) + "\n" );
+				sber.append( "</if>\n" );
+				sber.append( "<if test=\" " + columnName + "End" + " !=null \">\n" );
+				sber.append( " AND " ).append( selectorDB.datetimeFunction( columnName + "End" , ">" , columnName ) + "\n" );
+				sber.append( "</if>\n" );
+			}
 		}
 		sber.append( "</where>\n</select>\n\n" );
 
@@ -324,9 +333,7 @@ public class GeneralCode
 	{
 		StringBuilder sber = new StringBuilder();
 		sber.append( "<insert id=\"add" + tablename + "\" parameterType=\"" + tablename.toLowerCase() + "\" >\n" );
-		// sber.append( "<selectKey keyProperty=\"id\" order=\"AFTER\" resultType=\"int\">" );
-		// sber.append( "SELECT @@IDENTITY AS id" );
-		// sber.append( "</selectKey>" );
+
 		sber.append( "insert into " ).append( tablename ).append( "\n(\n" );
 		StringBuilder insertFields = new StringBuilder();
 		for( TableInfo tableInfo : tableInfoList )
@@ -362,7 +369,8 @@ public class GeneralCode
 			}
 			else if ( selectorDB.isDate( type ) )
 			{
-				insertValues.append( "#{" ).append( columnName ).append( ",jdbcType=DATE}," );
+
+				insertValues.append( selectorDB.dateType( columnName ) );
 			}
 		}
 		insertValues.deleteCharAt( insertValues.length() - 1 );
@@ -397,6 +405,9 @@ public class GeneralCode
 					if ( selectorDB.isDate( type ) )
 					{
 						importDate = true;
+
+						sber.append( beanField( tableInfo.getColumn_name() + "Start" , DBDataType.JAVA_STRING ) );
+						sber.append( beanField( tableInfo.getColumn_name() + "End" , DBDataType.JAVA_STRING ) );
 					}
 					sber.append( beanField( tableInfo.getColumn_name() , type ) );
 				}
@@ -409,6 +420,8 @@ public class GeneralCode
 					if ( selectorDB.isDate( type ) )
 					{
 						importDate = true;
+						sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() + "Start" , DBDataType.JAVA_STRING ) );
+						sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() + "End" , DBDataType.JAVA_STRING ) );
 					}
 					sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() , type ) );
 
@@ -440,7 +453,11 @@ public class GeneralCode
 	private String getJavaType( String type )
 	{
 		String javaType = "";
-		if ( selectorDB.isString( type ) )
+		if ( DBDataType.JAVA_STRING.equals( type ) )
+		{
+			javaType = DBDataType.JAVA_STRING;
+		}
+		else if ( selectorDB.isString( type ) )
 		{
 			javaType = selectorDB.string2JavaType( type );
 		}
