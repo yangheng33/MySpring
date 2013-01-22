@@ -1,16 +1,16 @@
 package com.amar.web.controller;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.amar.db.ibatis.dao.DiaryDAO;
+import com.amar.util.ServletUtil;
+import com.amar.util.TimeDateUtil;
 import com.amar.web.model.Diary;
 import com.amar.web.model.User;
 
@@ -20,27 +20,45 @@ public class DiaryController
 {
 	@Resource( name = "diaryDAO" )
 	private DiaryDAO diaryDAO;
-	
-	@RequestMapping( params = "method=list" )
-	public String list( HttpServletRequest request , HttpServletResponse response )
+
+	@RequestMapping( params = "method=personallist" )
+	public String personallist( HttpServletRequest request , HttpServletResponse response )
 	{
 
-		User user =(User) request.getSession().getAttribute( "user" );
+		User user = ( User ) request.getSession().getAttribute( "user" );
 		Diary diary = new Diary();
 		diary.setUserid( user.getId() );
-		
+
 		List<Diary> list = diaryDAO.findDiary( diary );
 
 		request.setAttribute( "list" , list );
-		
-		return "diary/diarylist";
+
+		return "diary/personallist";
 	}
-	
-	@RequestMapping( params = "method=list" )
-	public String addDiary( HttpServletRequest request , HttpServletResponse response )
+
+	@RequestMapping( params = "method=toAddDiary" )
+	public String toAddDiary( HttpServletRequest request , HttpServletResponse response )
 	{
 
 		return "diary/adddiary";
+	}
+
+	@RequestMapping( params = "method=addDiary" )
+	public void addDiary( HttpServletRequest request , HttpServletResponse response ) throws IOException
+	{
+		Diary diary = ServletUtil.request2Bean( request , Diary.class );
+
+		Date diarytime = new Date( TimeDateUtil.getLongDate( request.getParameter( "diarytimes" ) ) );
+
+		User user = ( User ) request.getSession().getAttribute( "user" );
+
+		diary.setUserid( user.getId() );
+
+		diary.setDiarytime( diarytime );
+
+		diaryDAO.addDiary( diary );
+		
+		response.sendRedirect( "diary.amar?method=personallist" );
 	}
 
 	@RequestMapping( params = "method=toEditDiary" )
@@ -49,18 +67,21 @@ public class DiaryController
 
 		return "diary/editdiary";
 	}
-	
+
 	@RequestMapping( params = "method=editDiary" )
-	public String editDiary( HttpServletRequest request , HttpServletResponse response )
+	public void editDiary( HttpServletRequest request , HttpServletResponse response ) throws IOException
 	{
 
-		return "diary/editdiary";
+		response.sendRedirect( "diary.amar?method=personallist" );
 	}
-	
-	@RequestMapping( params = "method=dellist" )
-	public void delDiary( HttpServletRequest request , HttpServletResponse response )
-	{
 
+	@RequestMapping( params = "method=delDiary" )
+	public void delDiary( HttpServletRequest request , HttpServletResponse response ) throws IOException
+	{
+		Diary diary = ServletUtil.request2Bean( request , Diary.class );
 		
+		diaryDAO.deleteDiary( diary );
+		
+		response.sendRedirect( "diary.amar?method=personallist" );
 	}
 }

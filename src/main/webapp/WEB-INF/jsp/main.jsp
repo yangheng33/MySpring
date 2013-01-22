@@ -23,12 +23,13 @@ String path = request.getContextPath();
   
   <body>
   
-  你好!${sessionSecope.user.username} <br/>
+  你好!${sessionScope.user.realname} <br/><br/>
   
-  <a href="<%=path%>/remindplan.amar?method=list">提醒计划</a>
-  <a href="<%=path%>/autocode.amar?method=init">生成代码</a>
-  <a href="<%=path%>/zhounan.amar?method=toAnalyze">日志分析</a>
-  <a href="<%=path%>/html/chart/chart.html">flash图表</a>
+  <a href="<%=path%>/remindplan.amar?method=list">提醒计划</a><br/>
+  <a href="<%=path%>/autocode.amar?method=init">生成代码</a><br/>
+  <a href="<%=path%>/zhounan.amar?method=toAnalyze">日志分析</a><br/>
+  <a href="<%=path%>/html/chart/chart.html">flash图表</a><br/>
+  <a href="<%=path%>/diary.amar?method=personallist">写日记</a><br/>
   	
   </body>
 </html>

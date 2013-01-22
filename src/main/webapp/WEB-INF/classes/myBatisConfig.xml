@@ -13,6 +13,6 @@
 		<typeAlias alias="user" type="com.amar.web.model.User" />
 		<typeAlias alias="remindplan" type="com.amar.web.model.Remindplan" />
 		<typeAlias alias="remindlog" type="com.amar.web.model.Remindlog" />
-		
+		<typeAlias alias="diary" type="com.amar.web.model.Diary" />
 	</typeAliases>
 </configuration>

@@ -19,21 +19,22 @@ SELECT id,userid,diarytime,content,type
 <if test=" type != null">
  AND type = #{type}
 </if>
-<if test="diarytime_start != null">
-AND unix_timestamp('${diarytime_start}') <![CDATA[ < ]]> unix_timestamp(diarytime)
+<if test="diarytimeStart != null">
+AND unix_timestamp('${diarytimeStart}') <![CDATA[ < ]]> unix_timestamp(diarytime)
 </if>
-<if test="diarytime_end != null">
-AND unix_timestamp(diarytime)<![CDATA[ < ]]>unix_timestamp('${diarytime_end}')  
+<if test="diarytimeEnd != null">
+AND unix_timestamp(diarytime)<![CDATA[ < ]]>unix_timestamp('${diarytimeEnd}')  
 </if>
 </where>
+ order by diarytime desc
 </select>
 
 <insert id="addDiary" parameterType="diary" >
 insert into Diary
 (
-id,userid,diarytime,content,type
+userid,diarytime,content,type
 ) values (
-mybatis_sequence.nextval,#{userid,jdbcType=NUMERIC},#{diarytime,jdbcType=DATE},#{content,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}
+#{userid,jdbcType=NUMERIC},#{diarytime},#{content,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}
 )
 </insert>
 

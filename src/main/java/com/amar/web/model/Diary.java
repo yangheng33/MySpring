@@ -13,33 +13,13 @@ public class Diary
 
 	private String type;
 
-	private String diarytime_start;
+	private String diarytimeStart;
 
-	private String diarytime_end;
+	private String diarytimeEnd;
 
 	public void setId( int id )
 	{
 		this.id = id;
-	}
-
-	public String getDiarytime_start()
-	{
-		return diarytime_start;
-	}
-
-	public void setDiarytime_start( String diarytime_start )
-	{
-		this.diarytime_start = diarytime_start;
-	}
-
-	public String getDiarytime_end()
-	{
-		return diarytime_end;
-	}
-
-	public void setDiarytime_end( String diarytime_end )
-	{
-		this.diarytime_end = diarytime_end;
 	}
 
 	public int getId()
@@ -85,6 +65,26 @@ public class Diary
 	public String getType()
 	{
 		return this.type;
+	}
+
+	public String getDiarytimeStart()
+	{
+		return diarytimeStart;
+	}
+
+	public void setDiarytimeStart( String diarytimeStart )
+	{
+		this.diarytimeStart = diarytimeStart;
+	}
+
+	public String getDiarytimeEnd()
+	{
+		return diarytimeEnd;
+	}
+
+	public void setDiarytimeEnd( String diarytimeEnd )
+	{
+		this.diarytimeEnd = diarytimeEnd;
 	}
 
 }
