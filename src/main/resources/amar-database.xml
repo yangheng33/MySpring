@@ -47,5 +47,10 @@
      
      <bean id="projectInfo" class="com.amar.constant.ProjectInfo">
      		<property name="datadir"><value>${file.data.dir}</value></property>
+     		<property name="PROJECTNAME"><value>${projectname}</value></property>
+     		<property name="JMS_IP"><value>${jms_ip}</value></property>
+     		<property name="JMS_PORT"><value>${jms_port}</value></property>
+     		<property name="IP"><value>${ip}</value></property>
+     		<property name="PORT"><value>${port}</value></property>
      </bean>
 </beans>

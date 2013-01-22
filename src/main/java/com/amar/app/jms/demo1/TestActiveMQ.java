@@ -27,7 +27,7 @@ public class TestActiveMQ
 	 */
 	public static void main( String [] args ) throws JMSException , InterruptedException
 	{
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory( ProjectInfo.jmsAddress() );
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory( "tcp://192.168.8.185:61616" );
 		Connection connection = connectionFactory.createConnection();
 		connection.start();
 

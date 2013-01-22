@@ -2,21 +2,81 @@ package com.amar.constant;
 
 public class ProjectInfo
 {
-	public static String name = "projectInfo";
+	public static final String name = "projectInfo";
 
-	public static String IP = "localhost";
+	public String IP = "localhost";
 
-	public static String PORT = "80";
+	public String PORT = "80";
 
-	public static String PROTOCOL = "http";
+	public String PROTOCOL = "http";
 
-	public static String PROJECTNAME = "myspring";
+	public String PROJECTNAME = "myspring";
 
-	public static String JMS_IP = "192.168.8.186";
+	public String JMS_IP = "192.168.8.186";
 
-	public static String JMS_PORT = "61616";
+	public String JMS_PORT = "61616";
 
 	public String datadir;
+
+	public String getIP()
+	{
+		return IP;
+	}
+
+	public void setIP( String iP )
+	{
+		IP = iP;
+	}
+
+	public String getPORT()
+	{
+		return PORT;
+	}
+
+	public void setPORT( String pORT )
+	{
+		PORT = pORT;
+	}
+
+	public String getPROTOCOL()
+	{
+		return PROTOCOL;
+	}
+
+	public void setPROTOCOL( String pROTOCOL )
+	{
+		PROTOCOL = pROTOCOL;
+	}
+
+	public String getPROJECTNAME()
+	{
+		return PROJECTNAME;
+	}
+
+	public void setPROJECTNAME( String pROJECTNAME )
+	{
+		PROJECTNAME = pROJECTNAME;
+	}
+
+	public String getJMS_IP()
+	{
+		return JMS_IP;
+	}
+
+	public void setJMS_IP( String jMS_IP )
+	{
+		JMS_IP = jMS_IP;
+	}
+
+	public String getJMS_PORT()
+	{
+		return JMS_PORT;
+	}
+
+	public void setJMS_PORT( String jMS_PORT )
+	{
+		JMS_PORT = jMS_PORT;
+	}
 
 	public String getDatadir()
 	{
@@ -28,13 +88,13 @@ public class ProjectInfo
 		this.datadir = datadir;
 	}
 
-	public static String webBaseAddress()
+	public String webBaseAddress()
 	{
 		return PROTOCOL + "://" + IP + ":" + PORT + "/" + PROJECTNAME;
 	}
 
-	public static String jmsAddress()
+	public String jmsAddress()
 	{
-		return "tcp" + "://" + JMS_IP + ":" + JMS_PORT;
+		return "tcp://" + JMS_IP + ":" + JMS_PORT;
 	}
 }
