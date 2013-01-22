@@ -10,7 +10,7 @@ public class ProjectInfo
 
 	public static String PROTOCOL = "http";
 
-	public static String PROJECTNAME = "MySpring";
+	public static String PROJECTNAME = "myspring";
 
 	public static String JMS_IP = "192.168.8.186";
 
