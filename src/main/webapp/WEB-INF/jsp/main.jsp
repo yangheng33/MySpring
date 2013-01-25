@@ -30,6 +30,7 @@ String path = request.getContextPath();
   <a href="<%=path%>/zhounan.amar?method=toAnalyze">日志分析</a><br/>
   <a href="<%=path%>/html/chart/chart.html">flash图表</a><br/>
   <a href="<%=path%>/diary.amar?method=personallist">写日记</a><br/>
+  <a href="<%=path%>/diaryJob.amar?method=personallist">写工作日记</a><br/>
   	
   </body>
 </html>

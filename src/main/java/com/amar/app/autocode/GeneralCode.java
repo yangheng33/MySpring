@@ -316,11 +316,11 @@ public class GeneralCode
 			}
 			else if ( selectorDB.isDate( type ) )
 			{
-				sber.append( "<if test=\" " + columnName + "Start" + " !=null \">\n" );
-				sber.append( " AND " ).append( selectorDB.datetimeFunction( columnName + "Start" , "<" , columnName ) + "\n" );
+				sber.append( "<if test=\" " + columnName + "start" + " !=null \">\n" );
+				sber.append( " AND " ).append( selectorDB.datetimeFunction( columnName + "start" , "<" , columnName ) + "\n" );
 				sber.append( "</if>\n" );
-				sber.append( "<if test=\" " + columnName + "End" + " !=null \">\n" );
-				sber.append( " AND " ).append( selectorDB.datetimeFunction( columnName + "End" , ">" , columnName ) + "\n" );
+				sber.append( "<if test=\" " + columnName + "end" + " !=null \">\n" );
+				sber.append( " AND " ).append( selectorDB.datetimeFunction( columnName + "end" , ">" , columnName ) + "\n" );
 				sber.append( "</if>\n" );
 			}
 		}
@@ -406,8 +406,8 @@ public class GeneralCode
 					{
 						importDate = true;
 
-						sber.append( beanField( tableInfo.getColumn_name() + "Start" , DBDataType.JAVA_STRING ) );
-						sber.append( beanField( tableInfo.getColumn_name() + "End" , DBDataType.JAVA_STRING ) );
+						sber.append( beanField( tableInfo.getColumn_name() + "start" , DBDataType.JAVA_STRING ) );
+						sber.append( beanField( tableInfo.getColumn_name() + "end" , DBDataType.JAVA_STRING ) );
 					}
 					sber.append( beanField( tableInfo.getColumn_name() , type ) );
 				}
@@ -420,8 +420,8 @@ public class GeneralCode
 					if ( selectorDB.isDate( type ) )
 					{
 						importDate = true;
-						sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() + "Start" , DBDataType.JAVA_STRING ) );
-						sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() + "End" , DBDataType.JAVA_STRING ) );
+						sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() + "start" , DBDataType.JAVA_STRING ) );
+						sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() + "end" , DBDataType.JAVA_STRING ) );
 					}
 					sber.append( codeSetGet( tableInfo.getColumn_name().toLowerCase() , type ) );
 
@@ -561,7 +561,7 @@ public class GeneralCode
 			}
 			if ( ! key )
 			{
-				sber.append( tablename + ":don't have key..\n" );
+				sber.append( tablename + "\n" );
 			}
 		}
 		bw.write( sber.toString() );

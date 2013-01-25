@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.JobDAO">
+
+<select id="findJob" parameterType="job" resultType="job">
+SELECT id,userid,jobtime
+ FROM Job
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" userid > 0 ">
+ AND userid = #{userid}
+</if>
+<if test=" jobtimestart !=null ">
+ AND unix_timestamp('${jobtimestart}') <![CDATA[ < ]]> unix_timestamp(jobtime)
+</if>
+<if test=" jobtimeend !=null ">
+ AND unix_timestamp('${jobtimeend}') <![CDATA[ > ]]> unix_timestamp(jobtime)
+</if>
+</where>
+</select>
+
+<select id="findJobRecode" resultType="hashmap" >
+	select j.userid,u.realname, c.date
+	from Job j 
+	right join Countdate c on left(c.date,10)= left(j.jobtime,10) 
+	<if test=" userid > 0 ">
+		and j.userid = #{userid}
+	</if>
+	left join User u on j.userid = u.id
+	where (c.date between 
+	date(concat(year(str_to_date('${datetime}','%Y-%m-%d %H:%i:%s')),'-',
+	month(str_to_date('${datetime}','%Y-%m-%d %H:%i:%s')),'-','1'))
+	AND last_day(str_to_date('${datetime}','%Y-%m-%d %H:%i:%s')))
+	order by date ,userid
+</select>
+
+
+<insert id="addJob" parameterType="job" >
+	<selectKey keyProperty="id" order="AFTER" resultType="int">
+		SELECT @@IDENTITY AS id
+	</selectKey>		
+insert into Job
+(
+id,userid,jobtime
+) values (
+#{id},#{userid,jdbcType=NUMERIC},#{jobtime}
+)
+</insert>
+
+<update id="editJob" parameterType="job">
+update Job<set>
+<if test=" userid > 0 ">
+userid=#{userid},
+</if>
+<if test=" jobtime != null ">
+jobtime=#{jobtime,jdbcType=DATE},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteJob" parameterType="job" >
+DELETE FROM Job 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

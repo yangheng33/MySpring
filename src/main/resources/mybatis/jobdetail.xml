@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.JobdetailDAO">
+
+<select id="findJobdetail" parameterType="jobdetail" resultType="jobdetail">
+SELECT id,jobid,usedtime,state,content
+ FROM Jobdetail
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" jobid > 0 ">
+ AND jobid = #{jobid}
+</if>
+<if test=" usedtime != null">
+ AND usedtime = #{usedtime}
+</if>
+<if test=" state != null">
+ AND state = #{state}
+</if>
+<if test=" content != null">
+AND state = #{content}
+</if>
+</where>
+</select>
+
+<insert id="addJobdetail" parameterType="jobdetail" >
+insert into Jobdetail
+(
+jobid,usedtime,state,content
+) values (
+#{jobid,jdbcType=NUMERIC},#{usedtime,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}
+)
+</insert>
+
+<update id="editJobdetail" parameterType="jobdetail">
+update Jobdetail<set>
+<if test=" jobid > 0 ">
+jobid=#{jobid},
+</if>
+<if test=" usedtime != null">
+usedtime=#{usedtime},
+</if>
+<if test=" state != null">
+state=#{state},
+</if>
+<if test=" content != null">
+content=#{content},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteJobdetail" parameterType="jobdetail" >
+DELETE FROM Jobdetail 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>
