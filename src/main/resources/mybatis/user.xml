@@ -3,6 +3,20 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.amar.db.ibatis.dao.UserDAO">
 
+<resultMap id="userMap" type="user">
+	<id property="id" column="id" jdbcType="NUMERIC"  />
+	<result property="loginname" column="loginname" jdbcType="VARCHAR"  />
+	<result property="realname" column="realname" jdbcType="VARCHAR"  />
+	<result property="pw" column="pw" jdbcType="VARCHAR"  />
+	<result property="phone" column="phone" jdbcType="VARCHAR"  />
+	<result property="email" column="email" jdbcType="VARCHAR"  />
+	<result property="qq" column="qq" jdbcType="VARCHAR"  />
+	<result property="address" column="address" jdbcType="VARCHAR"  />
+	<result property="regtime" column="regtime" />
+	<result property="brithday" column="brithday" />
+	<result property="lastlogintime" column="lastlogintime" />
+</resultMap>
+
 <select id="findUser" parameterType="user" resultType="user">
 SELECT id,loginname,realname,pw,phone,email,qq,address,regtime,brithday,lastlogintime
  FROM User

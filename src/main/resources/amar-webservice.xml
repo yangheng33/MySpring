@@ -22,9 +22,10 @@
 	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd/">
 
 
-	<!--  -->
+	<!--  
 	<jaxws:endpoint id="helloServiceWs" address="/helloService" implementor="com.amar.app.webservice.demo1.HelloServiceImpl" />
-   <jaxws:endpoint id="userServiceWs" address="/userService" implementor="com.amar.app.webservice.demo2.UserinfoImpl" />
+   	<jaxws:endpoint id="userServiceWs" address="/userService" implementor="com.amar.app.webservice.demo2.UserinfoImpl" />
+   	-->
 </beans>
 
 

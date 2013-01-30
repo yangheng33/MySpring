@@ -1,0 +1,176 @@
+create database spring;
+
+use spring;
+set names gbk;
+drop table if exists Area;
+create table Area
+(
+id int not null,
+belongto int,
+postcode varchar(8),
+areatype varchar(4),
+name varchar(100)
+);
+
+create table Metarnet_visit
+(
+id int auto_increment,
+protocol VARCHAR(20) ,
+Inside_global_ip VARCHAR(20) ,
+Inside_global_port VARCHAR(20) ,
+Inside_local_ip VARCHAR(20) ,
+Inside_local_port VARCHAR(20) ,
+Outside_local_ip  VARCHAR(20)   ,
+Outside_local_port VARCHAR(20) ,
+Outside_global_ip VARCHAR(20) ,
+Outside_global_port VARCHAR(20) ,
+recorddate datetime,
+PRIMARY KEY(id)
+);
+
+
+create table User
+(
+   id                   int not null auto_increment,
+   loginname            varchar(20),
+   realname             varchar(20),
+   pw                   varchar(20),
+   phone                varchar(20),
+   email                varchar(20),
+   qq                   varchar(20),
+   address              varchar(100),
+   regtime              datetime,
+   brithday             datetime,
+   lastlogintime        datetime,
+   primary key (id)
+);
+
+alter table User comment '用户表';
+
+create table Remindplan
+(
+   id                   int not null auto_increment,
+   userid               int not null comment '用户id',
+   title                varchar(40) comment '提醒标题',
+   type                 varchar(20) comment '任务类型,1提醒一次,2循环提醒',
+   cycle                varchar(20) comment '循环周期,1小时,2日,3周,4月',
+   cycleparam           varchar(100) comment '循环参数,以逗号间隔,小时周期取值0-59,日取值0-23,周取值1-7,月取值1-31',
+   exectime             datetime comment '提醒时间',
+   content              varchar(200) comment '提醒的内容',
+   state                varchar(2) default '1' comment '状态,1启动中,2停止中',
+   modifytime           datetime comment '最后更新时间',
+   primary key (id)
+);
+
+alter table Remindplan comment '提醒计划';
+
+create table Remindlog
+(
+   id                   int not null auto_increment,
+   remindplanid         int not null,
+   logtime              datetime not null,
+   state                varchar(2) not null comment '发送状态:1成功,2失败',
+   type                 varchar(2) not null comment '发送原因:1标准提醒,2失败重发',
+   primary key (id)
+);
+
+alter table Remindplan comment '提醒日志';
+
+
+create table Diary
+(
+   id                   int not null auto_increment,
+   userid         	    int not null,
+   diarytime            datetime not null,
+   content              varchar(2000) not null comment '日记内容',
+   type                 varchar(2) not null comment '日记类型,1公有,2私有',
+   primary key (id)
+);
+
+alter table Diary comment '日记表';
+
+create table Job
+(
+   id                   int not null auto_increment,
+   userid         	    int not null,   
+   jobtime         	    datetime not null comment '时间格式:年年年年-月月-日日',
+   primary key (id)
+);
+
+alter table Job comment '工作记录表';
+
+create table Jobdetail
+(
+	id			int not null auto_increment,
+	jobid		int not null,  
+	usedtime 	varchar(3) not null comment '用时,单位小时',
+	state		varchar(2) not null comment '完成情况,1完成,2未完成',
+	title	    varchar(1000),
+	content     varchar(1000),
+	primary key (id)
+);
+alter table Jobdetail comment '工作记录细节表';
+
+create table Countdate
+(
+id int not null auto_increment,
+date date,
+primary key (id)
+);
+
+CREATE TABLE `Jobplan` (
+`id`  int NULL AUTO_INCREMENT ,
+`projectid`  int NULL COMMENT '项目id' ,
+`title`  varchar(100) NULL ,
+`content`  varchar(5000) NULL ,
+`planfinishtime`  datetime NULL COMMENT '计划完成时间' ,
+`finishtime`  datetime NULL COMMENT '实际完成实际' ,
+`state`  int NULL COMMENT '状态,1.指派中,2.开发中,3.测试中,4,已经完成' ,
+`jobplanlevel` int NULL COMMENT '级别:1.次要,2.普通,3.重要,4.紧急',
+`plantype`  int NULL COMMENT '1.新需求,2.bug,3.产品改进' ,
+`reportuserid`  int NULL ,
+`reporttime`  datetime NULL COMMENT '提出计划的时间' ,
+`dealuserid`  int NULL COMMENT '处理问题的开发者id' ,
+`dealtime`  datetime NULL COMMENT '开发完毕时间' ,
+`testuserid`  int NULL ,
+`testtime`  datetime NULL COMMENT '最后测试完毕时间', 
+PRIMARY KEY(id)
+)
+;
+
+CREATE TABLE `Project` (
+`id`  int NULL AUTO_INCREMENT ,
+`name`  varchar(100) NULL ,
+`remark`  varchar(200) NULL,
+PRIMARY KEY(id)
+)
+;
+
+CREATE TABLE `Jobplanfile` (
+`id`  int NULL AUTO_INCREMENT ,
+`type`  int NULL COMMENT '附件类型,1.图片,2.文件' ,
+`path`  varchar(300) NULL COMMENT '文件路径' ,
+`filename`  varchar(40) NULL ,
+PRIMARY KEY(id)
+)
+;
+
+CREATE TABLE `Jobplanreply` (
+`id`  int NULL AUTO_INCREMENT ,
+`planid`  int NULL ,
+`replyuserid`  int NULL ,
+`replytime`  datetime NULL ,
+`content`  varchar(2000) NULL ,
+PRIMARY KEY(id)
+)
+;
+
+CREATE TABLE `Jobplanlog` (
+`id`  int NULL AUTO_INCREMENT ,
+`jobplanid`  int NULL ,
+`type`  int NULL COMMENT '日志类型,1.分派日志,2.上传文件日志,3.修改内容日志,4.回复日志' ,
+`content`  varchar(200) NULL,
+`logtime`  datetime NULL ,
+PRIMARY KEY(id) 
+)
+;

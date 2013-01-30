@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.JobplanfileDAO">
+
+<select id="findJobplanfile" parameterType="jobplanfile" resultType="jobplanfile">
+SELECT id,type,path,filename
+ FROM Jobplanfile
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" type > 0 ">
+ AND type = #{type}
+</if>
+<if test=" path != null">
+ AND path = #{path}
+</if>
+<if test=" filename != null">
+ AND filename = #{filename}
+</if>
+</where>
+</select>
+
+<insert id="addJobplanfile" parameterType="jobplanfile" >
+insert into Jobplanfile
+(
+type,path,filename
+) values (
+#{type,jdbcType=NUMERIC},#{path,jdbcType=VARCHAR},#{filename,jdbcType=VARCHAR}
+)
+</insert>
+
+<update id="editJobplanfile" parameterType="jobplanfile">
+update Jobplanfile<set>
+<if test=" type > 0 ">
+type=#{type},
+</if>
+<if test=" path != null">
+path=#{path},
+</if>
+<if test=" filename != null">
+filename=#{filename},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteJobplanfile" parameterType="jobplanfile" >
+DELETE FROM Jobplanfile 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

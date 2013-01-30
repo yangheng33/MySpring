@@ -34,4 +34,8 @@ public interface DBSelector
 
 	public String dateType( String columnName );
 
+	public String getJavaType( String type );
+	
+	public String getJdbcType( String type );
+
 }

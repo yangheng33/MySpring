@@ -42,4 +42,14 @@ public class DBDataType
 	
 	public static final String JAVA_BLOB="byte[]";
 	
+	/**jdbcType*/
+	public static final String JDBC_NUMBER="NUMERIC";
+	
+	public static final String JDBC_DATE="DATE";
+	
+	public static final String JDBC_DATETIME="DATETIME";
+	
+	public static final String JDBC_VARCHAR="VARCHAR";
+	
+	
 }

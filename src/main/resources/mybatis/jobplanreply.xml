@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.JobplanreplyDAO">
+
+<select id="findJobplanreply" parameterType="jobplanreply" resultType="jobplanreply">
+SELECT id,planid,replyuserid,replytime,content
+ FROM Jobplanreply
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" planid > 0 ">
+ AND planid = #{planid}
+</if>
+<if test=" replyuserid > 0 ">
+ AND replyuserid = #{replyuserid}
+</if>
+<if test=" replytimestart !=null ">
+ AND unix_timestamp('${replytimestart}') <![CDATA[ < ]]> unix_timestamp(replytime)
+</if>
+<if test=" replytimeend !=null ">
+ AND unix_timestamp('${replytimeend}') <![CDATA[ > ]]> unix_timestamp(replytime)
+</if>
+<if test=" content != null">
+ AND content = #{content}
+</if>
+</where>
+</select>
+
+<insert id="addJobplanreply" parameterType="jobplanreply" >
+insert into Jobplanreply
+(
+planid,replyuserid,replytime,content
+) values (
+#{planid,jdbcType=NUMERIC},#{replyuserid,jdbcType=NUMERIC},#{replytime},#{content,jdbcType=VARCHAR}
+)
+</insert>
+
+<update id="editJobplanreply" parameterType="jobplanreply">
+update Jobplanreply<set>
+<if test=" planid > 0 ">
+planid=#{planid},
+</if>
+<if test=" replyuserid > 0 ">
+replyuserid=#{replyuserid},
+</if>
+<if test=" replytime != null ">
+replytime=#{replytime,jdbcType=DATE},
+</if>
+<if test=" content != null">
+content=#{content},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteJobplanreply" parameterType="jobplanreply" >
+DELETE FROM Jobplanreply 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

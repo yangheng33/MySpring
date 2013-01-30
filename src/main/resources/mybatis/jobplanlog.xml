@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.db.ibatis.dao.JobplanlogDAO">
+
+<select id="findJobplanlog" parameterType="jobplanlog" resultType="jobplanlog">
+SELECT id,jobplanid,type,content,logtime
+ FROM Jobplanlog
+<where>
+<if test=" id > 0 ">
+ AND id = #{id}
+</if>
+<if test=" jobplanid > 0 ">
+ AND jobplanid = #{jobplanid}
+</if>
+<if test=" type > 0 ">
+ AND type = #{type}
+</if>
+<if test=" content != null">
+ AND content = #{content}
+</if>
+<if test=" logtimestart !=null ">
+ AND unix_timestamp('${logtimestart}') <![CDATA[ < ]]> unix_timestamp(logtime)
+</if>
+<if test=" logtimeend !=null ">
+ AND unix_timestamp('${logtimeend}') <![CDATA[ > ]]> unix_timestamp(logtime)
+</if>
+</where>
+</select>
+
+<insert id="addJobplanlog" parameterType="jobplanlog" >
+insert into Jobplanlog
+(
+jobplanid,type,content,logtime
+) values (
+#{jobplanid,jdbcType=NUMERIC},#{type,jdbcType=NUMERIC},#{content,jdbcType=VARCHAR},#{logtime}
+)
+</insert>
+
+<update id="editJobplanlog" parameterType="jobplanlog">
+update Jobplanlog<set>
+<if test=" jobplanid > 0 ">
+jobplanid=#{jobplanid},
+</if>
+<if test=" type > 0 ">
+type=#{type},
+</if>
+<if test=" content != null">
+content=#{content},
+</if>
+<if test=" logtime != null ">
+logtime=#{logtime,jdbcType=DATE},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteJobplanlog" parameterType="jobplanlog" >
+DELETE FROM Jobplanlog 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

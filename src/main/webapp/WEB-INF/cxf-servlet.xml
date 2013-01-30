@@ -28,6 +28,10 @@
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	
+	<!--
 	<import resource="classpath:amar-webservice.xml"/>
+	-->
+	<jaxws:endpoint id="helloServiceWs" address="/helloService" implementor="com.amar.app.webservice.demo1.HelloServiceImpl" />
+    <jaxws:endpoint id="userServiceWs" address="/userService" implementor="com.amar.app.webservice.demo2.UserinfoImpl" />
 </beans>
 <!-- END SNIPPET: beans -->

@@ -166,6 +166,7 @@ public class GeneralCode
 				sber.append( " \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\"> \n" );
 				sber.append( "<mapper namespace=\"" + ( daoPath + "/" ).replace( "/" , "." ) + tablename + "DAO" + "\">\n\n" );
 
+				sber.append( resultMap( tableInfoList , tablename ) );
 				// find
 				sber.append( findFunction( tableInfoList , tablename ) );
 				// add
@@ -186,6 +187,32 @@ public class GeneralCode
 		{
 			e.printStackTrace();
 		}
+	}
+
+	private String resultMap( List<TableInfo> tableInfoList , String tablename )
+	{
+		StringBuilder sber = new StringBuilder();
+
+		sber.append( "<resultMap id=\"" + tablename.toLowerCase() + "Map\" type=\"" + tablename.toLowerCase() + "\">\n" );
+		for( TableInfo tableInfo : tableInfoList )
+		{
+			String columnName = tableInfo.getColumn_name().toLowerCase();
+			String type = tableInfo.getData_type();
+			String jdbctype = "";
+			String idOrProperty = "result";
+			if ( selectorDB.isKey( tableInfo.getIskey() ) )
+			{
+				idOrProperty = "id";
+			}
+			if ( ! selectorDB.isDate( type ) )
+			{
+				jdbctype = " jdbcType=\"" + selectorDB.getJdbcType( type ) + "\" ";
+			}
+			sber.append( "\t<" + idOrProperty + " property=\"" + columnName + "\" column=\"" + columnName + "\"" + jdbctype + " />\n" );
+		}
+		sber.append( "</resultMap>\n\n" );
+
+		return sber.toString();
 	}
 
 	private String deleteFunction( List<TableInfo> tableInfoList , String tablename )
@@ -245,7 +272,7 @@ public class GeneralCode
 			else if ( selectorDB.isDate( type ) && ! iskey )
 			{
 				sber.append( "<if test=\" " + columnName + " != null \">\n" );
-				sber.append( columnName ).append( "=#{" ).append( columnName ).append( ",jdbcType=DATE},\n" );
+				sber.append( columnName ).append( "=" ).append( selectorDB.dateType( columnName ) ).append( "\n" );
 				sber.append( "</if>\n" );
 			}
 		}
@@ -286,12 +313,12 @@ public class GeneralCode
 		StringBuilder selectField = new StringBuilder();
 		for( TableInfo tableInfo : tableInfoList )
 		{
-			selectField.append( tableInfo.getColumn_name() ).append( "," );
+			selectField.append( "A." ).append( tableInfo.getColumn_name() ).append( "," );
 		}
 		selectField.deleteCharAt( selectField.length() - 1 );
 
 		sber.append( "SELECT " ).append( selectField.toString() ).append( "\n FROM " ).append( tablename );
-		sber.append( "\n<where>\n" );
+		sber.append( " AS A \n<where>\n" );
 		for( TableInfo tableInfo : tableInfoList )
 		{
 			String columnName = tableInfo.getColumn_name().toLowerCase();
@@ -299,19 +326,19 @@ public class GeneralCode
 			if ( selectorDB.isString( type ) )
 			{
 				sber.append( "<if test=\" " + columnName + " != null\">\n" );
-				sber.append( " AND " ).append( columnName ).append( " = #{" ).append( columnName ).append( "}\n" );
+				sber.append( " AND A." ).append( columnName ).append( " = #{" ).append( columnName ).append( "}\n" );
 				sber.append( "</if>\n" );
 			}
 			else if ( selectorDB.isFloat( type ) )
 			{
 				sber.append( "<if test=\" " + columnName + " > 0 \">\n" );
-				sber.append( " AND " ).append( columnName ).append( " = #{" ).append( columnName ).append( "}\n" );
+				sber.append( " AND A." ).append( columnName ).append( " = #{" ).append( columnName ).append( "}\n" );
 				sber.append( "</if>\n" );
 			}
 			else if ( selectorDB.isNumber( type ) )
 			{
 				sber.append( "<if test=\" " + columnName + " > 0 \">\n" );
-				sber.append( " AND " ).append( columnName ).append( " = #{" ).append( columnName ).append( "}\n" );
+				sber.append( " AND A." ).append( columnName ).append( " = #{" ).append( columnName ).append( "}\n" );
 				sber.append( "</if>\n" );
 			}
 			else if ( selectorDB.isDate( type ) )
@@ -334,6 +361,16 @@ public class GeneralCode
 		StringBuilder sber = new StringBuilder();
 		sber.append( "<insert id=\"add" + tablename + "\" parameterType=\"" + tablename.toLowerCase() + "\" >\n" );
 
+		for( TableInfo tableInfo : tableInfoList )
+		{
+			String key = tableInfo.getIskey();
+			boolean iskey = selectorDB.isKey( key );
+			if ( iskey )
+			{
+				sber.append( selectorDB.keyFunction( tableInfo.getColumn_name().toLowerCase() ) );
+			}
+		}
+
 		sber.append( "insert into " ).append( tablename ).append( "\n(\n" );
 		StringBuilder insertFields = new StringBuilder();
 		for( TableInfo tableInfo : tableInfoList )
@@ -353,13 +390,8 @@ public class GeneralCode
 		{
 			String columnName = tableInfo.getColumn_name().toLowerCase();
 			String type = tableInfo.getData_type();
-			String key = tableInfo.getIskey();
 
-			if ( selectorDB.isKey( key ) )
-			{
-				insertValues.append( "mybatis_sequence.nextval," );
-			}
-			else if ( selectorDB.isString( type ) )
+			if ( selectorDB.isString( type ) )
 			{
 				insertValues.append( "#{" ).append( columnName ).append( ",jdbcType=VARCHAR}," );
 			}
@@ -369,7 +401,6 @@ public class GeneralCode
 			}
 			else if ( selectorDB.isDate( type ) )
 			{
-
 				insertValues.append( selectorDB.dateType( columnName ) );
 			}
 		}
@@ -450,48 +481,18 @@ public class GeneralCode
 		}
 	}
 
-	private String getJavaType( String type )
-	{
-		String javaType = "";
-		if ( DBDataType.JAVA_STRING.equals( type ) )
-		{
-			javaType = DBDataType.JAVA_STRING;
-		}
-		else if ( selectorDB.isString( type ) )
-		{
-			javaType = selectorDB.string2JavaType( type );
-		}
-		else if ( selectorDB.isDate( type ) )
-		{
-			javaType = selectorDB.date2JavaType( type );
-		}
-		else if ( selectorDB.isInt( type ) )
-		{
-			javaType = selectorDB.int2JavaType( type );
-		}
-		else if ( selectorDB.isFloat( type ) )
-		{
-			javaType = selectorDB.float2JavaType( type );
-		}
-		else if ( selectorDB.isBlob( type ) )
-		{
-			javaType = selectorDB.blob2JavaType( type );
-		}
-		return javaType;
-	}
-
 	private String beanField( String column_name , String type )
 	{
 		StringBuilder sber = new StringBuilder();
 
-		sber.append( "private " ).append( getJavaType( type ) ).append( " " ).append( column_name.toLowerCase() ).append( ";\n\n" );
+		sber.append( "private " ).append( selectorDB.getJavaType( type ) ).append( " " ).append( column_name.toLowerCase() ).append( ";\n\n" );
 
 		return sber.toString();
 	}
 
 	private String codeSetGet( String column_name , String type )
 	{
-		String javaType = getJavaType( type );
+		String javaType = selectorDB.getJavaType( type );
 		StringBuilder sber = new StringBuilder();
 		sber.append( "public void set" ).append( upperFirstChar( column_name ) );
 		sber.append( "( " ).append( javaType ).append( " " ).append( column_name ).append( " )\n{\n" ).append( "this." ).append( column_name );

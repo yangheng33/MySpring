@@ -122,9 +122,9 @@ public class OracleSelector implements DBSelector
 	public String keyFunction( String keyname )
 	{
 		StringBuilder sber = new StringBuilder();
-		sber.append( "<selectKey keyProperty=\"" + keyname + "\" order=\"BEFORE\" resultType=\"int\">" );
-		sber.append( "select mybatis_sequence.nextval from dual" );
-		sber.append( "</selectKey>" );
+		sber.append( "<selectKey keyProperty=\"" + keyname + "\" order=\"BEFORE\" resultType=\"int\"> \n" );
+		sber.append( "select mybatis_sequence.nextval from dual \n" );
+		sber.append( "</selectKey> \n" );
 		return sber.toString();
 	}
 
@@ -134,5 +134,72 @@ public class OracleSelector implements DBSelector
 		return new StringBuilder().append( "#{" ).append( columnName ).append( ",jdbcType=DATE}," ).toString();
 	}
 
-	
+	@Override
+	public String getJavaType( String type )
+	{
+		String result = "";
+
+		if ( DBDataType.JAVA_STRING.equals( type ) )
+		{
+			result = DBDataType.JAVA_STRING;
+		}
+		else if ( isString( type ) )
+		{
+			result = string2JavaType( type );
+		}
+		else if ( isDate( type ) )
+		{
+			result = date2JavaType( type );
+		}
+		else if ( isFloat( type ) )
+		{
+			result = float2JavaType( type );
+		}
+		else if ( isInt( type ) )
+		{
+			result = int2JavaType( type );
+		}
+		else if ( isNumber( type ) )
+		{
+			result = number2JavaType( type );
+		}
+		else if ( isBlob( type ) )
+		{
+			result = blob2JavaType( type );
+		}
+		return result;
+	}
+
+	@Override
+	public String getJdbcType( String type )
+	{
+		String result = "";
+
+		if ( isString( type ) )
+		{
+			result = DBDataType.JDBC_VARCHAR;
+		}
+		else if ( isDate( type ) )
+		{
+			result = DBDataType.JDBC_DATE;
+		}
+		else if ( isFloat( type ) )
+		{
+			result = DBDataType.JDBC_NUMBER;
+		}
+		else if ( isInt( type ) )
+		{
+			result = DBDataType.JDBC_NUMBER;
+		}
+		else if ( isNumber( type ) )
+		{
+			result = DBDataType.JDBC_NUMBER;
+		}
+		else if ( isBlob( type ) )
+		{
+			result = "";
+		}
+
+		return result;
+	}
 }

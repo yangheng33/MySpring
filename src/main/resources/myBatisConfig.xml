@@ -16,5 +16,10 @@
 		<typeAlias alias="diary" type="com.amar.web.model.Diary" />
 		<typeAlias alias="job" type="com.amar.web.model.Job" />
 		<typeAlias alias="jobdetail" type="com.amar.web.model.Jobdetail" />
+		<typeAlias alias="jobplanfile" type="com.amar.web.model.Jobplanfile" />
+		<typeAlias alias="project" type="com.amar.web.model.Project" />
+		<typeAlias alias="jobplan" type="com.amar.web.model.Jobplan" />
+		<typeAlias alias="jobplanreply" type="com.amar.web.model.Jobplanreply" />
+		<typeAlias alias="jobplanlog" type="com.amar.web.model.Jobplanlog" />
 	</typeAliases>
 </configuration>
