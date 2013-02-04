@@ -69,7 +69,7 @@ public class Zhounan
 
 			MultipartHttpServletRequest multipartRequest = ( MultipartHttpServletRequest ) request;
 
-			MultipartFile multipartFile = multipartRequest.getFile( "file" );
+			MultipartFile multipartFile = multipartRequest.getFile( "files[]" );
 
 			BufferedReader read = new BufferedReader( new InputStreamReader( multipartFile.getInputStream() ) );
 

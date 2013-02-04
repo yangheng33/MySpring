@@ -7,9 +7,15 @@ private int jobid;
 
 private String usedtime;
 
-private String state;
-
 private String content;
+
+private String title;
+
+private int type;
+
+private int count;
+
+private int jobplanid;
 
 public void setId( int id )
 {
@@ -41,16 +47,6 @@ public String getUsedtime()
 return this.usedtime;
 }
 
-public void setState( String state )
-{
-this.state=state;
-}
-
-public String getState()
-{
-return this.state;
-}
-
 public String getContent()
 {
 	return content;
@@ -59,6 +55,46 @@ public String getContent()
 public void setContent( String content )
 {
 	this.content = content;
+}
+
+public String getTitle()
+{
+	return title;
+}
+
+public void setTitle( String title )
+{
+	this.title = title;
+}
+
+public int getType()
+{
+	return type;
+}
+
+public void setType( int type )
+{
+	this.type = type;
+}
+
+public int getCount()
+{
+	return count;
+}
+
+public void setCount( int count )
+{
+	this.count = count;
+}
+
+public int getJobplanid()
+{
+	return jobplanid;
+}
+
+public void setJobplanid( int jobplanid )
+{
+	this.jobplanid = jobplanid;
 }
 
 }

@@ -46,6 +46,23 @@ public class DataTool
 		file.delete();
 	}
 
+	public static void checkFileDir( File file )
+	{
+		if ( ! file.exists() )
+		{
+			file.mkdirs();
+		}
+	}
+
+	public static void checkFileDir( String filepath )
+	{
+		File file = new File( filepath );
+		if ( ! file.exists() )
+		{
+			file.mkdirs();
+		}
+	}
+
 	public static void main( String [] args )
 	{
 		byte [] s = intToByte( 1024 );

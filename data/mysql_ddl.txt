@@ -104,8 +104,10 @@ create table Jobdetail
 	id			int not null auto_increment,
 	jobid		int not null,  
 	usedtime 	varchar(3) not null comment '用时,单位小时',
-	state		varchar(2) not null comment '完成情况,1完成,2未完成',
-	title	    varchar(1000),
+	count		int not null comment '完成百分比',
+	title	    varchar(100),
+	type        int not null COMMENT '任务类型,1开发,2测试,3其他',
+	jobplanid   int not null COMMENT '计划id,任务类型为1或者2时有效',
 	content     varchar(1000),
 	primary key (id)
 );
@@ -150,7 +152,9 @@ CREATE TABLE `Jobplanfile` (
 `id`  int NULL AUTO_INCREMENT ,
 `type`  int NULL COMMENT '附件类型,1.图片,2.文件' ,
 `path`  varchar(300) NULL COMMENT '文件路径' ,
-`filename`  varchar(40) NULL ,
+`filename`  varchar(60) NULL ,
+`userid` int NULL,
+`jobplanid` int NULL,
 PRIMARY KEY(id)
 )
 ;

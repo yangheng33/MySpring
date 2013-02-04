@@ -9,7 +9,7 @@ String path = request.getContextPath();
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>工作日报</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -20,9 +20,13 @@ String path = request.getContextPath();
   <style>
 	<!--
 	
-	 .jobdiv{
+	 .jobdiv
+	 {
+	 	   font-family:宋体;
+	 	   font-size:10;
+	 	   font-weight:blod;
 	 	   background-color: #EFEFEF;
-	 	   border: 2px solid red;
+	 	   border: 1px solid red;
            z-index:1000;
            left:40%;
            top:100;

@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -27,25 +28,45 @@
   function dosomething()
   {
 	  var s_usedtime="";
-	  var s_states="";
 	  var s_content="";
+	  var s_jobplanid="";
+	  var s_type="";
+	  var s_count="";
+	  var s_title="";
 		 
+	 $("[name='_title']").each(function(index)
+     {
+		 s_title += $(this).val()+",,,,";
+	 })
 	 $("input[name='_usedtime']").each(function(index)
 	 {
 		 s_usedtime += $(this).val()+",,,,";
-	 })
-	  $("select[name='_state']").each(function(index)
-	 {
-		 
-		  s_states += $(this).val()+",,,,";
 	 })
 	  $("[name='_content']").each(function(index)
      {
 		  s_content += $(this).val()+",,,,";
 	 })
 	 
+	  $("[name='_jobplanid']").each(function(index)
+     {
+		  s_jobplanid += $(this).val()+",,,,";
+	 })
+	 
+	  $("[name='_type']").each(function(index)
+     {
+		  s_type += $(this).val()+",,,,";
+	 })
+	 
+	  $("[name='_count']").each(function(index)
+     {
+		  s_count += $(this).val()+",,,,";
+	 })
+	 
+	 $("#title").val(s_title);
+	 $("#jobplanid").val(s_jobplanid);
+	 $("#type").val(s_type);
+	 $("#count").val(s_count);
 	 $("#usetime").val(s_usedtime);
-	 $("#state").val(s_states);
 	 $("#content").val(s_content);
 	 
 	if(confirm("您确认提交工作日志??"))
@@ -59,13 +80,29 @@
   {
 	  divIndex++;
       var content = "<div id='div"+divIndex+"' width='900' height='200'>";
-      content += "用时:<input type='text' name='_usedtime'/>状态:<select name='_state'><option value='2'>"
-      content += "未完成</option><option value='1'>已完成</option></select><br/>"
-      content += "<textarea name='_content' cols='80' rows='3' name='content'>请输入内容</textarea><br/>";
-      content += "<input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' />"
-      content += "</div>";
-      $("#jobContainer").html( $("#jobContainer").html()+content );
-      
+		content += "用时(小时):<input type='text' name='_usedtime' value='0' style='width:50px'/>";
+		content += "&nbsp;&nbsp;";
+		content += "标题:<input type='text' name='_title' value='请输入标题'/>&nbsp;";
+		content += "<input type='hidden' name='_jobplanid' value='0'/>";
+		content += "任务类型:<select name='_type' >";
+		content += "<option value='3' selected='selected'>杂事</option>";
+		content += "<option value='2' >测试任务</option>";
+		content += "<option value='1' >开发任务</option>";
+		content += " </select>";
+		content += "&nbsp;&nbsp;";
+		content += "完成情况:<select name='_count'>";
+		content += "<option value='0'>0%</option>";
+		content += "<option value='20'>20%</option>";
+		content += "<option value='40'>40%</option>";
+		content += "<option value='60'>60%</option>";
+		content += "<option value='80'>80%</option>";
+		content += "<option value='100'>100%</option>";
+		content += "</select>";
+		content += "<br/>";
+		content += "<textarea name='_content' cols='80' rows='3'>请输入工作内容</textarea> ";        
+		content += "<br/><input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' />"
+		content += "</div>";
+		$("#jobContainer").html( $("#jobContainer").html()+content );
   }
   
   function removeJob(id) 
@@ -77,25 +114,71 @@
 <body>
 	添加工作记录
 	<br>
-	<form action="<%=path%>/diaryJob.amar?method=addDiaryjob" method="post">
+	<form action="<%=path%>/diaryJob.amar?method=addDiaryjob" method="post" style="font-family:宋体;font-size:10;">
 		<input name="usetime" id="usetime" type="hidden"/>
-		<input name="state" id="state" type="hidden"/>
 		<input name="content" id="content" type="hidden"/>
+		<input name="jobplanid" id="jobplanid" type="hidden"/>
+		<input name="type" id="type" type="hidden"/>
+		<input name="count" id="count" type="hidden"/>
+		<input name="title" id="title" type="hidden"/>
 		
-		  运行时间:<input type="text" id="recordtime" name="recordtime" readonly="readonly" value="${querydatetime}"
+		 工作时间:<input type="text" id="recordtime" name="recordtime" readonly="readonly" value="${querydatetime}"
 		  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:140px">
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" onclick="addjob()" value="新增一条"/> 
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" onclick="dosomething()" value="保存工作记录"/><br/>
+		
 		<hr width="800" align="left"/>
-		用时:<input type='text' name='_usedtime'/>
-		状态:<select name='_state'>
-				<option value='1'>已完成</option>
-				<option value='2'>未完成</option>
-			</select>
+		
+		<c:forEach items="${dealJobList}" var="dealjob">
+			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
+			&nbsp;
+			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled"/>
+				<input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
+			
+			任务类型:<select name='_type' disabled="disabled">
+					<option value='3'>杂事</option>
+					<option value='2' >测试任务</option>
+					<option value='1' selected="selected">开发任务</option>
+				  </select>
+			&nbsp;
+			完成情况:<select name='_count'>
+					<option value='0'>0%</option>
+					<option value='20'>20%</option>
+					<option value='40'>40%</option>
+					<option value='60'>60%</option>
+					<option value='80'>80%</option>
+					<option value='100'>100%</option>
+				  </select>
+			<br/>
+			<textarea name='_content' cols='80' rows='3' disabled="disabled">${dealjob.content}</textarea>
+		</c:forEach>
 		<br/>
-		<textarea name='_content' cols='80' rows='3'>请输入内容</textarea>
+		
+		<c:forEach items="${testJobList}" var="dealjob">
+			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
+			&nbsp;
+			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled"/>
+				<input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
+			
+			任务类型:<select name='_type' disabled="disabled">
+					<option value='3'>杂事</option>
+					<option value='2' selected="selected">测试任务</option>
+					<option value='1' >开发任务</option>
+				  </select>
+			&nbsp;
+			完成情况:<select name='_count'>
+					<option value='0'>0%</option>
+					<option value='20'>20%</option>
+					<option value='40'>40%</option>
+					<option value='60'>60%</option>
+					<option value='80'>80%</option>
+					<option value='100'>100%</option>
+				  </select>
+			<br/>
+			<textarea name='_content' cols='80' rows='3' disabled="disabled">${dealjob.content}</textarea>
+		</c:forEach>
 		<br/>
 		<div id="jobContainer" width="900" height="500">
 		</div>

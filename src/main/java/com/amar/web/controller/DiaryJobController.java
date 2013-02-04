@@ -16,10 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.amar.db.ibatis.dao.JobDAO;
 import com.amar.db.ibatis.dao.JobdetailDAO;
+import com.amar.db.ibatis.dao.JobplanDAO;
 import com.amar.db.ibatis.dao.UserDAO;
 import com.amar.util.TimeDateUtil;
 import com.amar.web.model.Job;
 import com.amar.web.model.Jobdetail;
+import com.amar.web.model.Jobplan;
 import com.amar.web.model.User;
 
 @SuppressWarnings( { "unchecked", "rawtypes" } )
@@ -35,6 +37,9 @@ public class DiaryJobController
 
 	@Resource( name = "userDAO" )
 	private UserDAO userDAO;
+
+	@Resource( name = "jobplanDAO" )
+	private JobplanDAO jobplanDAO;
 
 	@RequestMapping( params = "method=personallist" )
 	public String personallist( HttpServletRequest request , HttpServletResponse response )
@@ -223,8 +228,26 @@ public class DiaryJobController
 		}
 
 		String newDatetime = querydatetime.substring( 0 , 8 ) + index + querydatetime.substring( 10 , querydatetime.length() );
+
+		User user = ( User ) request.getSession().getAttribute( "user" );
+		Jobplan _jobplanDeal = new Jobplan();
+		Jobplan _jobplanTest = new Jobplan();
+		
+		_jobplanDeal.setState( 2 );
+		_jobplanTest.setState( 3 );
+		
+		_jobplanDeal.setDealuserid( user.getId() );
+		_jobplanTest.setTestuserid( user.getId() );
+		
+		List<Jobplan> dealJobList = jobplanDAO.findJobplan( _jobplanDeal );
+		List<Jobplan> testJobList = jobplanDAO.findJobplan( _jobplanTest );
+
 		request.setAttribute( "querydatetime" , newDatetime );
 
+		request.setAttribute( "dealJobList" , dealJobList );
+		
+		request.setAttribute( "testJobList" , testJobList );
+		
 		return "diaryjob/adddiaryjob";
 	}
 
@@ -235,7 +258,11 @@ public class DiaryJobController
 		String splitSign = ",,,,";
 		String [] usetimes = request.getParameter( "usetime" ).split( splitSign );
 		String [] contents = request.getParameter( "content" ).split( splitSign );
-		String [] states = request.getParameter( "state" ).split( splitSign );
+		String [] jobplanids = request.getParameter( "jobplanid" ).split( splitSign );
+		String [] titles = request.getParameter( "title" ).split( splitSign );
+		String [] counts = request.getParameter( "count" ).split( splitSign );
+		String [] types = request.getParameter( "type" ).split( splitSign );
+		
 		String recordtime = request.getParameter( "recordtime" );
 
 		User user = ( User ) request.getSession().getAttribute( "user" );
@@ -252,9 +279,12 @@ public class DiaryJobController
 			{
 				Jobdetail jobdetail = new Jobdetail();
 				jobdetail.setJobid( job.getId() );
-				jobdetail.setState( states[ i ] );
 				jobdetail.setUsedtime( usetimes[ i ] );
 				jobdetail.setContent( contents[ i ] );
+				jobdetail.setTitle( titles[i] );
+				jobdetail.setType( Integer.parseInt( types[i] ) );
+				jobdetail.setCount( Integer.parseInt( counts[i] ) );
+				jobdetail.setJobplanid( Integer.parseInt( jobplanids[i] ) );
 				jobdetailDAO.addJobdetail( jobdetail );
 			}
 		}

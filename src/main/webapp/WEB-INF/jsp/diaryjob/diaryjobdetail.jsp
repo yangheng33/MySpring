@@ -31,27 +31,43 @@ String path = request.getContextPath();
   </head>
   
   <body>
-  <div id="closeBtn" align="right" onclick="hiddenMe()">关闭</div>
-${user.realname }<br/>
-<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate><br/>
-<hr width="600" align="left" />
-<c:forEach items="${detaillist}" var="detail" varStatus="status">
-<hr width="600" align="left"/>
-序号:${status.count}<br/>
-用时:${detail.usedtime}小时, 完成情况:
-<c:if test="${detail.state=='1' }">
-已完成
-</c:if>
-<c:if test="${detail.state=='2' }">
-未完成
-</c:if>
-<br/> 
-<textarea cols='80' rows='3'>
-${detail.content }
-</textarea>
-<br/>
-<br/> 
+<div id="closeBtn" align="right" onclick="hiddenMe()" >关闭</div>
 
+&nbsp;&nbsp;${user.realname }<br/>
+&nbsp;&nbsp;<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate><br/>
+
+<c:forEach items="${detaillist}" var="detail" varStatus="status">
+	<hr width="600" align="left"/>
+	&nbsp;&nbsp;序号:${status.count},
+	<c:if test="${detail.jobplanid > 0 }">
+		<a href="<%=path%>/jobPlan.amar?method=toEdtiJobplan&id=${detail.jobplanid}">
+		${detail.title}
+		</a>
+	</c:if>
+	<c:if test="${detail.jobplanid == 0 }">
+	${detail.title}
+	</c:if>
+	
+	<br/>
+	&nbsp;&nbsp;用时:${detail.usedtime}小时, 完成${detail.count}%,
+	
+	<c:if test="${detail.jobplanid > 0 }">
+	计划中的->
+	</c:if>
+	<c:if test="${detail.jobplanid == 0 }">
+	计划外的->
+	</c:if>
+	<c:if test="${detail.type=='1' }">
+	开发任务
+	</c:if>
+	<c:if test="${detail.type=='2' }">
+	测试任务
+	</c:if>
+	<c:if test="${detail.type=='3' }">
+	杂事
+	</c:if>
+	<br/> 
+	&nbsp;&nbsp;${detail.content }
 </c:forEach>          
 	
   </body>

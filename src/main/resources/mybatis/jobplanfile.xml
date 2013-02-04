@@ -4,7 +4,7 @@
 <mapper namespace="com.amar.db.ibatis.dao.JobplanfileDAO">
 
 <select id="findJobplanfile" parameterType="jobplanfile" resultType="jobplanfile">
-SELECT id,type,path,filename
+SELECT id,type,path,filename,jobplanid,userid
  FROM Jobplanfile
 <where>
 <if test=" id > 0 ">
@@ -19,15 +19,21 @@ SELECT id,type,path,filename
 <if test=" filename != null">
  AND filename = #{filename}
 </if>
+<if test=" userid > 0">
+ AND userid = #{userid}
+</if>
+<if test=" jobplanid > 0">
+ AND jobplanid = #{jobplanid}
+</if>
 </where>
 </select>
 
 <insert id="addJobplanfile" parameterType="jobplanfile" >
 insert into Jobplanfile
 (
-type,path,filename
+type,path,filename,jobplanid,userid
 ) values (
-#{type,jdbcType=NUMERIC},#{path,jdbcType=VARCHAR},#{filename,jdbcType=VARCHAR}
+#{type,jdbcType=NUMERIC},#{path,jdbcType=VARCHAR},#{filename,jdbcType=VARCHAR},#{jobplanid,jdbcType=NUMERIC},#{userid,jdbcType=NUMERIC}
 )
 </insert>
 

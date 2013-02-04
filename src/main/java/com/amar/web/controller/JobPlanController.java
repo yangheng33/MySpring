@@ -1,5 +1,7 @@
 package com.amar.web.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,18 +12,26 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import net.sf.json.JSONObject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.amar.constant.ProjectInfo;
 import com.amar.db.ibatis.dao.JobplanDAO;
 import com.amar.db.ibatis.dao.JobplanfileDAO;
 import com.amar.db.ibatis.dao.JobplanlogDAO;
 import com.amar.db.ibatis.dao.JobplanreplyDAO;
 import com.amar.db.ibatis.dao.ProjectDAO;
 import com.amar.db.ibatis.dao.UserDAO;
+import com.amar.util.DataTool;
 import com.amar.util.ServletUtil;
 import com.amar.util.TimeDateUtil;
 import com.amar.web.model.Jobplan;
+import com.amar.web.model.Jobplanfile;
 import com.amar.web.model.Project;
 import com.amar.web.model.User;
 
@@ -47,6 +57,9 @@ public class JobPlanController
 
 	@Resource( name = "jobplanlogDAO" )
 	private JobplanlogDAO jobplanlogDAO;
+
+	@Resource( name = "projectInfo" )
+	private ProjectInfo projectInfo;
 
 	@RequestMapping( params = "method=queryJobplanList" )
 	public String queryJobplanList( HttpServletRequest request , HttpServletResponse response )
@@ -171,9 +184,82 @@ public class JobPlanController
 	}
 
 	@RequestMapping( params = "method=uploadFile" )
-	public String uploadFile( HttpServletRequest request , HttpServletResponse response )
+	public void uploadFile( HttpServletRequest request , HttpServletResponse response )
 	{
-		return "";
+		JSONObject result = new JSONObject();
+
+		int jobplanid = Integer.parseInt( request.getParameter( "jobplanid" ) );
+		User user = ( User ) request.getSession().getAttribute( "user" );
+
+		System.out.println( "jobplanid:" + jobplanid );
+		try
+		{
+			if ( request instanceof MultipartHttpServletRequest )
+			{
+				MultipartHttpServletRequest multipartRequest = ( MultipartHttpServletRequest ) request;
+
+				MultipartFile multipartFile = multipartRequest.getFile( "files[]" );
+
+				String origName = multipartFile.getOriginalFilename();
+				int _sign = origName.lastIndexOf( "." );
+				String newFilename = "";
+				if ( _sign > 0 )
+				{
+					newFilename = origName.substring( 0 , _sign - 1 ) + "_" + ( new Date().getTime() % 100000 ) + origName.substring( _sign , origName.length() );
+				}
+				else
+				{
+					newFilename = origName + "_" + ( new Date().getTime() % 100000 );
+				}
+
+				String filePath = "jobplan/" + TimeDateUtil.getDate( new Date() ) + "/";
+
+				DataTool.checkFileDir( projectInfo.datadir + filePath );
+
+				File file = new File( projectInfo.datadir + filePath + newFilename );
+
+				FileCopyUtils.copy( multipartFile.getBytes() , file );
+
+				String [] picType = { "jpeg", "bmp", "jpg", "png", "gif" };
+
+				int fileType = 2;
+
+				for( String picName : picType )
+				{
+					if ( origName.toLowerCase().endsWith( picName ) )
+					{
+						fileType = 1;
+					}
+				}
+
+				Jobplanfile jobplanfile = new Jobplanfile();
+				jobplanfile.setType( fileType );
+				jobplanfile.setFilename( newFilename );
+				jobplanfile.setPath( filePath );
+				jobplanfile.setUserid( user.getId() );
+				jobplanfile.setJobplanid( jobplanid );
+				jobplanfileDAO.addJobplanfile( jobplanfile );
+
+				Jobplanfile _jobplanfile = new Jobplanfile();
+				_jobplanfile.setJobplanid( jobplanid );
+				_jobplanfile.setType( 1 );// 图片类型
+				List<Jobplanfile> list = jobplanfileDAO.findJobplanfile( _jobplanfile );
+
+				result.put( "picfile" , list );
+			}
+
+			response.setHeader( "Content-Type" , "text/plain;charset=UTF-8" );
+
+			response.getWriter().write( result.toString() );
+		}
+		catch ( IOException e )
+		{
+			e.printStackTrace();
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping( params = "method=downFile" )
@@ -220,9 +306,31 @@ public class JobPlanController
 	}
 
 	@RequestMapping( params = "method=edtiJobplan" )
-	public void edtiJobplan( HttpServletRequest request , HttpServletResponse response )
+	public void edtiJobplan( HttpServletRequest request , HttpServletResponse response ) throws IOException
 	{
+		Jobplan jobplan = ServletUtil.request2Bean( request , Jobplan.class );
 
+		if ( jobplan.getState() == 1 )
+		{
+
+		}
+		else if ( jobplan.getState() == 2 )// 开始开发
+		{
+			jobplan.setTesttime( new Date() );
+		}
+		else if ( jobplan.getState() == 3 )// 开始测试
+		{
+			jobplan.setDealtime( new Date() );
+		}
+		else if ( jobplan.getState() == 4 )// 已经完毕
+		{
+			jobplan.setFinishtime( new Date() );
+		}
+
+		jobplanDAO.editJobplan( jobplan );
+
+		System.out.println( "" + jobplan.getId() + "" + jobplan.getJobplanlevel() );
+		response.sendRedirect( "jobPlan.amar?method=toEdtiJobplan&id=" + jobplan.getId() );
 	}
 
 	@RequestMapping( params = "method=toEdtiJobplan" )
@@ -233,13 +341,43 @@ public class JobPlanController
 
 		Jobplan _jobplan = new Jobplan();
 		_jobplan.setId( id );
+
+		Jobplanfile _jobplanfile = new Jobplanfile();
+		_jobplanfile.setJobplanid( id );
+		_jobplanfile.setType( 1 );// 图片类型
+		List<Jobplanfile> picfilelist = jobplanfileDAO.findJobplanfile( _jobplanfile );
+
+		Jobplanfile _jobplanfile2 = new Jobplanfile();
+		_jobplanfile2.setJobplanid( id );
+		_jobplanfile2.setType( 2 );// 图片类型
+		List<Jobplanfile> filelist = jobplanfileDAO.findJobplanfile( _jobplanfile2 );
+
 		Jobplan jobplan = jobplanDAO.findJobplan( _jobplan ).get( 0 );
 
 		rightAttribute( request , user.getId() , jobplan.getReportuserid() , "meReport" );
 		rightAttribute( request , user.getId() , jobplan.getDealuserid() , "meDeal" );
 		rightAttribute( request , user.getId() , jobplan.getTestuserid() , "meTest" );
 
+		if ( user.getId() == jobplan.getReportuserid() )// 报告者
+		{
+			request.setAttribute( "stateRight" , "y" );
+		}
+		else if ( jobplan.getState() == 2 && user.getId() == jobplan.getDealuserid() )// 程序员
+		{
+			request.setAttribute( "stateRight" , "y" );
+		}
+		else if ( jobplan.getState() == 3 && user.getId() == jobplan.getTestuserid() )// 测试者
+		{
+			request.setAttribute( "stateRight" , "y" );
+		}
+		else
+		{
+			request.setAttribute( "stateRight" , "n" );
+		}
+
 		request.setAttribute( "jobplan" , jobplan );
+		request.setAttribute( "picfilelist" , picfilelist );
+		request.setAttribute( "filelist" , filelist );
 
 		commAttribute( request );
 		return "jobplan/editjobplan";
