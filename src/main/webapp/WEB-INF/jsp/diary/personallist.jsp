@@ -1,10 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"  isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-String path = request.getContextPath();
-%>
+<%@ include file="../common/tag.jsp" %>
+<%@ include file="../common/header.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -59,7 +55,6 @@ String path = request.getContextPath();
   </head>
   
   <body>
-            你好!${sessionScope.user.realname}&nbsp;&nbsp; 写日记啦<br><br/>
     
     <form action="<%=path%>/diary.amar?method=personalDiarylist" method="post">
 	标题:<input type="text" name="title">&nbsp;&nbsp;

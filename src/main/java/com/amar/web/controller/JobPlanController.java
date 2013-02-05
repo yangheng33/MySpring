@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +32,7 @@ import com.amar.db.ibatis.dao.UserDAO;
 import com.amar.util.DataTool;
 import com.amar.util.ServletUtil;
 import com.amar.util.TimeDateUtil;
+import com.amar.util.mail.MailTool;
 import com.amar.web.model.Jobplan;
 import com.amar.web.model.Jobplanfile;
 import com.amar.web.model.Project;
@@ -39,7 +42,6 @@ import com.amar.web.model.User;
 @RequestMapping( "jobPlan.amar" )
 public class JobPlanController
 {
-
 	@Resource( name = "jobplanDAO" )
 	private JobplanDAO jobplanDAO;
 
@@ -60,6 +62,9 @@ public class JobPlanController
 
 	@Resource( name = "projectInfo" )
 	private ProjectInfo projectInfo;
+
+	@Resource( name = "mailTool" )
+	private MailTool mailTool;
 
 	@RequestMapping( params = "method=queryJobplanList" )
 	public String queryJobplanList( HttpServletRequest request , HttpServletResponse response )
@@ -275,8 +280,9 @@ public class JobPlanController
 		return "jobplan/addjobplan";
 	}
 
+	@Transactional( propagation = Propagation.REQUIRED , rollbackFor = { Exception.class } )
 	@RequestMapping( params = "method=addJobplan" )
-	public String addJobplan( HttpServletRequest request , HttpServletResponse response )
+	public void addJobplan( HttpServletRequest request , HttpServletResponse response ) throws IOException
 	{
 		Jobplan jobplan = ServletUtil.request2Bean( request , Jobplan.class );
 
@@ -288,7 +294,29 @@ public class JobPlanController
 
 		jobplanDAO.addJobplan( jobplan );
 
-		return "jobplan/jobplanlist";
+		Jobplan _jobplan = new Jobplan();
+		_jobplan.setId( jobplan.getId() );
+		jobplan = jobplanDAO.findJobplan( _jobplan ).get( 0 );
+
+		String [] sendto = new String [] { jobplan.getReportuser().getEmail(), jobplan.getDealuser().getEmail(), jobplan.getTestuser().getEmail() };
+		mailTool.sendEmail( "报告任务:" + jobplan.getTitle() , jobplanInfo( jobplan ) , projectInfo.managerMail , sendto , projectInfo.managerMailPw , MailTool.MAIL_TYPE_HTML );
+
+		response.sendRedirect( "jobPlan.amar?method=toEdtiJobplan&id=" + jobplan.getId() );
+	}
+
+	public String jobplanInfo( Jobplan jobplan )
+	{
+		StringBuilder sb = new StringBuilder();
+		String sign = "\n";
+		sb.append( "主题:" ).append( jobplan.getTitle() ).append( sign );
+		sb.append( "内容:" ).append( jobplan.getContent() ).append( sign );
+		sb.append( "发布时间:" ).append( TimeDateUtil.getDateTime( jobplan.getReporttime() ) ).append( sign );
+		sb.append( "要求完成时间:" ).append( TimeDateUtil.getDateTime( jobplan.getPlanfinishtime() ) ).append( sign );
+		sb.append( "发布者:" ).append( jobplan.getReportuser().getRealname() ).append( sign );
+		sb.append( "程序员:" ).append( jobplan.getDealuser().getRealname() ).append( sign );
+		sb.append( "测试者:" ).append( jobplan.getTestuser().getRealname() ).append( sign );
+
+		return sb.toString();
 	}
 
 	@RequestMapping( params = "method=replyOneJobplan" )
@@ -305,10 +333,18 @@ public class JobPlanController
 		return "jobplan/";
 	}
 
+	@Transactional( propagation = Propagation.REQUIRED , rollbackFor = { Exception.class } )
 	@RequestMapping( params = "method=edtiJobplan" )
 	public void edtiJobplan( HttpServletRequest request , HttpServletResponse response ) throws IOException
 	{
-		Jobplan jobplan = ServletUtil.request2Bean( request , Jobplan.class );
+		Jobplan _jobplan = ServletUtil.request2Bean( request , Jobplan.class );
+
+		Jobplan jobplan = new Jobplan();
+		jobplan.setId( _jobplan.getId() );
+
+		jobplan = jobplanDAO.findJobplan( jobplan ).get( 0 );
+
+		String [] sendtoAll = new String [] { jobplan.getReportuser().getEmail(), jobplan.getDealuser().getEmail(), jobplan.getTestuser().getEmail() };
 
 		if ( jobplan.getState() == 1 )
 		{
@@ -317,19 +353,24 @@ public class JobPlanController
 		else if ( jobplan.getState() == 2 )// 开始开发
 		{
 			jobplan.setTesttime( new Date() );
+			mailTool.sendEmail( "请开始开发:" + jobplan.getTitle() , jobplanInfo( jobplan ) , projectInfo.managerMail , new String [] { sendtoAll[ 1 ] } , projectInfo.managerMailPw ,
+					MailTool.MAIL_TYPE_HTML );
 		}
 		else if ( jobplan.getState() == 3 )// 开始测试
 		{
 			jobplan.setDealtime( new Date() );
+			mailTool.sendEmail( "请开始测试:" + jobplan.getTitle() , jobplanInfo( jobplan ) , projectInfo.managerMail , new String [] { sendtoAll[ 2 ] } , projectInfo.managerMailPw ,
+					MailTool.MAIL_TYPE_HTML );
 		}
 		else if ( jobplan.getState() == 4 )// 已经完毕
 		{
 			jobplan.setFinishtime( new Date() );
+
+			mailTool.sendEmail( "任务结束:" + jobplan.getTitle() , jobplanInfo( jobplan ) , projectInfo.managerMail , sendtoAll , projectInfo.managerMailPw , MailTool.MAIL_TYPE_HTML );
 		}
 
-		jobplanDAO.editJobplan( jobplan );
+		jobplanDAO.editJobplan( _jobplan );
 
-		System.out.println( "" + jobplan.getId() + "" + jobplan.getJobplanlevel() );
 		response.sendRedirect( "jobPlan.amar?method=toEdtiJobplan&id=" + jobplan.getId() );
 	}
 

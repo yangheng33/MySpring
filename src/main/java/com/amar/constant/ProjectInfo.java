@@ -18,6 +18,14 @@ public class ProjectInfo
 
 	public String datadir;
 
+	public String smtp;
+	
+	public String pop3;
+	
+	public String managerMail;
+	
+	public String managerMailPw;
+	
 	public String getIP()
 	{
 		return IP;
@@ -96,5 +104,45 @@ public class ProjectInfo
 	public String jmsAddress()
 	{
 		return "tcp://" + JMS_IP + ":" + JMS_PORT;
+	}
+
+	public String getSmtp()
+	{
+		return smtp;
+	}
+
+	public void setSmtp( String smtp )
+	{
+		this.smtp = smtp;
+	}
+
+	public String getPop3()
+	{
+		return pop3;
+	}
+
+	public void setPop3( String pop3 )
+	{
+		this.pop3 = pop3;
+	}
+
+	public String getManagerMail()
+	{
+		return managerMail;
+	}
+
+	public void setManagerMail( String managerMail )
+	{
+		this.managerMail = managerMail;
+	}
+
+	public String getManagerMailPw()
+	{
+		return managerMailPw;
+	}
+
+	public void setManagerMailPw( String managerMailPw )
+	{
+		this.managerMailPw = managerMailPw;
 	}
 }

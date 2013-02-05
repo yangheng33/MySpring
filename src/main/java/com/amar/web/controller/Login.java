@@ -38,6 +38,14 @@ public class Login
 
 		response.getWriter().write( json.toString() );
 	}
+	
+	@RequestMapping( params = "method=exit" )
+	public String exitLogin(HttpServletRequest request , HttpServletResponse response)throws Exception
+	{
+		request.getSession().removeAttribute( "user" );
+		
+		return "login/login";
+	}
 
 	@RequestMapping( params = "method=tologin" )
 	public String toLogin( HttpServletRequest request , HttpServletResponse response ) throws Exception
@@ -92,6 +100,12 @@ public class Login
 			request.setAttribute( "errorinfo" , "<font color='red'>error</font>" );
 			return "login/regist";
 		}
+	}
+
+	@RequestMapping( params = "method=main" )
+	public String main( HttpServletRequest request , HttpServletResponse response )
+	{
+		return "main";
 	}
 
 	@RequestMapping( params = "method=login" )

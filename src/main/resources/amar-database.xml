@@ -52,5 +52,9 @@
      		<property name="JMS_PORT"><value>${jms_port}</value></property>
      		<property name="IP"><value>${ip}</value></property>
      		<property name="PORT"><value>${port}</value></property>
+     		<property name="smtp"><value>${smtp}</value></property>
+     		<property name="pop3"><value>${pop3}</value></property>
+     		<property name="managerMail"><value>${managerMail}</value></property>
+     		<property name="managerMailPw"><value>${managerMailPw}</value></property>
      </bean>
 </beans>

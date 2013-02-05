@@ -178,3 +178,5 @@ CREATE TABLE `Jobplanlog` (
 PRIMARY KEY(id) 
 )
 ;
+
+ALTER table User MODIFY email varchar(40);

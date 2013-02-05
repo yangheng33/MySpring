@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-%>
+<%@ include file="common/tag.jsp" %>
+<%@ include file="common/header.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -18,18 +17,23 @@ String path = request.getContextPath();
   <script >
 	//window.location.href = "http://www.baidu.com";
 	
-	//window.top.location.href='https://www.facebook.com/dialog/oauth?client_id=264583603594034&redirect_uri=http://apps.facebook.com/amar_happy/&scope=email,publish_stream';
   </script>
   
   <body>
   
-  你好!${sessionScope.user.realname} <br/><br/>
   
-  <a href="<%=path%>/remindplan.amar?method=list">提醒计划</a><br/>
+  	<b>工具与案例:</b><br/>
+  	<hr align="left" width="700">
   <a href="<%=path%>/autocode.amar?method=init">生成代码</a><br/>
   <a href="<%=path%>/zhounan.amar?method=toAnalyze">日志分析</a><br/>
   <a href="<%=path%>/html/chart/chart.html">flash图表</a><br/>
   <a href="<%=path%>/diary.amar?method=personallist">写日记</a><br/>
+  <a href="<%=path%>/remindplan.amar?method=list">提醒计划</a><br/>
+  
+  <br/>
+  	<b>工作流程:</b><br/>
+  <hr align="left" width="700">
+  	
   <a href="<%=path%>/diaryJob.amar?method=personallist">写工作日记</a><br/>
   <a href="<%=path%>/jobPlan.amar?method=queryJobplanList">做工作计划</a><br/>
   

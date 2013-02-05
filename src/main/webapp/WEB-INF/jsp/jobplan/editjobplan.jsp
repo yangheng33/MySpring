@@ -1,10 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ include file="../common/tag.jsp" %>
+<%@ include file="../common/header.jsp" %>
 <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	String picPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/image"+"/";
 %>
 
@@ -145,7 +142,7 @@ $(document).ready(function(){initFunc();});
 <body>
 	<table width="700" height="20" style="font-family:宋体;font-size:14;font-weight:bold">
 		<tr>
-			<td width="200"> 你好!${sessionScope.user.realname}&nbsp;查看工作</td>
+			<td width="200"> 查看工作</td>
 			<td align="center">
 				<div id="msgDiv" style="color:E83034;font-weight:bold">
 				</div>
