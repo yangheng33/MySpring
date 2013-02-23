@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.amar.db.ibatis.dao.JobDAO;
 import com.amar.db.ibatis.dao.JobdetailDAO;
 import com.amar.db.ibatis.dao.JobplanDAO;
+import com.amar.db.ibatis.dao.ProjectDAO;
 import com.amar.db.ibatis.dao.UserDAO;
 import com.amar.util.TimeDateUtil;
 import com.amar.web.model.Job;
 import com.amar.web.model.Jobdetail;
 import com.amar.web.model.Jobplan;
+import com.amar.web.model.Project;
 import com.amar.web.model.User;
 
 @SuppressWarnings( { "unchecked", "rawtypes" } )
@@ -40,6 +42,9 @@ public class DiaryJobController
 
 	@Resource( name = "jobplanDAO" )
 	private JobplanDAO jobplanDAO;
+	
+	@Resource( name = "projectDAO" )
+	private ProjectDAO projectDAO;
 
 	@RequestMapping( params = "method=personallist" )
 	public String personallist( HttpServletRequest request , HttpServletResponse response )
@@ -109,7 +114,8 @@ public class DiaryJobController
 		request.setAttribute( "job" , _job );
 		request.setAttribute( "detaillist" , detaillist );
 		request.setAttribute( "user" , _user );
-
+		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
+		
 		return "diaryjob/diaryjobdetail";
 	}
 
@@ -232,21 +238,23 @@ public class DiaryJobController
 		User user = ( User ) request.getSession().getAttribute( "user" );
 		Jobplan _jobplanDeal = new Jobplan();
 		Jobplan _jobplanTest = new Jobplan();
-		
+
 		_jobplanDeal.setState( 2 );
 		_jobplanTest.setState( 3 );
-		
+
 		_jobplanDeal.setDealuserid( user.getId() );
 		_jobplanTest.setTestuserid( user.getId() );
-		
+
 		List<Jobplan> dealJobList = jobplanDAO.findJobplan( _jobplanDeal );
 		List<Jobplan> testJobList = jobplanDAO.findJobplan( _jobplanTest );
 
 		request.setAttribute( "querydatetime" , newDatetime );
 
 		request.setAttribute( "dealJobList" , dealJobList );
-		
+
 		request.setAttribute( "testJobList" , testJobList );
+
+		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
 		
 		return "diaryjob/adddiaryjob";
 	}
@@ -262,7 +270,8 @@ public class DiaryJobController
 		String [] titles = request.getParameter( "title" ).split( splitSign );
 		String [] counts = request.getParameter( "count" ).split( splitSign );
 		String [] types = request.getParameter( "type" ).split( splitSign );
-		
+		String [] projectids = request.getParameter( "projectid" ).split( splitSign );
+
 		String recordtime = request.getParameter( "recordtime" );
 
 		User user = ( User ) request.getSession().getAttribute( "user" );
@@ -281,10 +290,12 @@ public class DiaryJobController
 				jobdetail.setJobid( job.getId() );
 				jobdetail.setUsedtime( usetimes[ i ] );
 				jobdetail.setContent( contents[ i ] );
-				jobdetail.setTitle( titles[i] );
-				jobdetail.setType( Integer.parseInt( types[i] ) );
-				jobdetail.setCount( Integer.parseInt( counts[i] ) );
-				jobdetail.setJobplanid( Integer.parseInt( jobplanids[i] ) );
+				jobdetail.setTitle( titles[ i ] );
+				jobdetail.setType( Integer.parseInt( types[ i ] ) );
+				jobdetail.setCount( Integer.parseInt( counts[ i ] ) );
+				jobdetail.setJobplanid( Integer.parseInt( jobplanids[ i ] ) );
+				jobdetail.setProjectid( Integer.parseInt( projectids[ i ] ) );
+
 				jobdetailDAO.addJobdetail( jobdetail );
 			}
 		}

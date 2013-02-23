@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   手机号码:<input type="text" name="phone" id="phone"/><br/>
   通信地址:<input type="text" name="address" id="address"/><br/>
  qq号码:<input type="text" name="qq" id="qq" /><br/>
-  出生日期:<input type="text" name="brithdays" readonly="readonly" 
+  出生日期:<input type="text" name="brithdays" id="brithdays" readonly="readonly" 
   	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:140px"><br/>
   	
   	<!-- 

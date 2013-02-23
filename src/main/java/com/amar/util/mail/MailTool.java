@@ -31,17 +31,11 @@ public class MailTool
 		mailInfo.setSubject( subject );
 		mailInfo.setContent( content );
 
-		SimpleMailSender sms = new SimpleMailSender();
+		SimpleMailSender sms = new SimpleMailSender( mailtype , mailInfo );
 
-		if ( "html".equals( mailtype ) )
-		{
-			sms.sendHtmlMail( mailInfo );
-		}
-		else
-		{
-			sms.sendTextMail( mailInfo );
-		}
+		Thread mailThread = new Thread( sms , "mailThread" );
 
+		mailThread.start();
 	}
 
 	public static void main( String [] args )
@@ -53,13 +47,16 @@ public class MailTool
 		mailInfo.setUserName( "hsyang@metarnet.com" );
 		mailInfo.setPassword( "123456" );// 您的邮箱密码
 		mailInfo.setFromAddress( "hsyang@metarnet.com" );
-		mailInfo.setToAddresses( new String [] { "hsyang@metarnet.com" } );
+		mailInfo.setToAddresses( new String [] { "hsyang@metarnet.com", "111", "222" } );
 		mailInfo.setSubject( "测试发个邮件" );
-		mailInfo.setContent( "测试发个邮件的内容<b>内容</b>\n123\n456" );
+		mailInfo.setContent( "测试发个邮件的内容<b>内容</b>\n123<br/>\n4567" );
 		// 这个类主要来发送邮件
-		SimpleMailSender sms = new SimpleMailSender();
+		SimpleMailSender sms = new SimpleMailSender( "html" , mailInfo );
+		Thread mailThread = new Thread( sms , "mailThread" );
+		mailThread.start();
+		System.out.println( "over" );
 		// sms.sendTextMail( mailInfo );// 发送文体格式
-		sms.sendHtmlMail( mailInfo );// 发送html格式
+		// sms.sendHtmlMail( mailInfo );// 发送html格式
 
 	}
 

@@ -180,3 +180,5 @@ PRIMARY KEY(id)
 ;
 
 ALTER table User MODIFY email varchar(40);
+alter table Jobdetail add projectid int;
+alter table Countdate add type int default 1 comment'1工作日,2节假日';

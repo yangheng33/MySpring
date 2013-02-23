@@ -33,12 +33,15 @@ String path = request.getContextPath();
   <body>
 <div id="closeBtn" align="right" onclick="hiddenMe()" >关闭</div>
 
-&nbsp;&nbsp;${user.realname }<br/>
-&nbsp;&nbsp;<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate><br/>
+&nbsp;${user.realname }<br/>
+&nbsp;<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate><br/>
 
 <c:forEach items="${detaillist}" var="detail" varStatus="status">
 	<hr width="600" align="left"/>
-	&nbsp;&nbsp;序号:${status.count},
+	&nbsp;
+	序号:${status.count}
+	&nbsp;
+	标题:
 	<c:if test="${detail.jobplanid > 0 }">
 		<a href="<%=path%>/jobPlan.amar?method=toEdtiJobplan&id=${detail.jobplanid}">
 		${detail.title}
@@ -47,10 +50,13 @@ String path = request.getContextPath();
 	<c:if test="${detail.jobplanid == 0 }">
 	${detail.title}
 	</c:if>
-	
+	&nbsp;
+	项目:	<c:forEach items="${projectlist}" var="projectInfo">
+				<c:if test="${projectInfo.id == detail.projectid}">${projectInfo.name}</c:if>
+		</c:forEach>
+		
 	<br/>
-	&nbsp;&nbsp;用时:${detail.usedtime}小时, 完成${detail.count}%,
-	
+	&nbsp;
 	<c:if test="${detail.jobplanid > 0 }">
 	计划中的->
 	</c:if>
@@ -58,16 +64,25 @@ String path = request.getContextPath();
 	计划外的->
 	</c:if>
 	<c:if test="${detail.type=='1' }">
-	开发任务
+	功能开发
 	</c:if>
 	<c:if test="${detail.type=='2' }">
-	测试任务
+	功能测试
 	</c:if>
 	<c:if test="${detail.type=='3' }">
-	杂事
+	其他事项
 	</c:if>
+	<c:if test="${detail.type=='4' }">
+	数据整理
+	</c:if>
+	&nbsp;
+	用时:${detail.usedtime}小时
+	&nbsp;
+	完成${detail.count}%
+	&nbsp;
 	<br/> 
-	&nbsp;&nbsp;${detail.content }
+	&nbsp;
+	${detail.content }
 </c:forEach>          
 	
   </body>

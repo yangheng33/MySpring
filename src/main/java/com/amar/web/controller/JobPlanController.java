@@ -196,7 +196,6 @@ public class JobPlanController
 		int jobplanid = Integer.parseInt( request.getParameter( "jobplanid" ) );
 		User user = ( User ) request.getSession().getAttribute( "user" );
 
-		System.out.println( "jobplanid:" + jobplanid );
 		try
 		{
 			if ( request instanceof MultipartHttpServletRequest )
@@ -307,7 +306,7 @@ public class JobPlanController
 	public String jobplanInfo( Jobplan jobplan )
 	{
 		StringBuilder sb = new StringBuilder();
-		String sign = "\n";
+		String sign = "<br/>";
 		sb.append( "主题:" ).append( jobplan.getTitle() ).append( sign );
 		sb.append( "内容:" ).append( jobplan.getContent() ).append( sign );
 		sb.append( "发布时间:" ).append( TimeDateUtil.getDateTime( jobplan.getReporttime() ) ).append( sign );

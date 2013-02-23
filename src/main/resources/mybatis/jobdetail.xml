@@ -4,7 +4,7 @@
 <mapper namespace="com.amar.db.ibatis.dao.JobdetailDAO">
 
 <select id="findJobdetail" parameterType="jobdetail" resultType="jobdetail">
-SELECT id,jobid,usedtime,content,title,type,count,jobplanid
+SELECT id,jobid,usedtime,content,title,type,count,jobplanid,projectid
  FROM Jobdetail
 <where>
 <if test=" id > 0 ">
@@ -31,16 +31,19 @@ AND title = #{title}
 <if test=" jobplanid > 0 ">
  AND jobplanid = #{jobplanid}
 </if>
+<if test=" projectid > 0 ">
+ AND projectid = #{projectid}
+</if>
 </where>
 </select>
 
 <insert id="addJobdetail" parameterType="jobdetail" >
 insert into Jobdetail
 (
-jobid,usedtime,content,title,type,count,jobplanid
+jobid,usedtime,content,title,type,count,jobplanid,projectid
 ) values (
 #{jobid,jdbcType=NUMERIC},#{usedtime,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},
-#{title,jdbcType=VARCHAR},#{type,jdbcType=NUMERIC},#{count,jdbcType=NUMERIC},#{jobplanid,jdbcType=NUMERIC}
+#{title,jdbcType=VARCHAR},#{type,jdbcType=NUMERIC},#{count,jdbcType=NUMERIC},#{jobplanid,jdbcType=NUMERIC},#{projectid,jdbcType=NUMERIC}
 )
 </insert>
 
@@ -66,6 +69,9 @@ count=#{count},
 </if>
 <if test=" jobplanid > 0 ">
 jobplanid=#{jobplanid},
+</if>
+<if test=" projectid > 0 ">
+projectid=#{projectid},
 </if>
 </set>
 <where>

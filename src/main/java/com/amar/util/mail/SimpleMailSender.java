@@ -14,10 +14,34 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-public class SimpleMailSender
+public class SimpleMailSender implements Runnable
 {
+	private String mailtype = "";
+
+	private MailSenderInfo mailInfo;
+
+	public SimpleMailSender( String mailtype , MailSenderInfo mailInfo )
+	{
+		this.mailtype = mailtype;
+		this.mailInfo = mailInfo;
+	}
+
+	@Override
+	public void run()
+	{
+		if ( mailtype.equalsIgnoreCase( MailTool.MAIL_TYPE_HTML ) )
+		{
+			sendHtmlMail( mailInfo );
+		}
+		else
+		{
+			sendTextMail( mailInfo );
+		}
+	}
+
 	/**
 	 * 发送文体格式
+	 * 
 	 * @param mailInfo
 	 * @return
 	 */
@@ -123,4 +147,5 @@ public class SimpleMailSender
 		}
 		return false;
 	}
+
 }

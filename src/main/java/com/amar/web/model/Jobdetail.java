@@ -17,6 +17,8 @@ private int count;
 
 private int jobplanid;
 
+private int projectid;
+
 public void setId( int id )
 {
 this.id=id;
@@ -95,6 +97,16 @@ public int getJobplanid()
 public void setJobplanid( int jobplanid )
 {
 	this.jobplanid = jobplanid;
+}
+
+public int getProjectid()
+{
+	return projectid;
+}
+
+public void setProjectid( int projectid )
+{
+	this.projectid = projectid;
 }
 
 }

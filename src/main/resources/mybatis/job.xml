@@ -29,6 +29,7 @@ SELECT id,userid,jobtime
 	<if test=" userid > 0 ">
 		and j.userid = #{userid}
 	</if>
+	and c.type = 1
 	left join User u on j.userid = u.id
 	where (c.date between 
 	date(concat(year(str_to_date('${datetime}','%Y-%m-%d %H:%i:%s')),'-',

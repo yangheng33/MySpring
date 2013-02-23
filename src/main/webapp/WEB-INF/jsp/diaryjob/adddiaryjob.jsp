@@ -1,11 +1,6 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
-	isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ include file="../common/tag.jsp" %>
+<%@ include file="../common/header.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -23,7 +18,10 @@
 <script type="text/javascript"
 	src="<%=path%>/javascript/jquery-1.6.2.min.js"></script>
 <script type="text/javascript">
-  
+  function goback()
+  {
+	  window.location.href = "diaryJob.amar?method=personallist";
+  }
   
   function dosomething()
   {
@@ -33,7 +31,8 @@
 	  var s_type="";
 	  var s_count="";
 	  var s_title="";
-		 
+	  var s_project="";	 
+	  
 	 $("[name='_title']").each(function(index)
      {
 		 s_title += $(this).val()+",,,,";
@@ -62,12 +61,19 @@
 		  s_count += $(this).val()+",,,,";
 	 })
 	 
+	   $("[name='_project']").each(function(index)
+     {
+		   s_project += $(this).val()+",,,,";
+	 })
+	 
+	 
 	 $("#title").val(s_title);
 	 $("#jobplanid").val(s_jobplanid);
 	 $("#type").val(s_type);
 	 $("#count").val(s_count);
 	 $("#usetime").val(s_usedtime);
 	 $("#content").val(s_content);
+	 $("#projectid").val(s_project);
 	 
 	if(confirm("您确认提交工作日志??"))
 	{
@@ -80,16 +86,26 @@
   {
 	  divIndex++;
       var content = "<div id='div"+divIndex+"' width='900' height='200'>";
-		content += "用时(小时):<input type='text' name='_usedtime' value='0' style='width:50px'/>";
+		
 		content += "&nbsp;&nbsp;";
 		content += "标题:<input type='text' name='_title' value='请输入标题'/>&nbsp;";
 		content += "<input type='hidden' name='_jobplanid' value='0'/>";
+		
+		content += "项目:<select name='_project' >"
+		<c:forEach items="${projectlist}" var="projectInfo">
+		content += "<option value='${projectInfo.id}'> ${projectInfo.name} </option>"
+		</c:forEach>
+		content += "</select>";
+		content += "&nbsp;";
 		content += "任务类型:<select name='_type' >";
-		content += "<option value='3' selected='selected'>杂事</option>";
-		content += "<option value='2' >测试任务</option>";
-		content += "<option value='1' >开发任务</option>";
+		content += "<option value='3' >其他事项</option>";
+		content += "<option value='4' >数据整理</option>";
+		content += "<option value='2' >功能测试</option>";
+		content += "<option value='1' selected='selected'>功能开发</option>";
 		content += " </select>";
-		content += "&nbsp;&nbsp;";
+		content += "&nbsp;";
+		content += "用时(小时):<input type='text' name='_usedtime' value='0' style='width:50px'/>";
+		content += "&nbsp;";
 		content += "完成情况:<select name='_count'>";
 		content += "<option value='0'>0%</option>";
 		content += "<option value='20'>20%</option>";
@@ -121,28 +137,42 @@
 		<input name="type" id="type" type="hidden"/>
 		<input name="count" id="count" type="hidden"/>
 		<input name="title" id="title" type="hidden"/>
+		<input name="projectid" id="projectid" type="hidden"/>
 		
 		 工作时间:<input type="text" id="recordtime" name="recordtime" readonly="readonly" value="${querydatetime}"
 		  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:140px">
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" onclick="addjob()" value="新增一条"/> 
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" onclick="dosomething()" value="保存工作记录"/><br/>
+		&nbsp;&nbsp;
+		<input type="button" onclick="dosomething()" value="保存工作记录"/>
+		&nbsp;&nbsp;
+		<input type="button" onclick="goback()" value="返回日记列表"/>
 		
 		<hr width="800" align="left"/>
 		
 		<c:forEach items="${dealJobList}" var="dealjob">
-			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
+			<br/>
 			&nbsp;
 			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled"/>
-				<input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
+			    <input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
+			
+			项目:<select name='_project' disabled="disabled">
+					<c:forEach items="${projectlist}" var="projectInfo">
+						<option value='${projectInfo.id}'  <c:if test="${projectInfo.id == dealjob.projectid}">selected='selected'</c:if> >
+							${projectInfo.name}
+						</option>
+					</c:forEach>
+				</select>
 			
 			任务类型:<select name='_type' disabled="disabled">
-					<option value='3'>杂事</option>
-					<option value='2' >测试任务</option>
-					<option value='1' selected="selected">开发任务</option>
+					<option value='3' >其他事项</option>
+					<option value='4' >数据整理</option>
+					<option value='2' >功能测试</option>
+					<option value='1' selected="selected">功能开发</option>
 				  </select>
-			&nbsp;
+			
+			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
+			
 			完成情况:<select name='_count'>
 					<option value='0'>0%</option>
 					<option value='20'>20%</option>
@@ -154,20 +184,31 @@
 			<br/>
 			<textarea name='_content' cols='80' rows='3' disabled="disabled">${dealjob.content}</textarea>
 		</c:forEach>
-		<br/>
+		
 		
 		<c:forEach items="${testJobList}" var="dealjob">
-			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
+			<br/>
 			&nbsp;
 			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled"/>
 				<input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
 			
+			项目:<select name='_project' disabled="disabled">
+					<c:forEach items="${projectlist}" var="projectInfo">
+						<option value='${projectInfo.id}'  <c:if test="${projectInfo.id == dealjob.projectid}">selected='selected'</c:if> >
+							${projectInfo.name}
+						</option>
+					</c:forEach>
+				</select>
+				
 			任务类型:<select name='_type' disabled="disabled">
-					<option value='3'>杂事</option>
-					<option value='2' selected="selected">测试任务</option>
-					<option value='1' >开发任务</option>
+					<option value='3' >其他事项</option>
+					<option value='4' >数据整理</option>
+					<option value='2' selected="selected">功能测试</option>
+					<option value='1' >功能开发</option>
 				  </select>
-			&nbsp;
+			
+			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
+			
 			完成情况:<select name='_count'>
 					<option value='0'>0%</option>
 					<option value='20'>20%</option>
