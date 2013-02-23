@@ -6,7 +6,7 @@
 .metadata
 bin/
 tmp/
-src/main/webapp/WEB-INF/classes/*
+src/main/webapp/WEB-INF/classes/
 *.tmp
 *.bak
 *.swp
@@ -14,7 +14,7 @@ src/main/webapp/WEB-INF/classes/*
 local.properties
 .settings/
 .loadpath
-*.class
+#*.class
 *.war
 target/
 #.classpath
