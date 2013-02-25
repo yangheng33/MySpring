@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script type="text/javascript">
   	function gogo()
   	{
-  		if(confirm("您确定注册码??"))
+  		if(confirm("您确定注册码?"))
   		{
   			document.forms[0].submit();
   		}
