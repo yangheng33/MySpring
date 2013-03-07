@@ -38,6 +38,7 @@ import com.amar.web.model.Jobplanfile;
 import com.amar.web.model.Project;
 import com.amar.web.model.User;
 
+@SuppressWarnings( "unused" )
 @Controller
 @RequestMapping( "jobPlan.amar" )
 public class JobPlanController
