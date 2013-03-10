@@ -34,9 +34,9 @@
   </script>
   
   <body>
-    This is my JSP page. <br>
+          自动生成代码 <br>
     
-    add<br/>
+    <br/>
   	<form action="<%=request.getContextPath()%>/autocode.amar?method=generate" method="post">
   	
   	数据库类型:	<select name="dbtype">
@@ -44,7 +44,7 @@
   					<option value="mysql">MYSQL</option>
   				</select><br/>
   	数据库名称:<input type="text" name="dbname" value="spring"><br/>
-  	程序根路径:<input type="text" name="path" value="d:/autocode"><br/>
+  	<!--程序根路径:--><input type="hidden" name="path" value="d:/autocode" >
   	model路径:<input type="text" name="modelPath" value="com/amar/web/model"><br/>
   	xml配置文件路径:<input type="text" name="configPath" value="mybatis"><br/>
   	dao的路径:<input type="text" name="daoPath" value="com/amar/db/ibatis/dao"><br/>

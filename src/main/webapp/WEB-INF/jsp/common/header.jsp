@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -22,7 +23,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
    <table width="100%" height="20" style="font-family:宋体;font-size:14;font-weight:bold">
 		<tr>
-			<td width="200"> 你好!${sessionScope.user.realname}</td>
+			<td width="200"> 你好! 
+			<c:if test="${sessionScope.user == null}">
+				浏览者
+			</c:if>
+			${sessionScope.user.realname} 			
+			</td>
 			<td align="center">
 				<a href="login.amar?method=main">首页</a>
 				<a href="login.amar?method=exit">退出</a>

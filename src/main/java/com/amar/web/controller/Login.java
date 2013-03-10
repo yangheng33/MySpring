@@ -39,6 +39,12 @@ public class Login
 		response.getWriter().write( json.toString() );
 	}
 	
+	@RequestMapping( params = "method=beBrower" )
+	public String beBrower( HttpServletRequest request , HttpServletResponse response ) throws Exception
+	{
+		return "main";
+	}
+	
 	@RequestMapping( params = "method=exit" )
 	public String exitLogin(HttpServletRequest request , HttpServletResponse response)throws Exception
 	{
@@ -122,7 +128,7 @@ public class Login
 		}
 		else
 		{
-			request.setAttribute( "error" , "用户名或密码错误" );
+			request.setAttribute( "errorinfo" , "用户名或密码错误" );
 			return "login/login";
 		}
 	}

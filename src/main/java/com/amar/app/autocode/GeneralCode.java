@@ -199,16 +199,30 @@ public class GeneralCode
 			String columnName = tableInfo.getColumn_name().toLowerCase();
 			String type = tableInfo.getData_type();
 			String jdbctype = "";
-			String idOrProperty = "result";
 			if ( selectorDB.isKey( tableInfo.getIskey() ) )
 			{
-				idOrProperty = "id";
+				if ( ! selectorDB.isDate( type ) )
+				{
+					jdbctype = " jdbcType=\"" + selectorDB.getJdbcType( type ) + "\" ";
+				}
+				sber.append( "\t<id property=\"" + columnName + "\" column=\"" + columnName + "\"" + jdbctype + " />\n" );
 			}
-			if ( ! selectorDB.isDate( type ) )
+		}
+		
+		for( TableInfo tableInfo : tableInfoList )
+		{
+			String columnName = tableInfo.getColumn_name().toLowerCase();
+			String type = tableInfo.getData_type();
+			String jdbctype = "";
+			if (! selectorDB.isKey( tableInfo.getIskey() ) )
 			{
-				jdbctype = " jdbcType=\"" + selectorDB.getJdbcType( type ) + "\" ";
+				if ( ! selectorDB.isDate( type ) )
+				{
+					jdbctype = " jdbcType=\"" + selectorDB.getJdbcType( type ) + "\" ";
+				}
+				sber.append( "\t<result property=\"" + columnName + "\" column=\"" + columnName + "\"" + jdbctype + " />\n" );
 			}
-			sber.append( "\t<" + idOrProperty + " property=\"" + columnName + "\" column=\"" + columnName + "\"" + jdbctype + " />\n" );
+			
 		}
 		sber.append( "</resultMap>\n\n" );
 
@@ -318,7 +332,7 @@ public class GeneralCode
 		selectField.deleteCharAt( selectField.length() - 1 );
 
 		sber.append( "SELECT " ).append( selectField.toString() ).append( "\n FROM " ).append( tablename );
-		sber.append( " AS A \n<where>\n" );
+		sber.append( " A \n<where>\n" );
 		for( TableInfo tableInfo : tableInfoList )
 		{
 			String columnName = tableInfo.getColumn_name().toLowerCase();

@@ -122,7 +122,7 @@ public class OracleSelector implements DBSelector
 	public String keyFunction( String keyname )
 	{
 		StringBuilder sber = new StringBuilder();
-		sber.append( "<selectKey keyProperty=\"" + keyname + "\" order=\"BEFORE\" resultType=\"int\"> \n" );
+		sber.append( "<selectKey keyProperty=\"" + keyname + "\" order=\"BEFORE\" resultType=\"long\"> \n" );
 		sber.append( "select mybatis_sequence.nextval from dual \n" );
 		sber.append( "</selectKey> \n" );
 		return sber.toString();
@@ -131,7 +131,7 @@ public class OracleSelector implements DBSelector
 	@Override
 	public String dateType( String columnName )
 	{
-		return new StringBuilder().append( "#{" ).append( columnName ).append( ",jdbcType=DATE}," ).toString();
+		return new StringBuilder().append( "#{" ).append( columnName ).append( ",jdbcType=TIMESTAMP}," ).toString();
 	}
 
 	@Override
