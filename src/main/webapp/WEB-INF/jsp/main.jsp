@@ -29,6 +29,7 @@
   <a href="<%=path%>/html/chart/chart.html">flash图表</a><br/>
   <a href="<%=path%>/diary.amar?method=personallist">写日记</a><br/>
   <a href="<%=path%>/remindplan.amar?method=list">提醒计划</a><br/>
+  <a href="jsDemo.amar?method=list">jsDemo</a><br/>
   
   <br/>
   	<b>工作流程:</b><br/>

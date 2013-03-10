@@ -182,3 +182,23 @@ PRIMARY KEY(id)
 ALTER table User MODIFY email varchar(40);
 alter table Jobdetail add projectid int;
 alter table Countdate add type int default 1 comment'1工作日,2节假日';
+
+CREATE TABLE `FamliyBoy` (
+`id`  int NULL AUTO_INCREMENT ,
+`name`  varchar(20) NOT NULL ,
+`birthday`  datetime  ,
+`fatherid`  int ,
+`sex`  int NULL DEFAULT 1 COMMENT '性别,1男,2女' ,
+`remark`  varchar(400)  ,
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `FamliyWife` (
+`id`  int NULL AUTO_INCREMENT ,
+`mateid`  int  COMMENT '配偶id',
+`name`  varchar(20) NOT NULL ,
+`birthday`  datetime ,
+`marrydate`  datetime COMMENT '结婚日期' ,
+`sex`  int NULL DEFAULT 1 COMMENT '性别,1男,2女' ,
+PRIMARY KEY (`id`)
+);
