@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.amar.constant.ProjectInfo;
 import com.amar.db.ibatis.dao.Metarnet_visitDAO;
 import com.amar.util.SpringBeanFactory;
+import com.amar.web.framework.BaseController;
 import com.amar.web.model.Metarnet_visit;
 
 import java.util.Date;
@@ -35,7 +36,7 @@ import java.util.regex.*;
 
 @Controller
 @RequestMapping( "zhounan.amar" )
-public class Zhounan
+public class Zhounan  extends BaseController
 {
 	@Resource( name = "metarnet_visitDAO" )
 	private Metarnet_visitDAO metarnet_visitDAO;
@@ -69,7 +70,7 @@ public class Zhounan
 
 			MultipartHttpServletRequest multipartRequest = ( MultipartHttpServletRequest ) request;
 
-			MultipartFile multipartFile = multipartRequest.getFile( "files[]" );
+			MultipartFile multipartFile = multipartRequest.getFile( "file" );
 
 			BufferedReader read = new BufferedReader( new InputStreamReader( multipartFile.getInputStream() ) );
 

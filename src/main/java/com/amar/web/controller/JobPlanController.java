@@ -33,6 +33,7 @@ import com.amar.util.DataTool;
 import com.amar.util.ServletUtil;
 import com.amar.util.TimeDateUtil;
 import com.amar.util.mail.MailTool;
+import com.amar.web.framework.BaseController;
 import com.amar.web.model.Jobplan;
 import com.amar.web.model.Jobplanfile;
 import com.amar.web.model.Project;
@@ -41,7 +42,7 @@ import com.amar.web.model.User;
 @SuppressWarnings( "unused" )
 @Controller
 @RequestMapping( "jobPlan.amar" )
-public class JobPlanController
+public class JobPlanController  extends BaseController
 {
 	@Resource( name = "jobplanDAO" )
 	private JobplanDAO jobplanDAO;

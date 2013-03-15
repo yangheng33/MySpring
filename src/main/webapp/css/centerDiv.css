@@ -15,3 +15,9 @@
        documentElement.scrollTop + (document.documentElement.clientHeight - this.offsetHeight)/2: /*IE6*/
    	   document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);  /*IE5 IE5.5*/
 }
+
+.commonFont
+{
+	font-family:宋体;
+	font-size:12;
+}

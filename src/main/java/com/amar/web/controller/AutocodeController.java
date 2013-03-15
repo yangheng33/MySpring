@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +23,12 @@ import com.amar.app.compress.Compress;
 import com.amar.db.ibatis.dao.AutocodeDAO;
 import com.amar.util.DataTool;
 import com.amar.util.ServletUtil;
+import com.amar.web.framework.BaseController;
 
 @Controller
 @RequestMapping( "autocode.amar" )
-public class AutocodeController
+public class AutocodeController extends BaseController
 {
-	private final Logger log = Logger.getLogger( this.getClass() );
 
 	@Resource( name = "autocodeDAO" )
 	private AutocodeDAO autocodeDAO;

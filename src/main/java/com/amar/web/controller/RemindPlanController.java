@@ -11,12 +11,13 @@ import com.amar.db.ibatis.dao.RemindlogDAO;
 import com.amar.db.ibatis.dao.RemindplanDAO;
 import com.amar.util.ServletUtil;
 import com.amar.util.TimeDateUtil;
+import com.amar.web.framework.BaseController;
 import com.amar.web.model.Remindlog;
 import com.amar.web.model.Remindplan;
 
 @Controller
 @RequestMapping( "remindplan.amar" )
-public class RemindPlanController
+public class RemindPlanController  extends BaseController
 {
 	@Resource( name = "remindplanDAO" )
 	RemindplanDAO remindplanDAO;

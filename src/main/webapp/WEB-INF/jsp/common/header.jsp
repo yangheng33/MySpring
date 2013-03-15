@@ -17,11 +17,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-
+	<link rel="stylesheet" href="css/centerDiv.css" />
   </head>
   
   <body>
-   <table width="100%" height="20" style="font-family:宋体;font-size:14;font-weight:bold">
+   <table width="100%" height="20" class="commonFont" style="font-weight:bold">
 		<tr>
 			<td width="200"> 你好! 
 			<c:if test="${sessionScope.user == null}">

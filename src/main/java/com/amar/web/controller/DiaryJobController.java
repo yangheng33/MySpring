@@ -20,6 +20,7 @@ import com.amar.db.ibatis.dao.JobplanDAO;
 import com.amar.db.ibatis.dao.ProjectDAO;
 import com.amar.db.ibatis.dao.UserDAO;
 import com.amar.util.TimeDateUtil;
+import com.amar.web.framework.BaseController;
 import com.amar.web.model.Job;
 import com.amar.web.model.Jobdetail;
 import com.amar.web.model.Jobplan;
@@ -29,7 +30,7 @@ import com.amar.web.model.User;
 @SuppressWarnings( { "unchecked", "rawtypes" } )
 @Controller
 @RequestMapping( "diaryJob.amar" )
-public class DiaryJobController
+public class DiaryJobController  extends BaseController
 {
 	@Resource( name = "jobDAO" )
 	private JobDAO jobDAO;
@@ -311,9 +312,9 @@ public class DiaryJobController
 	}
 
 	@RequestMapping( params = "method=delDiaryjob" )
-	public void delDiaryjob( HttpServletRequest request , HttpServletResponse response ) throws IOException
+	public void delDiaryjob( HttpServletRequest request , HttpServletResponse response,int id ) throws IOException
 	{
-
+		
 		response.sendRedirect( "diaryJob.amar?method=personallist" );
 	}
 }

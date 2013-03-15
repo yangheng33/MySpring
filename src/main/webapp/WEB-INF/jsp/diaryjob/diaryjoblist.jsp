@@ -113,7 +113,7 @@
 	</script>
   </head>
   
-  <body>
+  <body class="commonFont">
     
     <form action="<%=path%>/diaryJob.amar?method=personallist" method="post">
 	时间选择:<input type="text" id="querydatetime" name="querydatetime" readonly="readonly" value="${querydatetime}"

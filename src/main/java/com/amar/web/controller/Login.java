@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.amar.db.ibatis.dao.UserDAO;
 import com.amar.util.ServletUtil;
 import com.amar.util.TimeDateUtil;
+import com.amar.web.framework.BaseController;
 import com.amar.web.model.User;
 
 @Controller
 @RequestMapping( "login.amar" )
-public class Login
+public class Login  extends BaseController
 {
 
 	@Resource( name = "userDAO" )

@@ -82,7 +82,12 @@ AND id = #{id}
 <delete id="deleteJobdetail" parameterType="jobdetail" >
 DELETE FROM Jobdetail 
 <where> 
+<if test="id > 0">
 AND id = #{id}
+</if>
+<if test="">
+AND jobid= #{jobid}
+</if>
 </where>
 </delete>
 

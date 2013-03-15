@@ -267,11 +267,12 @@ public class TimeDateUtil {
 		return (int) ((t1-t2)/86400000);
 	}
 
-	public static void main(String[] args){ 
-		System.out.println(getDateTime(TimeDateUtil.getDayTime(System.currentTimeMillis())));
-		System.out.println(getDateTime(TimeDateUtil.getDayTime(System.currentTimeMillis()) + 24*3600*1000));
-		System.out.println(getDateTime(System.currentTimeMillis()));
-		System.out.println(getMonth(System.currentTimeMillis()));
+	public static void main(String[] args)
+	{ 
+//		System.out.println(getDateTime(TimeDateUtil.getDayTime(System.currentTimeMillis())));
+//		System.out.println(getDateTime(TimeDateUtil.getDayTime(System.currentTimeMillis()) + 24*3600*1000));
+//		System.out.println(getDateTime(System.currentTimeMillis()));
+//		System.out.println(getMonth(System.currentTimeMillis()));
 //		long st = System.currentTimeMillis();
 //		int i=1000;
 //		while(i-->0)

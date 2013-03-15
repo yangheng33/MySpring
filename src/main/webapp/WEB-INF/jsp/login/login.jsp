@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	
   </script>
   
-  <body onkeydown="keyLogin();">
+  <body onkeydown="keyLogin();" class="">
   	登录<br/>
   	<div id="errorDiv" width="300" style="display:none" class="centerDiv"></div>
   	<c:if test="${errorinfo!=null}">

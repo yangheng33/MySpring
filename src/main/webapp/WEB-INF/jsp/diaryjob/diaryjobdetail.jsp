@@ -20,7 +20,7 @@ String path = request.getContextPath();
   <script type="text/javascript" src="<%=request.getContextPath()%>/javascript/date/WdatePicker.js"></script>
   <script type="text/javascript" src="<%=path%>/javascript/jquery-1.6.2.min.js"></script>
   <script type="text/javascript" src="<%=path%>/javascript/jquery.tablesorter/jquery.tablesorter.min.js"></script>
-  
+  <link rel="stylesheet" href="css/centerDiv.css" />
   <script type="text/javascript">
   
   function hiddenMe()
@@ -30,7 +30,8 @@ String path = request.getContextPath();
   </script>
   </head>
   
-  <body>
+  <body class="commonFont">
+<div id="closeBtn" align="left" onclick="hiddenMe()" >关闭</div>
 <div id="closeBtn" align="right" onclick="hiddenMe()" >关闭</div>
 
 &nbsp;${user.realname }<br/>

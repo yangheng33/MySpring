@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.amar.db.ibatis.dao.DiaryDAO;
 import com.amar.util.ServletUtil;
 import com.amar.util.TimeDateUtil;
+import com.amar.web.framework.BaseController;
 import com.amar.web.model.Diary;
 import com.amar.web.model.User;
 
 @Controller
 @RequestMapping( "diary.amar" )
-public class DiaryController
+public class DiaryController extends BaseController
 {
 	@Resource( name = "diaryDAO" )
 	private DiaryDAO diaryDAO;

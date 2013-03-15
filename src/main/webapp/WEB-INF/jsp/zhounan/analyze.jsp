@@ -19,9 +19,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-	<link rel="stylesheet" href="<%=path%>/javascript/jquery.tablesorter/themes/blue/style.css" type="text/css" id="" media="print, projection, screen" />
-	<script type="text/javascript" src="<%=path%>/javascript/jquery-1.6.2.min.js"></script>
-	<script type="text/javascript" src="<%=path%>/javascript/jquery.tablesorter/jquery.tablesorter.min.js"></script>
+	<link rel="stylesheet" href="javascript/jquery.tablesorter/themes/blue/style.css" type="text/css" id="" media="print, projection, screen" />
+	<script type="text/javascript" src="javascript/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="javascript/jquery.tablesorter/jquery.tablesorter.min.js"></script>
 
   </head>
     <script >

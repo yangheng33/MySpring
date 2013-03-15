@@ -16,6 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
   </head>
   <link rel="stylesheet" href="<%=path%>/javascript/jquery.validity/jquery.validity.css" />
+  <link rel="stylesheet" href="css/centerDiv.css" />
   <script type="text/javascript" src="<%=path%>/javascript/date/WdatePicker.js"></script>
   <script type="text/javascript" src="<%=path%>/javascript/jquery.validity/jquery-1.8.3.min.js"></script>
   <script type="text/javascript" src="<%=path%>/javascript/jquery.validity/jquery.validity.min.js"></script>
@@ -49,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	
   </script>
   
-  <body>
+  <body class="commonFont">
  欢迎前来 注册
  
   <br/>
