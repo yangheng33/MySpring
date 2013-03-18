@@ -42,9 +42,13 @@ public class BaseController
 		{
 			title = "缺少数据";
 		}
-		if ( ex instanceof IOException )
+		else if ( ex instanceof IOException )
 		{
 			title = "输入输出";
+		}
+		else if ( ex instanceof NumberFormatException )
+		{
+			title = "数据格式";
 		}
 		else if ( ex instanceof SQLException )
 		{

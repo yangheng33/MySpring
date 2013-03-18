@@ -30,7 +30,7 @@ import com.amar.web.model.User;
 @SuppressWarnings( { "unchecked", "rawtypes" } )
 @Controller
 @RequestMapping( "diaryJob.amar" )
-public class DiaryJobController  extends BaseController
+public class DiaryJobController extends BaseController
 {
 	@Resource( name = "jobDAO" )
 	private JobDAO jobDAO;
@@ -43,7 +43,7 @@ public class DiaryJobController  extends BaseController
 
 	@Resource( name = "jobplanDAO" )
 	private JobplanDAO jobplanDAO;
-	
+
 	@Resource( name = "projectDAO" )
 	private ProjectDAO projectDAO;
 
@@ -116,7 +116,7 @@ public class DiaryJobController  extends BaseController
 		request.setAttribute( "detaillist" , detaillist );
 		request.setAttribute( "user" , _user );
 		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
-		
+
 		return "diaryjob/diaryjobdetail";
 	}
 
@@ -256,7 +256,7 @@ public class DiaryJobController  extends BaseController
 		request.setAttribute( "testJobList" , testJobList );
 
 		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
-		
+
 		return "diaryjob/adddiaryjob";
 	}
 
@@ -311,10 +311,19 @@ public class DiaryJobController  extends BaseController
 		return "diaryjob/editdiary";
 	}
 
+	@Transactional( propagation = Propagation.REQUIRED , rollbackFor = { Exception.class } )
 	@RequestMapping( params = "method=delDiaryjob" )
-	public void delDiaryjob( HttpServletRequest request , HttpServletResponse response,int id ) throws IOException
+	public void delDiaryjob( HttpServletRequest request , HttpServletResponse response ) throws IOException
 	{
-		
-		response.sendRedirect( "diaryJob.amar?method=personallist" );
+		int id = Integer.parseInt( request.getParameter( "id" ) );
+		Job job = new Job();
+		job.setId( id );
+		jobDAO.deleteJob( job );
+
+		Jobdetail jobdetail = new Jobdetail();
+		jobdetail.setJobid( id );
+		jobdetailDAO.deleteJobdetail( jobdetail );
+
+		sendData( response , "ok" );
 	}
 }

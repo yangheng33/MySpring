@@ -85,7 +85,7 @@ DELETE FROM Jobdetail
 <if test="id > 0">
 AND id = #{id}
 </if>
-<if test="">
+<if test="jobid > 0">
 AND jobid= #{jobid}
 </if>
 </where>
