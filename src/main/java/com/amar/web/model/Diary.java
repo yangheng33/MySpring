@@ -3,7 +3,7 @@ import java.util.Date;
 
 public class Diary
 {
-	private int id;
+	private long id;
 
 	private int userid;
 
@@ -17,12 +17,12 @@ public class Diary
 
 	private String diarytimeEnd;
 
-	public void setId( int id )
+	public void setId( long id )
 	{
 		this.id = id;
 	}
 
-	public int getId()
+	public long getId()
 	{
 		return this.id;
 	}
