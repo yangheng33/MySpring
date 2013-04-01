@@ -94,8 +94,12 @@
 		document.forms[0].action= "<%=path%>/diaryJob.amar?method=seeOneDayJob&index="+index+"&userid="+userid+"&querydatetime="+$("#querydatetime").val();    
 		document.forms[0].submit();
 	}
-	
-	
+	function exportExcel()
+	{
+		$("#onejobDiv").hide();
+		document.forms[0].action= "diaryJob.amar?method=exportExcel"; 
+		document.forms[0].submit();
+	}
 	function query4Div(index,userid)
 	{
 		$("#onejobDiv").hide();
@@ -123,7 +127,7 @@
   	<input type="button" onclick="go()" value="查询">&nbsp;&nbsp;
   	
   	<c:if test="${querytype =='all'}">
-  	<button onclick="seePersonaljob()">查看自己的工作</button>
+  	<button onclick="seePersonaljob()">查看自己的工作</button>&nbsp;&nbsp;<button onclick="exportExcel()">导出excel</button>
   	</c:if>
   	<c:if test="${querytype =='personal'}">
   	<button onclick="seeOtherDiaryjob()">查看所有人的工作</button>

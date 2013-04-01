@@ -15,10 +15,16 @@
 	http://www.springframework.org/schema/util   
     http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     
-
-	
 	<bean id="springBeanFactory" class="com.amar.util.SpringBeanFactory"></bean>
-	
+    
+	 <mvc:interceptors>
+    	<mvc:interceptor>
+    		<mvc:mapping path="/*"/>
+    		<bean class="com.amar.web.interceptor.TestInterceptor"></bean>
+    	</mvc:interceptor>
+    </mvc:interceptors>
+    
+    <!--
 	<bean id="taskExecutor"
 	  class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 	  <property name="corePoolSize" value="3" />
@@ -26,43 +32,6 @@
 	  <property name="maxPoolSize" value="5" />
 	  <property name="queueCapacity" value="25" />
 	</bean>
-	
-    <!--<mvc:default-servlet-handler default-servlet-name=""/>--> 
-    
-    
-	<!--  
-	 <mvc:interceptors>
-    	<mvc:interceptor>
-    		<mvc:mapping path="/*"/>
-    		<bean class="com.amar.web.interceptor.TestInterceptor"></bean>
-    	</mvc:interceptor>
-    </mvc:interceptors>
-    -->
-   <!--  
-    <bean id="exceptionAopService" class="org.springframework.aop.framework.ProxyFactoryBean">  
-        <property name="target" ref="randomCodeController"></property>  
-        <property name="interceptorNames">  
-            <list>  
-                <value>myThrowsAdvice</value>  
-            </list>
-        </property>  
-    </bean>  
-    -->
-    <!-- 
-    <bean id="myThrowsAdvice" class="com.amar.web.framework.MyThrowsAdvice"></bean>  
-    <bean id="beanNameAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-            <property name="beanNames">
-                   <list>
-                         	<value>*Controller</value>
-                         	<value>*amar</value>
-                   </list>
-            </property>
-            <property name="interceptorNames">
-                        <value>myThrowsAdvice</value>
-            </property>
-	</bean>
-  -->
-   
+	--> 
+    <!--<mvc:default-servlet-handler default-servlet-name=""/>-->
 </beans>
-
-

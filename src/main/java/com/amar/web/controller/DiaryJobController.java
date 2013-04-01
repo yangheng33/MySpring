@@ -10,6 +10,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,47 +83,6 @@ public class DiaryJobController extends BaseController
 		return "diaryjob/diaryjoblist";
 	}
 
-	@RequestMapping( params = "method=seeOneDayJob" )
-	public String seeOneDayJob( HttpServletRequest request , HttpServletResponse response )
-	{
-		String index = request.getParameter( "index" );
-		String userid = request.getParameter( "userid" );
-		String querydatetime = request.getParameter( "querydatetime" );
-
-		if ( index.length() == 1 )
-		{
-			index = "0" + index;
-		}
-
-		String datetime = querydatetime.substring( 0 , 8 ) + index;
-
-		String start = datetime + " 00:00:00";
-		String end = datetime + " 23:59:59";
-
-		Job job = new Job();
-		job.setJobtimeend( end );
-		job.setJobtimestart( start );
-		job.setUserid( Integer.parseInt( userid ) );
-
-		Job _job = jobDAO.findJob( job ).get( 0 );
-
-		Jobdetail jobdetail = new Jobdetail();
-		jobdetail.setJobid( _job.getId() );
-		List<Jobdetail> detaillist = jobdetailDAO.findJobdetail( jobdetail );
-
-		User user = new User();
-		user.setId( _job.getUserid() );
-
-		User _user = userDAO.findUser( user ).get( 0 );
-
-		request.setAttribute( "job" , _job );
-		request.setAttribute( "detaillist" , detaillist );
-		request.setAttribute( "user" , _user );
-		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
-
-		return "diaryjob/diaryjobdetail";
-	}
-
 	@RequestMapping( params = "method=alllist" )
 	public String alllist( HttpServletRequest request , HttpServletResponse response )
 	{
@@ -149,6 +112,38 @@ public class DiaryJobController extends BaseController
 		request.setAttribute( "querydatetime" , querydatetime );
 
 		return "diaryjob/diaryjoblist";
+	}
+
+	@RequestMapping( params = "method=exportExcel" )
+	public void exportExcel( HttpServletRequest request , HttpServletResponse response ) throws IOException
+	{
+		String querydatetime = request.getParameter( "querydatetime" );
+		if ( querydatetime == null || "".equals( querydatetime ) )
+		{
+			querydatetime = TimeDateUtil.getDateTime( new Date() );
+		}
+
+		List alllist = jobDAO.findJobRecode( 0 , querydatetime );
+		List<String> dateList = getDateList( alllist );
+		List<User> userlist = userDAO.findUser( new User() );
+		List userList = initUserList( userlist , dateList );
+		checkDiaryJob( alllist , userList );
+
+		String fileName = "统计";
+		XSSFWorkbook demoWorkBook = new XSSFWorkbook();
+		Sheet demoSheet = demoWorkBook.createSheet( "明细表" );
+
+		int rowNumber = 0;
+		Row headerRow = demoSheet.createRow( rowNumber );
+		for( int i = 0 ; i < dateList.size() ; i ++ )
+		{
+			Cell headerCell = headerRow.createCell( i );
+			headerCell.setCellValue( dateList.get( i ) );
+		}
+
+		response.setContentType( "application/binary;" );
+		response.setHeader( "Content-Disposition" , "attachment;filename=" + new String( ( fileName ).getBytes() , "iso8859-1" ) + ".xlsx" );
+		demoWorkBook.write( response.getOutputStream() );
 	}
 
 	public void checkDiaryJob( List alllist , List userList )
@@ -220,6 +215,47 @@ public class DiaryJobController extends BaseController
 			}
 		}
 		return datelist;
+	}
+
+	@RequestMapping( params = "method=seeOneDayJob" )
+	public String seeOneDayJob( HttpServletRequest request , HttpServletResponse response )
+	{
+		String index = request.getParameter( "index" );
+		String userid = request.getParameter( "userid" );
+		String querydatetime = request.getParameter( "querydatetime" );
+
+		if ( index.length() == 1 )
+		{
+			index = "0" + index;
+		}
+
+		String datetime = querydatetime.substring( 0 , 8 ) + index;
+
+		String start = datetime + " 00:00:00";
+		String end = datetime + " 23:59:59";
+
+		Job job = new Job();
+		job.setJobtimeend( end );
+		job.setJobtimestart( start );
+		job.setUserid( Integer.parseInt( userid ) );
+
+		Job _job = jobDAO.findJob( job ).get( 0 );
+
+		Jobdetail jobdetail = new Jobdetail();
+		jobdetail.setJobid( _job.getId() );
+		List<Jobdetail> detaillist = jobdetailDAO.findJobdetail( jobdetail );
+
+		User user = new User();
+		user.setId( _job.getUserid() );
+
+		User _user = userDAO.findUser( user ).get( 0 );
+
+		request.setAttribute( "job" , _job );
+		request.setAttribute( "detaillist" , detaillist );
+		request.setAttribute( "user" , _user );
+		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
+
+		return "diaryjob/diaryjobdetail";
 	}
 
 	@RequestMapping( params = "method=toAddDiaryjob" )
