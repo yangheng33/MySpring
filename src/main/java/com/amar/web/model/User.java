@@ -1,7 +1,9 @@
 package com.amar.web.model;
 import java.util.Date;
 
-public class User
+import com.amar.web.framework.BaseModel;
+
+public class User extends BaseModel
 {
 private int id;
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,7 +21,7 @@ import com.amar.web.model.User;
 
 @Controller
 @RequestMapping( "login.amar" )
-public class Login  extends BaseController
+public class Login extends BaseController
 {
 
 	@Resource( name = "userDAO" )
@@ -39,18 +40,18 @@ public class Login  extends BaseController
 
 		response.getWriter().write( json.toString() );
 	}
-	
+
 	@RequestMapping( params = "method=beBrower" )
 	public String beBrower( HttpServletRequest request , HttpServletResponse response ) throws Exception
 	{
 		return "main";
 	}
-	
+
 	@RequestMapping( params = "method=exit" )
-	public String exitLogin(HttpServletRequest request , HttpServletResponse response)throws Exception
+	public String exitLogin( HttpServletRequest request , HttpServletResponse response ) throws Exception
 	{
 		request.getSession().removeAttribute( "user" );
-		
+
 		return "login/login";
 	}
 
@@ -120,7 +121,7 @@ public class Login  extends BaseController
 	{
 		User user = ServletUtil.request2Bean( request , User.class );
 
-		List<User> userList = userDAO.findUser( user );
+		List<User> userList = userDAO.findUser( user , new RowBounds( 0 , 10 ) );
 
 		if ( userList != null && userList.size() > 0 )
 		{
