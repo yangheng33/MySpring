@@ -31,18 +31,18 @@ public class TestInterceptor implements HandlerInterceptor
 		boolean result = true;
 
 		String forbiddens[] = { "drop", "select" };
-
-		if ( data != null )
+		if ( data != null && ! "".equals( data.trim() ) )
 		{
 			for( String forbidden : forbiddens )
 			{
-				if ( forbidden.toLowerCase().contains( data ) )
+				if ( data.toLowerCase().contains( forbidden ) )
 				{
 					result = false;
 					break;
 				}
 			}
 		}
+
 		return result;
 	}
 
@@ -58,7 +58,7 @@ public class TestInterceptor implements HandlerInterceptor
 			String name = names.nextElement().toString();
 			String value = arg0.getParameter( name.toString() );
 
-			if ( !validate( name ) || ! validate( value ) )
+			if ( ! validate( value ) )
 			{
 				log.info( "" + name + "=" + value );
 				result = false;
