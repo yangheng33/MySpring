@@ -120,21 +120,21 @@
   <body class="commonFont">
     
     <form action="<%=path%>/diaryJob.amar?method=personallist" method="post">
-	时间选择:<input type="text" id="querydatetime" name="querydatetime" readonly="readonly" value="${querydatetime}"
-  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:140px">
+	时间选择:<input type="text" id="querydatetime" name="querydatetime" value="${querydatetime}"
+  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:160px">
   	&nbsp;&nbsp;
   	<input type="hidden" id="querytype" value="${querytype}">
-  	<input type="button" onclick="go()" value="查询">&nbsp;&nbsp;
+  	<input type="button" onclick="go()" value="查询" class="btn2">&nbsp;&nbsp;
   	
   	<c:if test="${querytype =='all'}">
-  	<button onclick="seePersonaljob()">查看自己的工作</button>&nbsp;&nbsp;<button onclick="exportExcel()">导出excel</button>
+  	<button onclick="seePersonaljob()" class="btn2">查看自己的工作</button>&nbsp;&nbsp;<button onclick="exportExcel()">导出excel</button>
   	</c:if>
   	<c:if test="${querytype =='personal'}">
-  	<button onclick="seeOtherDiaryjob()">查看所有人的工作</button>
+  	<button onclick="seeOtherDiaryjob()" class="btn2">查看所有人的工作</button>
   	</c:if>
   	<br/>
 	
-	<table cellspacing="1" style="width:3000" border="1" class="tablesorter">
+	<table cellspacing="1" style="width:3000" class="tablesorter">
 			<thead>
 				<tr>
 						<th >用户名</th>

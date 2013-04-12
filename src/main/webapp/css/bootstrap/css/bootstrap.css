@@ -1994,12 +1994,7 @@ legend + .control-group {
   padding-left: 180px;
 }
 
-table {
-  
-  background-color: transparent;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+
 
 .tableBootstrap {
   width: 100%;
@@ -3177,6 +3172,10 @@ button.close {
   background: transparent;
   border: 0;
   -webkit-appearance: none;
+}
+
+.btn2 {
+	font-size: 10px;
 }
 
 .btn {

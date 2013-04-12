@@ -39,7 +39,7 @@
         </div>
         <div class="span4">
           <h2>做工作计划</h2>
-          <p>类似jira、mantis的报告问题和跟踪问题的模块，因为是我们自己开发的，可以根据我们的需求进行个性化定制。目前已经具备文件上传，图片预览功能。分为3中角色，报告者、程序员、测试员（验收）</p>
+          <p>类似jira、mantis的报告问题和跟踪问题的模块，因为是我们自己开发的，可以根据我们的需求进行个性化定制。目前已经具备文件上传，图片预览功能。分为三种角色，报告者、程序员、测试员（验收）</p>
           <p><a class="btn" href="jobPlan.amar?method=queryJobplanList">查看 &raquo;</a></p>
        </div>
         <div class="span4">

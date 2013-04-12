@@ -88,7 +88,7 @@
       var content = "<div id='div"+divIndex+"' width='900' height='200'>";
 		
 		content += "&nbsp;&nbsp;";
-		content += "标题:<input type='text' name='_title' value='请输入标题'/>&nbsp;";
+		content += "标题:<input type='text' name='_title' value='请输入标题' style='width:100px'/>&nbsp;";
 		content += "<input type='hidden' name='_jobplanid' value='0'/>";
 		
 		content += "项目:<select name='_project' >"
@@ -97,7 +97,7 @@
 		</c:forEach>
 		content += "</select>";
 		content += "&nbsp;";
-		content += "任务类型:<select name='_type' >";
+		content += "任务类型:<select name='_type' style='width:100px'>";
 		content += "<option value='3' >其他事项</option>";
 		content += "<option value='4' >数据整理</option>";
 		content += "<option value='2' >功能测试</option>";
@@ -106,7 +106,7 @@
 		content += "&nbsp;";
 		content += "用时(小时):<input type='text' name='_usedtime' value='0' style='width:50px'/>";
 		content += "&nbsp;";
-		content += "完成情况:<select name='_count'>";
+		content += "完成情况:<select name='_count' style='width:70px'>";
 		content += "<option value='0'>0%</option>";
 		content += "<option value='20'>20%</option>";
 		content += "<option value='40'>40%</option>";
@@ -115,8 +115,8 @@
 		content += "<option value='100'>100%</option>";
 		content += "</select>";
 		content += "<br/>";
-		content += "<textarea name='_content' cols='80' rows='3'>请输入工作内容</textarea> ";        
-		content += "<br/><input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' />"
+		content += "<textarea name='_content' cols='80' rows='3' style='width:500px;height:80px;font-size:10'>请输入工作内容</textarea> ";        
+		content += "<br/><input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' class='btn2'/>"
 		content += "</div>";
 		$("#jobContainer").html( $("#jobContainer").html()+content );
   }
@@ -127,7 +127,8 @@
   }
   
   </script>
-<body>
+<body
+	<div class="container">
 	添加工作记录
 	<br>
 	<form action="<%=path%>/diaryJob.amar?method=addDiaryjob" method="post" style="font-family:宋体;font-size:10;">
@@ -139,21 +140,19 @@
 		<input name="title" id="title" type="hidden"/>
 		<input name="projectid" id="projectid" type="hidden"/>
 		
-		 工作时间:<input type="text" id="recordtime" name="recordtime" readonly="readonly" value="${querydatetime}"
-		  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:140px">
+		 工作时间:<input type="text" id="recordtime" name="recordtime"  value="${querydatetime}"
+		  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:160px">
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" onclick="addjob()" value="新增一条"/> 
+		<input type="button" onclick="addjob()" value="新增一条" class="btn2"/> 
 		&nbsp;&nbsp;
-		<input type="button" onclick="dosomething()" value="保存工作记录"/>
+		<input type="button" onclick="dosomething()" value="保存工作记录" class="btn2"/>
 		&nbsp;&nbsp;
-		<input type="button" onclick="goback()" value="返回日记列表"/>
+		<input type="button" onclick="goback()" value="返回日记列表" class="btn2"/>
 		
 		<hr width="800" align="left"/>
 		
 		<c:forEach items="${dealJobList}" var="dealjob">
-			<br/>
-			&nbsp;
-			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled"/>
+			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled" style='width:100px'/>
 			    <input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
 			
 			项目:<select name='_project' disabled="disabled">
@@ -164,16 +163,16 @@
 					</c:forEach>
 				</select>
 			
-			任务类型:<select name='_type' disabled="disabled">
+			任务类型:<select name='_type' disabled="disabled" style='width:100px'>
 					<option value='3' >其他事项</option>
 					<option value='4' >数据整理</option>
 					<option value='2' >功能测试</option>
 					<option value='1' selected="selected">功能开发</option>
 				  </select>
 			
-			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
+			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0' />
 			
-			完成情况:<select name='_count'>
+			完成情况:<select name='_count' style='width:70px'>
 					<option value='0'>0%</option>
 					<option value='20'>20%</option>
 					<option value='40'>40%</option>
@@ -182,17 +181,15 @@
 					<option value='100'>100%</option>
 				  </select>
 			<br/>
-			<textarea name='_content' cols='80' rows='3' disabled="disabled">${dealjob.content}</textarea>
+			<textarea name='_content' cols='80' rows='3' disabled="disabled" style="width:500px;height:80px;font-size:10">${dealjob.content}</textarea>
 		</c:forEach>
 		
 		
 		<c:forEach items="${testJobList}" var="dealjob">
-			<br/>
-			&nbsp;
-			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled"/>
+			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled" style="width:100px"/>
 				<input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
 			
-			项目:<select name='_project' disabled="disabled">
+			项目:<select name='_project' disabled="disabled" >
 					<c:forEach items="${projectlist}" var="projectInfo">
 						<option value='${projectInfo.id}'  <c:if test="${projectInfo.id == dealjob.projectid}">selected='selected'</c:if> >
 							${projectInfo.name}
@@ -200,7 +197,7 @@
 					</c:forEach>
 				</select>
 				
-			任务类型:<select name='_type' disabled="disabled">
+			任务类型:<select name='_type' disabled="disabled" style="width:100px">
 					<option value='3' >其他事项</option>
 					<option value='4' >数据整理</option>
 					<option value='2' selected="selected">功能测试</option>
@@ -209,7 +206,7 @@
 			
 			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
 			
-			完成情况:<select name='_count'>
+			完成情况:<select name='_count' style="width:70px">
 					<option value='0'>0%</option>
 					<option value='20'>20%</option>
 					<option value='40'>40%</option>
@@ -218,12 +215,13 @@
 					<option value='100'>100%</option>
 				  </select>
 			<br/>
-			<textarea name='_content' cols='80' rows='3' disabled="disabled">${dealjob.content}</textarea>
+			<textarea name='_content' cols='80' rows='3' disabled="disabled" style="width:500px;height:80px;font-size:10">${dealjob.content}</textarea>
 		</c:forEach>
 		<br/>
 		<div id="jobContainer" width="900" height="500">
 		</div>
 
 	</form>
+	</div>
 </body>
 </html>

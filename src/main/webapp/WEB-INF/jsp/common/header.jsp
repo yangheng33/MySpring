@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <a class="brand" href="#">日志管理系统v0.1</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-	              <li class="active"><a href="login.amar?method=main">首页</a></li>
+	              <li class="dropdown"><a href="login.amar?method=main">首页</a></li>
 	              <li class="dropdown">
 	                <a href="#" class="dropdown-toggle" data-toggle="dropdown">工作流程 <b class="caret"></b></a>
 	                <ul class="dropdown-menu">
