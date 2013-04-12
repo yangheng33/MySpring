@@ -195,7 +195,7 @@
 							${projectInfo.name}
 						</option>
 					</c:forEach>
-				</select>
+				</select> 
 				
 			任务类型:<select name='_type' disabled="disabled" style="width:100px">
 					<option value='3' >其他事项</option>
