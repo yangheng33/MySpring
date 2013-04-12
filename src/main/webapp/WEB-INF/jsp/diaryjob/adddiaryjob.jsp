@@ -93,7 +93,7 @@
 		
 		content += "项目:<select name='_project' >"
 		<c:forEach items="${projectlist}" var="projectInfo">
-		content += "<option value='${projectInfo.id}'> ${projectInfo.name} </option>"
+			content += "<option value='${projectInfo.id}'> ${projectInfo.name} </option>"
 		</c:forEach>
 		content += "</select>";
 		content += "&nbsp;";

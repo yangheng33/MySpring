@@ -52,7 +52,7 @@ public class Login extends BaseController
 	{
 		request.getSession().removeAttribute( "user" );
 
-		return "login/login";
+		return "main";
 	}
 
 	@RequestMapping( params = "method=tologin" )

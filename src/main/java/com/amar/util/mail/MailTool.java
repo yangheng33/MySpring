@@ -41,13 +41,13 @@ public class MailTool
 	public static void main( String [] args )
 	{
 		MailSenderInfo mailInfo = new MailSenderInfo();
-		mailInfo.setMailServerHost( "mail.metarnet.com" );
+		mailInfo.setMailServerHost( "smtp.sina.com" );
 		mailInfo.setMailServerPort( "25" );
 		mailInfo.setValidate( true );
-		mailInfo.setUserName( "hsyang@metarnet.com" );
-		mailInfo.setPassword( "123456" );// 您的邮箱密码
-		mailInfo.setFromAddress( "hsyang@metarnet.com" );
-		mailInfo.setToAddresses( new String [] { "hsyang@metarnet.com", "111", "222" } );
+		mailInfo.setUserName( "yangheng33@sina.com" );
+		mailInfo.setPassword( "aries1986" );// 您的邮箱密码
+		mailInfo.setFromAddress( "yangheng33@sina.com" );
+		mailInfo.setToAddresses( new String [] { "yangheng33@sina.com", "yangheng33@yahoo.com.cn" } );
 		mailInfo.setSubject( "测试发个邮件" );
 		mailInfo.setContent( "测试发个邮件的内容<b>内容</b>\n123<br/>\n4567" );
 		// 这个类主要来发送邮件

@@ -134,7 +134,7 @@
   	</c:if>
   	<br/>
 	
-	<table cellspacing="1" style="width:3000" class="tablesorter">
+	<table cellspacing="1" style="width:3000" border="1" class="tablesorter">
 			<thead>
 				<tr>
 						<th >用户名</th>
