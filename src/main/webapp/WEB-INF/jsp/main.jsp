@@ -21,9 +21,12 @@
   
   <body class="commonFont">
   <c:if test="${waring!=null}">
-  <div class="alert" style="text-align:center">
-  	<button type="button" class="close" data-dismiss="alert">&times;</button>
-  	对不起，注册用户才能使用该功能！</div>
+  	<div width="100%" >
+	  <div class="alert" style="text-align:center;width:600;margin:auto;">
+	  	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	  	对不起，注册用户才能使用该功能！
+	  </div>
+  	</div>	  
   </c:if>
   <div class="container">
 

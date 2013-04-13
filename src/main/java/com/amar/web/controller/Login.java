@@ -83,11 +83,15 @@ public class Login extends BaseController
 			user.setLastlogintime( new Date() );
 
 			String brithdays = request.getParameter( "brithdays" );
+			String pw = request.getParameter( "_pw" );
+			String loginname = request.getParameter( "_loginname" );
 
 			Date brithday = new Date( TimeDateUtil.getLongDay( brithdays ) );
 
 			user.setBrithday( brithday );
-
+			user.setPw( pw );
+			user.setLoginname( loginname );
+			
 			userDAO.addUser( user );
 
 			request.getSession().setAttribute( "user" , user );

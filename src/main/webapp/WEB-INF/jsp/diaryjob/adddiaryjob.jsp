@@ -104,7 +104,7 @@
 		content += "<option value='1' selected='selected'>功能开发</option>";
 		content += " </select>";
 		content += "&nbsp;";
-		content += "用时(小时):<input type='text' name='_usedtime' value='0' style='width:50px'/>";
+		content += "用时(小时):<input type='text' name='_usedtime' value='0' style='width:50px' />";
 		content += "&nbsp;";
 		content += "完成情况:<select name='_count' style='width:70px'>";
 		content += "<option value='0'>0%</option>";
@@ -114,10 +114,12 @@
 		content += "<option value='80'>80%</option>";
 		content += "<option value='100'>100%</option>";
 		content += "</select>";
-		content += "<br/>";
-		content += "<textarea name='_content' cols='80' rows='3' style='width:500px;height:80px;font-size:10'>请输入工作内容</textarea> ";        
-		content += "<br/><input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' class='btn2'/>"
-		content += "</div>";
+		
+		content += "<textarea name='_content' cols='80' rows='3' style='width:700px;height:80px;font-size:10'>请输入工作内容</textarea> ";    
+		//content += "<br/>";
+		content += "&nbsp;&nbsp;";
+		content += "<input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' class='btn2'/>"
+		content += "</div><br/>";
 		$("#jobContainer").html( $("#jobContainer").html()+content );
   }
   
@@ -127,11 +129,11 @@
   }
   
   </script>
-<body
+<body>
 	<div class="container">
 	添加工作记录
 	<br>
-	<form action="<%=path%>/diaryJob.amar?method=addDiaryjob" method="post" style="font-family:宋体;font-size:10;">
+	<form action="<%=path%>/diaryJob.amar?method=addDiaryjob" method="post" class="form-inline">
 		<input name="usetime" id="usetime" type="hidden"/>
 		<input name="content" id="content" type="hidden"/>
 		<input name="jobplanid" id="jobplanid" type="hidden"/>
@@ -181,7 +183,8 @@
 					<option value='100'>100%</option>
 				  </select>
 			<br/>
-			<textarea name='_content' cols='80' rows='3' disabled="disabled" style="width:500px;height:80px;font-size:10">${dealjob.content}</textarea>
+			<textarea name='_content' cols='80' rows='3' disabled="disabled" style="width:700px;height:80px;font-size:10">${dealjob.content}</textarea>
+			<br/>
 		</c:forEach>
 		
 		
@@ -215,7 +218,8 @@
 					<option value='100'>100%</option>
 				  </select>
 			<br/>
-			<textarea name='_content' cols='80' rows='3' disabled="disabled" style="width:500px;height:80px;font-size:10">${dealjob.content}</textarea>
+			<textarea name='_content' cols='80' rows='3' disabled="disabled" style="width:700px;height:80px;font-size:10">${dealjob.content}</textarea>
+			<br/>
 		</c:forEach>
 		<br/>
 		<div id="jobContainer" width="900" height="500">

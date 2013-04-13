@@ -117,11 +117,11 @@
 	</script>
   </head>
   
-  <body class="commonFont">
+  <body class="commonFont"><br/>
     
-    <form action="<%=path%>/diaryJob.amar?method=personallist" method="post">
+    <form action="<%=path%>/diaryJob.amar?method=personallist" method="post" class="form-inline">
 	时间选择:<input type="text" id="querydatetime" name="querydatetime" value="${querydatetime}"
-  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:160px">
+  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate,input-small"  style="width:160px">
   	&nbsp;&nbsp;
   	<input type="hidden" id="querytype" value="${querytype}">
   	<input type="button" onclick="go()" value="查询" class="btn2">&nbsp;&nbsp;
