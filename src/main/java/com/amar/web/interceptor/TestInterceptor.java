@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.amar.web.model.User;
+
 public class TestInterceptor implements HandlerInterceptor
 {
 	private final Logger log = Logger.getLogger( this.getClass() );
@@ -16,14 +18,30 @@ public class TestInterceptor implements HandlerInterceptor
 	@Override
 	public void afterCompletion( HttpServletRequest arg0 , HttpServletResponse arg1 , Object arg2 , Exception arg3 ) throws Exception
 	{
-		log.info( "afterCompletion" );
 
 	}
 
 	@Override
 	public void postHandle( HttpServletRequest arg0 , HttpServletResponse arg1 , Object arg2 , ModelAndView arg3 ) throws Exception
 	{
-		log.info( "postHandle" );
+
+	}
+
+	public boolean validateRight( String url , User user )
+	{
+		boolean result = true;
+
+		String forbiddenUrl[] = { "diaryJob.amar", "jobPlan.amar" };
+		for( String fbUrl : forbiddenUrl )
+		{
+			if ( user == null && url.contains( fbUrl ) )
+			{
+				result = false;
+				break;
+			}
+		}
+
+		return result;
 	}
 
 	public boolean validate( String data )
@@ -65,6 +83,14 @@ public class TestInterceptor implements HandlerInterceptor
 				arg1.sendRedirect( "error.amar?method=toWarning" );
 				break;
 			}
+		}
+
+		String url = arg0.getRequestURI();
+		User user = ( User ) arg0.getSession().getAttribute( "user" );
+		if ( ! validateRight( url , user ) )
+		{
+			arg1.sendRedirect( "login.amar?method=main&waring=noright" );
+			result = false;
 		}
 
 		return result;

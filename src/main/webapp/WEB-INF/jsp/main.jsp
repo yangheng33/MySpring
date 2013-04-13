@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="common/tag.jsp" %>
 <%@ include file="common/header.jsp" %>
 
@@ -20,6 +20,11 @@
   </script>
   
   <body class="commonFont">
+  <c:if test="${waring!=null}">
+  <div class="alert" style="text-align:center">
+  	<button type="button" class="close" data-dismiss="alert">&times;</button>
+  	对不起，注册用户才能使用该功能！</div>
+  </c:if>
   <div class="container">
 
       <!-- Main hero unit for a primary marketing message or call to action -->

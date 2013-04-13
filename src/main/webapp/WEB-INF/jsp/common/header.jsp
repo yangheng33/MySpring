@@ -18,8 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-	
 	<script type="text/javascript" src="css/bootstrap/js/jquery.js"></script>
+	<script type="text/javascript" src="css/bootstrap/js/bootstrap-alert.js"></script>
 	<link href="css/centerDiv.css" rel="stylesheet"/>
 	<link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">

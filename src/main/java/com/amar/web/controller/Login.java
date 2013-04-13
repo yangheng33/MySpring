@@ -113,6 +113,12 @@ public class Login extends BaseController
 	@RequestMapping( params = "method=main" )
 	public String main( HttpServletRequest request , HttpServletResponse response )
 	{
+		String waring = request.getParameter( "waring" );
+		if ( waring != null && waring.length() > 0 )
+		{
+			request.setAttribute( "waring" , waring );
+		}
+
 		return "main";
 	}
 
