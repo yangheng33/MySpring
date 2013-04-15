@@ -62,11 +62,14 @@ public class DiaryJobController extends BaseController
 			querydatetime = TimeDateUtil.getDateTime( new Date() );
 		}
 
+		User para_user = user;
+		para_user.setLevel( null );
+		
 		List alllist = jobDAO.findJobRecode( user.getId() , querydatetime );
 
 		List<String> dateList = getDateList( alllist );
 
-		List<User> userlist = userDAO.findUser( user );
+		List<User> userlist = userDAO.findUser( para_user );
 
 		List userList = initUserList( userlist , dateList );
 
