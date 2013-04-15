@@ -76,23 +76,7 @@ $(document).ready(function(){initFunc();});
     
     <form action="<%=path%>/jobPlan.amar?method=queryJobplanList" method="post">
 	
-	报告日期,从<input type="text" id="querydatetime" name="reporttimestart" readonly="readonly" value="${reporttimestart}"
-  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:140px">
-  	到
-  	<input type="text" id="querydatetime" name="reporttimeend" readonly="readonly" value="${reporttimeend}"
-  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:140px">
-  	&nbsp;&nbsp;
-  	<input type="radio" name="scope" value="me" 
-	  	<c:if test="${scope=='me'}">
-	  		checked="checked"
-	  	</c:if>
-  	/>自己的任务 
-  	<input type="radio" name="scope" value="all"
-  	<c:if test="${scope=='all'}">
-  		checked="checked"
-  	</c:if>
-  	/>所有的任务
-  	<br/>
+	
   	处理状态:
   	<select name="state" id="state">
   		<option value="0">不限</option>
@@ -115,11 +99,26 @@ $(document).ready(function(){initFunc();});
   		<option value="3">重要</option>
   		<option value="4">紧急</option>
   	</select>
+  	<br/>
+	报告日期,从<input type="text" id="querydatetime" name="reporttimestart"  value="${reporttimestart}"
+  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:160px">
+  	到
+  	<input type="text" id="querydatetime" name="reporttimeend"  value="${reporttimeend}"
+  	onfocus="WdatePicker({skin:'blue',autoPickDate:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  style="width:160px">
   	&nbsp;&nbsp;
+  	<input type="radio" name="scope" value="me" 
+	  	<c:if test="${scope=='me'}">
+	  		checked="checked"
+	  	</c:if>
+  	/>自己的任务 
+  	<input type="radio" name="scope" value="all"
+  	<c:if test="${scope=='all'}">
+  		checked="checked"
+  	</c:if>
+  	/>所有的任务
+  	
   	&nbsp;&nbsp;
   	
-  	<br/>
-  	&nbsp;&nbsp;&nbsp;&nbsp;
   	<input type="button" onclick="queryJobplanList()" value="点击查询">&nbsp;&nbsp;
   	<input type="button" onclick="toAddJobplan()" value="报告新问题">&nbsp;&nbsp;
   	<br/>
@@ -137,7 +136,6 @@ $(document).ready(function(){initFunc();});
 				<th>状态</th>
 				<th style="width:130">报告时间</th>
 				<th style="width:130">预计完成时间</th>
-				<th style="width:60">操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -146,7 +144,7 @@ $(document).ready(function(){initFunc();});
 					<tr>
 						<td>${it.id}</td>
 						<td>${it.project.name}</td>
-						<td>${it.title}</td>
+						<td><a href="jobPlan.amar?method=toEdtiJobplan&id=${it.id}" >${it.title} </a></td>
 						<td>${it.reportuser.realname}</td>
 						<td>${it.dealuser.realname}</td>
 						<td>${it.testuser.realname}</td>
@@ -177,9 +175,6 @@ $(document).ready(function(){initFunc();});
 						</td>
 						<td>
 							<fmt:formatDate value="${it.planfinishtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
-						</td>
-						<td>
-							<button onclick="toEditJobplan(${it.id})">查看</button>
 						</td>
 					</tr>
 				</c:forEach>

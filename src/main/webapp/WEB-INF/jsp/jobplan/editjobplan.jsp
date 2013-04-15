@@ -288,7 +288,8 @@ $(document).ready(function(){initFunc();});
 			内容:
 			</td>
 			<td colspan="8">
-			<textarea rows="5" cols="80" style="height:70px" name="content" <c:if test="${meReport=='n'}"> disabled="disabled" </c:if>>${jobplan.content}</textarea>
+			<textarea rows="5" cols="80"  style="width:700px;height:120px;font-size:10"
+			name="content" <c:if test="${meReport=='n'}"> disabled="disabled" </c:if>>${jobplan.content}</textarea>
 			</td>
 		</tr>
 	</table>

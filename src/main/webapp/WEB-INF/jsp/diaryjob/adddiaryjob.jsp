@@ -120,6 +120,7 @@
 		content += "&nbsp;&nbsp;";
 		content += "<input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' class='btn2'/>"
 		content += "</div><br/>";
+		
 		$("#jobContainer").html( $("#jobContainer").html()+content );
   }
   
@@ -165,11 +166,11 @@
 					</c:forEach>
 				</select>
 			
-			任务类型:<select name='_type' disabled="disabled" style='width:100px'>
+			任务类型${dealjob.state}:<select name='_type' disabled="disabled" style='width:100px'>
 					<option value='3' >其他事项</option>
 					<option value='4' >数据整理</option>
-					<option value='2' >功能测试</option>
-					<option value='1' selected="selected">功能开发</option>
+					<option value='2' <c:if test="${dealjob.state=='3' }">selected="selected"</c:if>>功能测试</option>
+					<option value='1'  <c:if test="${dealjob.state=='2' }">selected="selected"</c:if>>功能开发</option>
 				  </select>
 			
 			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0' />
@@ -188,39 +189,7 @@
 		</c:forEach>
 		
 		
-		<c:forEach items="${testJobList}" var="dealjob">
-			标题:<input type='text' name='_title' value="${dealjob.title}" disabled="disabled" style="width:100px"/>
-				<input type="hidden" name='_jobplanid' value="${dealjob.id}"/>
-			
-			项目:<select name='_project' disabled="disabled" >
-					<c:forEach items="${projectlist}" var="projectInfo">
-						<option value='${projectInfo.id}'  <c:if test="${projectInfo.id == dealjob.projectid}">selected='selected'</c:if> >
-							${projectInfo.name}
-						</option>
-					</c:forEach>
-				</select> 
-				
-			任务类型:<select name='_type' disabled="disabled" style="width:100px">
-					<option value='3' >其他事项</option>
-					<option value='4' >数据整理</option>
-					<option value='2' selected="selected">功能测试</option>
-					<option value='1' >功能开发</option>
-				  </select>
-			
-			用时(小时):<input type='text' name='_usedtime' style="width:50px" value='0'/>
-			
-			完成情况:<select name='_count' style="width:70px">
-					<option value='0'>0%</option>
-					<option value='20'>20%</option>
-					<option value='40'>40%</option>
-					<option value='60'>60%</option>
-					<option value='80'>80%</option>
-					<option value='100'>100%</option>
-				  </select>
-			<br/>
-			<textarea name='_content' cols='80' rows='3' disabled="disabled" style="width:700px;height:80px;font-size:10">${dealjob.content}</textarea>
-			<br/>
-		</c:forEach>
+		
 		<br/>
 		<div id="jobContainer" width="900" height="500">
 		</div>

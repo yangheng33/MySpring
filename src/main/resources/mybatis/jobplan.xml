@@ -27,13 +27,13 @@
 		<result property="email" column="r_email" jdbcType="VARCHAR"  />
 	</association>
 	<association column="dealuserid" property="dealuser" javaType="user" >
-		<id property="id" column="testuserid" jdbcType="NUMERIC"  />
+		<id property="id" column="dealuserid" jdbcType="NUMERIC"  />
 		<result property="loginname" column="d_loginname" jdbcType="VARCHAR"  />
 		<result property="realname" column="d_realname" jdbcType="VARCHAR"  />
 		<result property="email" column="d_email" jdbcType="VARCHAR"  />
 	</association>
 	<association column="testuserid" property="testuser" javaType="user" >
-		<id property="id" column="dealuserid" jdbcType="NUMERIC"  />
+		<id property="id" column="testuserid" jdbcType="NUMERIC"  />
 		<result property="loginname" column="t_loginname" jdbcType="VARCHAR"  />
 		<result property="realname" column="t_realname" jdbcType="VARCHAR"  />
 		<result property="email" column="t_email" jdbcType="VARCHAR"  />

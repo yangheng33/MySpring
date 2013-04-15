@@ -294,11 +294,13 @@ public class DiaryJobController extends BaseController
 		List<Jobplan> dealJobList = jobplanDAO.findJobplan( _jobplanDeal );
 		List<Jobplan> testJobList = jobplanDAO.findJobplan( _jobplanTest );
 
+		dealJobList.addAll( testJobList );
+		
 		request.setAttribute( "querydatetime" , newDatetime );
 
 		request.setAttribute( "dealJobList" , dealJobList );
 
-		request.setAttribute( "testJobList" , testJobList );
+		//request.setAttribute( "testJobList" , testJobList );
 
 		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
 
