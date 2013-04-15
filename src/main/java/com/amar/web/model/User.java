@@ -27,6 +27,7 @@ private Date brithday;
 
 private Date lastlogintime;
 
+private String level;
 
 public void setId( int id )
 {
@@ -136,6 +137,16 @@ this.lastlogintime=lastlogintime;
 public Date getLastlogintime()
 {
 return this.lastlogintime;
+}
+
+public String getLevel()
+{
+	return level;
+}
+
+public void setLevel( String level )
+{
+	this.level = level;
 }
 
 }

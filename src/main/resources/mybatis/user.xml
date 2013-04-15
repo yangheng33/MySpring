@@ -18,7 +18,7 @@
 </resultMap>
 
 <select id="findUser" parameterType="user" resultType="user">
-SELECT id,loginname,realname,pw,phone,email,qq,address,regtime,brithday,lastlogintime
+SELECT id,loginname,realname,pw,phone,email,qq,address,regtime,brithday,lastlogintime,level
  FROM User
 <where>
 <if test=" id > 0 ">
@@ -44,6 +44,9 @@ SELECT id,loginname,realname,pw,phone,email,qq,address,regtime,brithday,lastlogi
 </if>
 <if test=" address != null">
  AND address = #{address}
+</if>
+<if test=" level != null">
+ AND level = #{level}
 </if>
 </where>
 </select>
@@ -91,6 +94,9 @@ brithday=#{brithday,jdbcType=DATE},
 </if>
 <if test=" lastlogintime != null ">
 lastlogintime=#{lastlogintime,jdbcType=DATE},
+</if>
+<if test=" level != null ">
+level=#{level},
 </if>
 </set>
 <where>

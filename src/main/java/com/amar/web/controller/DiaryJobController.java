@@ -80,7 +80,7 @@ public class DiaryJobController extends BaseController
 
 		request.setAttribute( "querydatetime" , querydatetime );
 
-		return "diaryjob/diaryjoblist";
+		return "diaryjob/ownerdiaryjoblist";
 	}
 
 	@RequestMapping( params = "method=alllist" )
@@ -97,7 +97,11 @@ public class DiaryJobController extends BaseController
 
 		List<String> dateList = getDateList( alllist );
 
-		List<User> userlist = userDAO.findUser( new User() );
+		User user = new User();
+
+		user.setLevel( "2" );// 普通员工才必须写日志
+
+		List<User> userlist = userDAO.findUser( user );
 
 		List userList = initUserList( userlist , dateList );
 
@@ -192,7 +196,9 @@ public class DiaryJobController extends BaseController
 		{
 			String userid = user.getId() + "";
 			String realname = user.getRealname();
+			String level = user.getLevel();
 			Map userMap = new HashMap();
+			userMap.put( "level" , level );
 			userMap.put( "userid" , userid );
 			userMap.put( "realname" , realname );
 			userMap.put( "datelist" , dateList );

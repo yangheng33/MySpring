@@ -202,3 +202,5 @@ CREATE TABLE `FamliyWife` (
 `sex`  int NULL DEFAULT 1 COMMENT '性别,1男,2女' ,
 PRIMARY KEY (`id`)
 );
+
+alter table `User` add level VARCHAR(1) DEFAULT '2' COMMENT'1领导,2员工';
