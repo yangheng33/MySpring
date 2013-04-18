@@ -14,7 +14,7 @@
 <font color="red">对不起,操作失败,系统出错啦,产生<font size="14"><b>${errorTitle}异常</b></font>,请将下列信息提供给管理员吧,感谢您的支持!</font>
 <br/>
 
-<textarea rows="15" cols="110">
+<textarea style='width:700px;height:160px;font-size:10'>
 ${errorInfo}
 </textarea>
 
