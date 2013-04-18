@@ -121,7 +121,7 @@
 		content += "<input type='button' onclick='removeJob(\"div"+divIndex+"\")' value='删除本条' class='btn2'/>"
 		content += "</div><br/>";
 		
-		$("#jobContainer").html( $("#jobContainer").html()+content );
+		$("#jobContainer").append( content );
   }
   
   function removeJob(id) 
