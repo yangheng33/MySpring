@@ -30,7 +30,7 @@ AND title = #{title}
 </if>
 <if test=" jobplanid > 0 ">
  AND jobplanid = #{jobplanid}
-</if>
+</if>  
 <if test=" projectid > 0 ">
  AND projectid = #{projectid}
 </if>
