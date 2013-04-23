@@ -27,7 +27,7 @@ AND title = #{title}
 </if>
 <if test=" count > 0 ">
  AND count = #{count}
-</if> 
+</if>
 <if test=" jobplanid > 0 ">
  AND jobplanid = #{jobplanid}
 </if>
