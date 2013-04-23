@@ -21,6 +21,9 @@ public interface Metarnet_visitDAO
 	@SuppressWarnings( "rawtypes" )
 	public List<Map> findMetarnetVisitStatisticsByZhounan();
 
-	public List<Metarnet_visit> findMetarnetVisitOrderByZhounan();
+	//public List<Metarnet_visit> findMetarnetVisitOrderByZhounan();
+	
+	public List<Metarnet_visit> findMetarnetVisitOrderByInsideLocalIP(Metarnet_visit metarnet_visit);
+
 
 }

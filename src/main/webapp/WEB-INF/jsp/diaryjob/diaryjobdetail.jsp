@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   	function deleteMe(id)
   	{
-  		if( confirm("您确定删除吗?"))
+  		if( confirm("您确定全部删除吗?"))
 	  	{
   			var url = "diaryJob.amar?method=delDiaryjob"
 			$("#noDiv").load(url, { "id": id},
@@ -37,9 +37,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	}
   	}
   	
-  	function dealComplete(responseText, textStatus, XMLHttpRequest)
+  	function deleteOne(id,jobid,time,userid)
   	{
-  		if( responseText =="ok")
+  		if( confirm("您确定删除这一条吗?"))
+	  	{
+
+	  		var url = "diaryJob.amar?method=delOneDiaryjob"
+			$("#noDiv").load(url, { "id" : id , "jobid" : jobid , "time" : time , "userid" : userid},
+			function(responseText, textStatus, XMLHttpRequest ){
+				dealComplete(responseText, textStatus , XMLHttpRequest , userid , time);} );
+ 
+	  	}
+  	}
+  	
+  	function changeMe(time,id)
+  	{
+  		if( confirm("您确定要修改吗?"))
+	  	{
+  			
+  			document.forms[0].action= "diaryJob.amar?method=changeDiaryjob&id="+id+"&time="+time; 
+			document.forms[0].submit();
+	
+	  	}	
+  	}
+  	
+  	function dealComplete(responseText, textStatus, XMLHttpRequest , userid , time)
+  	{
+  	
+  		if( responseText =="yes" )
+  		{
+  			var url = "<%=path%>/diaryJob.amar?method=seeOneDayJob"
+			$("#onejobDiv").load(url, { "userid":userid,"time":time },
+				function(responseText, textStatus, XMLHttpRequest)
+				{
+					$("#infoDiv").html( "<font color='RED'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除成功&nbsp;&nbsp;&nbsp;&nbsp;</font>" ).show(300).delay(2000).hide(300);
+					$("#onejobDiv").show();} 
+				);
+  		}
+  		else if( responseText =="ok")
   		{
   			$("#infoDiv").html( "<font color='RED'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除成功&nbsp;&nbsp;&nbsp;&nbsp;</font>" ).show(300).delay(2000).hide(300);
   			setTimeout("reflash()",2000);
@@ -48,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		{
   			$("#infoDiv").html( "<font color='RED'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除失败&nbsp;&nbsp;&nbsp;&nbsp;</font>" ).show(300).delay(2000).hide(300);
   		}
-  		$('#onejobDiv').hide();
+  		
   	}
   	
   	function reflash()
@@ -64,9 +99,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="infoDiv" width="300" style="display:block" class="centerDiv"></div>
   <table width="100%" class="commonFont">
   	<tr>
+  		<td width="8%" align="left">  			
+  			<c:if test="${sessionScope.user.id==user.id }">
+  				<div id="changeBtn"  onclick="changeMe('<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss" />','${user.id}' )" >&nbsp;修改</div>
+  			</c:if>
+  		</td>
   		<td align="left">
   			<c:if test="${sessionScope.user.id==user.id }">
-  				<div id="deleteBtn"  onclick="deleteMe( '${job.id}' )" >删除</div>
+  				<div id="deleteBtn"  onclick="deleteMe( '${job.id}' )" >全部删除</div>
   			</c:if>
   		</td>
   		<td align="right">
@@ -77,11 +117,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 
-&nbsp;${user.realname }<br/>
-&nbsp;<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate><br/>
+&nbsp;&nbsp;${user.realname }<br/>
+&nbsp;&nbsp;<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate><br/>
 
-<c:forEach items="${detaillist}" var="detail" varStatus="status">
+<c:forEach items="${detaillist}" var="detail" varStatus="status">	
 	<hr width="600" align="left"/>
+	<c:if test="${detail.jobplanid == 0 }">
+		<div id="deleteOneBtn" align="right" onclick="deleteOne( '${detail.id}','${job.id}','<fmt:formatDate value="${job.jobtime }" pattern="yyyy-MM-dd HH:mm:ss"/>','${user.id }' )" >		
+		&nbsp;删除本条
+	</div>
+	</c:if>	
 	&nbsp;
 	序号:${status.count}
 	&nbsp;

@@ -102,8 +102,20 @@ DELETE FROM Metarnet_visit
 select count(*) as counts,inside_local_ip from Metarnet_visit group by inside_local_ip having count(*)>1 order by count(*) desc
 </select>
 
+<!--  
 <select id="findMetarnetVisitOrderByZhounan" resultType="metarnet_visit">
 select * from Metarnet_visit order by inside_global_ip,outside_global_ip,outside_global_port
+</select>
+-->
+
+<select id="findMetarnetVisitOrderByInsideLocalIP" parameterType="metarnet_visit" resultType="metarnet_visit">
+select * from Metarnet_visit 
+<where>
+<if test=" inside_local_ip != null">
+AND inside_local_ip = #{inside_local_ip,jdbcType=VARCHAR}
+</if>
+</where>
+order by inside_global_ip,outside_global_ip,outside_global_port LIMIT 1000
 </select>
 
 </mapper>

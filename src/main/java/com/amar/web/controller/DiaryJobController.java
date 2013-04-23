@@ -232,14 +232,23 @@ public class DiaryJobController extends BaseController
 		String index = request.getParameter( "index" );
 		String userid = request.getParameter( "userid" );
 		String querydatetime = request.getParameter( "querydatetime" );
-
-		if ( index.length() == 1 )
+		String time = request.getParameter( "time" );
+		
+		if ( index!=null&&index.length() == 1 )
 		{
 			index = "0" + index;
 		}
-
-		String datetime = querydatetime.substring( 0 , 8 ) + index;
-
+		
+		String datetime = "";
+		if(time!=null&&""!=time)
+		{
+			datetime = time.substring( 0 , 10 ) + "";
+		}
+		else
+		{
+			datetime = querydatetime.substring( 0 , 8 ) + index;
+		}
+		
 		String start = datetime + " 00:00:00";
 		String end = datetime + " 23:59:59";
 
@@ -351,6 +360,133 @@ public class DiaryJobController extends BaseController
 		response.sendRedirect( "diaryJob.amar?method=personallist" );
 	}
 
+	
+	@RequestMapping( params = "method=changeDiaryjob" )
+	public String changeDiaryjob( HttpServletRequest request , HttpServletResponse response ) throws Exception
+	{
+		String time = request.getParameter( "time" );
+		
+		String userid = request.getParameter( "id" );
+
+		String datetime = time.subSequence( 0 , 10 )+"";
+		
+		String start = datetime + " 00:00:00";
+		String end = datetime + " 23:59:59";
+
+		Job job = new Job();
+		job.setJobtimeend( end );
+		job.setJobtimestart( start );
+		job.setUserid( Integer.parseInt( userid ) );
+
+		Job _job = jobDAO.findJob( job ).get( 0 );
+
+		Jobdetail jobdetail = new Jobdetail();
+		jobdetail.setJobid( _job.getId() );
+		List<Jobdetail> detaillist = jobdetailDAO.findJobdetail( jobdetail );
+
+		User user = new User();
+		user.setId( _job.getUserid() );
+
+		User _user = userDAO.findUser( user ).get( 0 );
+
+		request.setAttribute( "job" , _job );
+		request.setAttribute( "detaillist" , detaillist );
+		request.setAttribute( "user" , _user );
+		request.setAttribute( "projectlist" , projectDAO.findProject( new Project() ) );
+
+		
+		return "diaryjob/changediaryjob";
+	}
+	
+	
+	//保存对日志的修改
+	@Transactional( propagation = Propagation.REQUIRED , rollbackFor = { Exception.class } )
+	@RequestMapping( params = "method=saveChange" )
+	public void saveChange( HttpServletRequest request , HttpServletResponse response ) throws IOException
+	{
+		String splitSign = ",,,,";
+		String [] detailid = request.getParameter("detailid").split( splitSign );
+		String [] jobid = request.getParameter("jobid").split( splitSign );
+		String [] usetimes = request.getParameter( "usetime" ).split( splitSign );
+		String [] contents = request.getParameter( "content" ).split( splitSign );
+		String [] jobplanids = request.getParameter( "jobplanid" ).split( splitSign );
+		String [] titles = request.getParameter( "title" ).split( splitSign );
+		String [] counts = request.getParameter( "count" ).split( splitSign );
+		String [] types = request.getParameter( "type" ).split( splitSign );
+		String [] projectids = request.getParameter( "projectid" ).split( splitSign );
+			
+		User user = ( User ) request.getSession().getAttribute( "user" );
+
+		Job job = new Job();
+		job.setId(Integer.parseInt(jobid[0]));
+		job.setUserid( user.getId() );
+		//更新job表
+		jobDAO.editJob( job );
+
+		
+		Jobdetail jobdetail = new Jobdetail();
+		jobdetail.setJobid( Integer.parseInt( jobid[0] ) );
+		List<Jobdetail> detaillist = jobdetailDAO.findJobdetail( jobdetail );
+		
+		
+		for (int i = 0; i < detailid.length; i++) 
+		{
+			int newdetailId = Integer.parseInt( detailid[i] );
+			
+			for (int j = 0; j < detaillist.size(); j++) 
+			{	
+				Jobdetail oldjobdetail = detaillist.get(j);
+				
+				if( newdetailId == oldjobdetail.getId())
+				{
+					oldjobdetail.setId(Integer.parseInt( detailid[i] ));
+					oldjobdetail.setJobid( job.getId() );
+					oldjobdetail.setUsedtime( usetimes[ i ] );
+					oldjobdetail.setContent( contents[ i ] );
+					oldjobdetail.setTitle( titles[ i ] );
+					oldjobdetail.setType( Integer.parseInt( types[ i ] ) );
+					oldjobdetail.setCount( Integer.parseInt( counts[ i ] ) );
+					oldjobdetail.setJobplanid( Integer.parseInt( jobplanids[ i ] ) );
+					oldjobdetail.setProjectid( Integer.parseInt( projectids[ i ] ) );
+						
+					jobdetailDAO.editJobdetail( oldjobdetail );
+					
+					detaillist.remove(j);
+				}
+				
+			}
+			
+		}
+		
+		for (int i = 0; i < detaillist.size(); i++) 
+		{
+			
+			Jobdetail oldjobdetail = detaillist.get(i);
+			
+			jobdetailDAO.deleteJobdetail( oldjobdetail );
+		}
+		
+		for( int i = detailid.length ; i < counts.length ; i++ )
+		{	
+			
+			Jobdetail newjobdetail = new Jobdetail();
+			newjobdetail.setJobid( job.getId() );
+			newjobdetail.setUsedtime( usetimes[ i ] );
+			newjobdetail.setContent( contents[ i ] );
+			newjobdetail.setTitle( titles[ i ] );
+			newjobdetail.setType( Integer.parseInt( types[ i ] ) );
+			newjobdetail.setCount( Integer.parseInt( counts[ i ] ) );
+			newjobdetail.setJobplanid( Integer.parseInt( jobplanids[ i ] ) );
+			newjobdetail.setProjectid( Integer.parseInt( projectids[ i ] ) );
+					
+			jobdetailDAO.addJobdetail( newjobdetail );
+			
+		}
+			
+
+		response.sendRedirect( "diaryJob.amar?method=personallist" );
+	}	
+	
 	@RequestMapping( params = "method=toEditDiary" )
 	public String toEditDiary( HttpServletRequest request , HttpServletResponse response )
 	{
@@ -372,5 +508,34 @@ public class DiaryJobController extends BaseController
 		jobdetailDAO.deleteJobdetail( jobdetail );
 
 		sendData( response , "ok" );
+	}
+	
+	
+	@Transactional( propagation = Propagation.REQUIRED , rollbackFor = { Exception.class } )
+	@RequestMapping( params = "method=delOneDiaryjob" )
+	public void delOneDiaryjob( HttpServletRequest request , HttpServletResponse response ) throws IOException
+	{
+		int id = Integer.parseInt( request.getParameter( "id" ) );
+		int jobid = Integer.parseInt( request.getParameter( "jobid" ) );
+		
+		Jobdetail jobdetail = new Jobdetail();
+		jobdetail.setId( id );
+		jobdetailDAO.deleteJobdetail( jobdetail );
+
+		Jobdetail jobdetail2 = new Jobdetail();
+		jobdetail2.setJobid( jobid );
+		if( jobdetailDAO.findJobdetail(jobdetail2).size() == 0 )
+		{
+			Job job = new Job();
+			job.setId( jobid );
+			jobDAO.deleteJob( job );
+			
+			sendData( response , "ok" );
+		}
+		else
+		{
+			sendData( response , "yes" );
+		}	
+		
 	}
 }

@@ -44,6 +44,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		}
   		
   	}
+  	
+  	function del()
+  	{
+		if(confirm("确定要删除之间的数据吗？"))
+		{
+			document.forms[0].action="zhounan.amar?method=del";
+		
+			document.forms[0].submit();
+		}	
+  	}
   </script>
   
   <body>
@@ -62,10 +72,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
         <input type="button" onclick="go()" value="upload"/>  
   
+  		<input type="button" value="delete" onclick="del()">
+  		
     </form>  
     
-    
-  	
-  	
+
   </body>
 </html>
