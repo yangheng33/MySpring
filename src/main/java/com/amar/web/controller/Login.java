@@ -91,7 +91,7 @@ public class Login extends BaseController
 			user.setBrithday( brithday );
 			user.setPw( pw );
 			user.setLoginname( loginname );
-			
+
 			userDAO.addUser( user );
 
 			request.getSession().setAttribute( "user" , user );
@@ -130,6 +130,16 @@ public class Login extends BaseController
 	public String login( HttpServletRequest request , HttpServletResponse response ) throws Exception
 	{
 		User user = ServletUtil.request2Bean( request , User.class );
+
+		if ( user.getPw() == null )
+		{
+			user.setPw( "" );
+		}
+
+		if ( user.getLoginname() == null )
+		{
+			user.setLoginname( "" );
+		}
 
 		List<User> userList = userDAO.findUser( user , new RowBounds( 0 , 10 ) );
 
