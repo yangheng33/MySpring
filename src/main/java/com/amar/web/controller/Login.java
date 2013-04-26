@@ -131,13 +131,9 @@ public class Login extends BaseController
 	{
 		User user = ServletUtil.request2Bean( request , User.class );
 
-		if ( user.getPw() == null )
+		if ( user.getPw() == null || user.getLoginname() == null )
 		{
 			user.setPw( "" );
-		}
-
-		if ( user.getLoginname() == null )
-		{
 			user.setLoginname( "" );
 		}
 
