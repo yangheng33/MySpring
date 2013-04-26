@@ -133,8 +133,8 @@ public class Login extends BaseController
 
 		if ( user.getPw() == null || user.getLoginname() == null )
 		{
-			user.setPw( "22222" );
-			user.setLoginname( "22222" );
+			user.setPw( "111" );
+			user.setLoginname( "111" );
 		}
 
 		List<User> userList = userDAO.findUser( user , new RowBounds( 0 , 10 ) );
