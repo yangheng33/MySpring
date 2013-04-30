@@ -27,7 +27,6 @@ public class PagePlugin implements Interceptor
 {
 	private final Logger log = Logger.getLogger( this.getClass() );
 
-	@SuppressWarnings( "rawtypes" )
 	@Override
 	public Object intercept( Invocation invocation ) throws Throwable
 	{
