@@ -23,13 +23,13 @@
     <script >
   	function goback()
   	{
-  		document.forms[0].action="?method=init";
-  		document.forms[0].submit();
+  		document.forms[1].action="?method=init";
+  		document.forms[1].submit();
   	}
   	
   	function go()
   	{
-  		document.forms[0].submit();
+  		document.forms[1].submit();
   	}
   </script>
   
