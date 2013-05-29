@@ -115,7 +115,7 @@ public class OracleSelector implements DBSelector
 	@Override
 	public String datetimeFunction( String value , String compareSign , String columnname )
 	{
-		return columnname + " <![CDATA[" + compareSign + "]]> TO_DATE('" + value + "','yyyy-mm-dd hh24:mi:ss')";
+		return columnname + " <![CDATA[" + compareSign + "]]> TO_DATE( '${" + value + "}','yyyy-mm-dd hh24:mi:ss')";
 	}
 
 	@Override
