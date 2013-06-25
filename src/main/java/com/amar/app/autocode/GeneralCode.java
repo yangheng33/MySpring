@@ -146,10 +146,10 @@ public class GeneralCode
 
 	private void generateXML( Map<String,List<TableInfo>> tableMap , String path , String configPath , String daoPath )
 	{
+		BufferedWriter bw = null;
 		try
 		{
 			Iterator<String> tableNames = tableMap.keySet().iterator();
-
 			while ( tableNames.hasNext() )
 			{
 				String tablename = tableNames.next();
@@ -158,7 +158,7 @@ public class GeneralCode
 
 				File javaFile = new File( path + File.separatorChar + configPath + File.separatorChar + tablename.toLowerCase() + ".xml" );
 
-				BufferedWriter bw = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( javaFile , true ) ) );
+				bw = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( javaFile , true ) ) );
 
 				StringBuilder sber = new StringBuilder();
 				sber.append( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" );
@@ -186,6 +186,15 @@ public class GeneralCode
 		catch ( IOException e )
 		{
 			e.printStackTrace();
+			if ( bw != null )
+				try
+				{
+					bw.close();
+				}
+				catch ( IOException e1 )
+				{
+					e1.printStackTrace();
+				}
 		}
 	}
 
@@ -208,13 +217,13 @@ public class GeneralCode
 				sber.append( "\t<id property=\"" + columnName + "\" column=\"" + columnName + "\"" + jdbctype + " />\n" );
 			}
 		}
-		
+
 		for( TableInfo tableInfo : tableInfoList )
 		{
 			String columnName = tableInfo.getColumn_name().toLowerCase();
 			String type = tableInfo.getData_type();
 			String jdbctype = "";
-			if (! selectorDB.isKey( tableInfo.getIskey() ) )
+			if ( ! selectorDB.isKey( tableInfo.getIskey() ) )
 			{
 				if ( ! selectorDB.isDate( type ) )
 				{
@@ -222,7 +231,7 @@ public class GeneralCode
 				}
 				sber.append( "\t<result property=\"" + columnName + "\" column=\"" + columnName + "\"" + jdbctype + " />\n" );
 			}
-			
+
 		}
 		sber.append( "</resultMap>\n\n" );
 
@@ -397,7 +406,10 @@ public class GeneralCode
 				insertFields.append( columnName ).append( "," );
 			}
 		}
-		insertFields.deleteCharAt( insertFields.length() - 1 );
+		if ( insertFields.length() > 0 )
+		{
+			insertFields.deleteCharAt( insertFields.length() - 1 );
+		}
 		sber.append( insertFields ).append( "\n) values (\n" );
 		StringBuilder insertValues = new StringBuilder();
 		for( TableInfo tableInfo : tableInfoList )
@@ -418,7 +430,10 @@ public class GeneralCode
 				insertValues.append( selectorDB.dateType( columnName ) );
 			}
 		}
-		insertValues.deleteCharAt( insertValues.length() - 1 );
+		if ( insertValues.length() > 0 )
+		{
+			insertValues.deleteCharAt( insertValues.length() - 1 );
+		}
 		sber.append( insertValues ).append( "\n)\n" );
 		sber.append( "</insert>\n\n" );
 		return sber.toString();

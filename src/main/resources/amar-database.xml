@@ -14,14 +14,22 @@
         </property>  
     </bean> 
    
-   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >  
+   <bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource" >  
         <property name="driverClass"><value>${mysql.driverClass}</value></property>  
         <property name="jdbcUrl"><value>${mysql.url}</value></property>  
         <property name="user"><value>${mysql.username}</value></property>  
         <property name="password"><value>${mysql.pw}</value></property>  
         <property name="initialPoolSize"><value>${jdbc.initialPoolSize}</value></property>  
         <property name="minPoolSize"><value>${jdbc.minPoolSize}</value></property>  
-        <property name="maxPoolSize"><value>${jdbc.maxPoolSize}</value></property>  
+        <property name="maxPoolSize"><value>${jdbc.maxPoolSize}</value></property>
+        <property name="breakAfterAcquireFailure"><value>false</value></property>
+        <property name="testConnectionOnCheckout"><value>false</value></property>
+        <property name="testConnectionOnCheckin"><value>false</value></property>
+        <property name="idleConnectionTestPeriod"><value>60</value></property>
+        <property name="acquireRetryAttempts"><value>10</value></property>
+        <property name="acquireRetryDelay"><value>60</value></property>
+		<property name="automaticTestTable"><value>Test</value></property>    
+		<property name="preferredTestQuery"><value>select * from Test</value></property>    
     </bean> 
     
     <!-- Mongodb数据库 -->
@@ -35,14 +43,22 @@
 		<property name="mongo" ref="mongo"></property>
 	</bean>
 	
-	<bean id="dataSource2" lazy-init="true" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >  
+	<bean id="dataSource" lazy-init="true" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >  
 		<property name="driverClass" value="${oracle.driverClass}" />
 		<property name="jdbcUrl" value="${oracle.url}" />
 		<property name="user" value="${oracle.username}" />  
 		<property name="password" value="${oracle.pw}" />  
 		<property name="initialPoolSize" value="${jdbc.initialPoolSize}" />  
 		<property name="minPoolSize" value="${jdbc.minPoolSize}" />  
-		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />  
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+		<property name="breakAfterAcquireFailure"><value>false</value></property>
+        <property name="testConnectionOnCheckout"><value>false</value></property>
+        <property name="testConnectionOnCheckin"><value>false</value></property>
+        <property name="idleConnectionTestPeriod"><value>60</value></property>
+        <property name="acquireRetryAttempts"><value>10</value></property>
+        <property name="acquireRetryDelay"><value>60</value></property>
+		<property name="automaticTestTable"><value>Test</value></property>    
+		<property name="preferredTestQuery"><value>select * from Test</value></property>
 	</bean>
      
      <bean id="projectInfo" class="com.amar.constant.ProjectInfo">
