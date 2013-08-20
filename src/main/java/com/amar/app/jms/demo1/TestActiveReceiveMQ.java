@@ -1,5 +1,6 @@
 package com.amar.app.jms.demo1;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import javax.jms.Connection;
@@ -40,20 +41,26 @@ public class TestActiveReceiveMQ
 			{
 				try
 				{
-					ObjectMessage message = ( ObjectMessage ) msg;
-					/*
-					 * MapMessage message = ( MapMessage ) msg;
-					 * long d = message.getLong( "count" );
-					 * String type = message.getString( "type" );
-					 * System.out.println( "receive message:" + new Date( d ) + "---" + type );
-					 */
-					System.out.println( "receive message:" + new Date() + "---" + message.getStringProperty( "type" ) );
+					TextMessage message = (TextMessage)msg;
+					System.out.println(msg.getJMSType());
+					
+					
+					System.out.println("receive message:" + message.getShortProperty( "content" ));
+					
+//					MapMessage message = ( MapMessage ) msg;
+//					long d = message.getLong( "count" );
+//					String type = message.getString( "type" );
+//					System.out.println( "receive message:" + new Date( d ) + "---" + type );
+					 
+//					ObjectMessage message = ( ObjectMessage ) msg;
+//					System.out.println( "receive message:" + new Date() + "---" + message.getStringProperty( "type" ) );
 					session.commit();
 				}
 				catch ( JMSException e )
 				{
 					e.printStackTrace();
 				}
+				
 			}
 		} );
 		connection.start();

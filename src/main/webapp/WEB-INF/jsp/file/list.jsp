@@ -13,7 +13,6 @@
   </head>
   <link rel="stylesheet" href="javascript/jquery.tablesorter/themes/blue/style.css" type="text/css" media="print, projection, screen" />
   <link rel="stylesheet" href="css/centerDiv.css" type="text/css"/>
-  <script type="text/javascript" src="javascript/date/WdatePicker.js"></script>
   <script type="text/javascript" src="javascript/jquery-1.6.2.min.js"></script>
   <script type="text/javascript" src="javascript/jquery.tablesorter/jquery.tablesorter.min.js"></script>
   <script type="text/javascript" src="javascript/jstree-v.pre1.0/jquery.jstree.js"></script>
