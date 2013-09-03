@@ -58,6 +58,15 @@
 	</filter-mapping>
 	
 	<!-- =============== -->
+	<servlet>
+        <servlet-name>MyWebSocketServlet</servlet-name>
+        <servlet-class>com.amar.web.websocket.MyWebSocketServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MyWebSocketServlet</servlet-name>
+        <url-pattern>/socket/*</url-pattern>
+    </servlet-mapping>
   
 
   <!-- dwr -->

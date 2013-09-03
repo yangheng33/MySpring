@@ -133,6 +133,7 @@ public class Rsa
 		System.out.println( a1.nextProbablePrime().toString() );
 	}
 
+	@SuppressWarnings( "unchecked" )
 	public static void main( String [] args ) throws FileNotFoundException , IOException , ClassNotFoundException
 	{
 		Rsa rsa = new Rsa();

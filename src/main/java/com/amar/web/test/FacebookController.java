@@ -31,7 +31,6 @@ public class FacebookController
 	public ModelAndView ip7( HttpServletRequest request , HttpServletResponse response )
 	{
 
-		@SuppressWarnings( "unchecked" )
 		Enumeration < String > e = request.getParameterNames();
 		StringBuffer s = new StringBuffer();
 		while ( e.hasMoreElements() )
@@ -79,7 +78,6 @@ public class FacebookController
 		else return new ModelAndView( "facebook/index" );
 	}
 
-	@SuppressWarnings( "unchecked" )
 	@RequestMapping( params = "a=login" )
 	public String ip( HttpServletRequest request , HttpServletResponse response )
 	{
@@ -149,7 +147,6 @@ public class FacebookController
 	public String ip3( HttpServletRequest request , HttpServletResponse response )
 	{
 		String uri = request.getRequestURI();
-		@SuppressWarnings( "unchecked" )
 		Enumeration < String > e = request.getParameterNames();
 
 		StringBuffer s = new StringBuffer();

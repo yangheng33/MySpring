@@ -20,8 +20,55 @@
 	</properties>
  
 <dependencies> 
-
-	<dependency>
+		<!-- websocket -->
+		
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>7.0.30</version>
+			<scope>provided</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-coyote</artifactId>
+			<version>7.0.30</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- websocket -->
+		
+		<dependency>  
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+			<scope>provided</scope>
+		</dependency> 
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-servlet_3.0_spec</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency> 
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-demo</artifactId>
 			<version>4.3.1</version>
@@ -41,30 +88,7 @@
 		<artifactId>mail</artifactId>
 		<version>1.4.5</version>
 	</dependency>
-	<dependency>  
-		<groupId>javax.servlet</groupId>
-		<artifactId>servlet-api</artifactId>
-		<version>2.4</version>
-		<scope>provided</scope>
-	</dependency> 
-	<dependency>
-		<groupId>org.apache.geronimo.specs</groupId>
-		<artifactId>geronimo-servlet_3.0_spec</artifactId>
-		<version>1.0</version>
-		<scope>provided</scope>
-	</dependency>
-	<dependency>
-		<groupId>javax.servlet.jsp</groupId>
-		<artifactId>jsp-api</artifactId>
-		<version>2.0</version>
-		<scope>provided</scope>
-	</dependency> 
 	
-	<dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>jstl</artifactId>
-		<version>1.2</version>
-	</dependency>
 	<dependency>
 		<groupId>org.snmp4j</groupId>
 		<artifactId>snmp4j</artifactId>
@@ -520,19 +544,18 @@
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<pluginManagement>
 			<plugins>
-				<!--  
 				<plugin>
 					<artifactId>maven-war-plugin</artifactId>
 					<configuration>
 						<webappDirectory>target/</webappDirectory>
 						<packagingExcludes>WEB-INF/web.xml</packagingExcludes>
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<source>1.6</source> 
-          				<target>1.6</target> 
+						<source>1.7</source> 
+          				<target>1.7</target> 
           				<encoding>UTF-8</encoding> 
 					</configuration>
 				</plugin>
-				-->
+				<!-- 
 				<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>  
@@ -544,6 +567,7 @@
 				<update>true</update>
 				</configuration>
 				</plugin>
+				 -->
 			</plugins>
 		</pluginManagement>
 	</build>
