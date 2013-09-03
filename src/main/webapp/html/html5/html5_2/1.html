@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+
+<script type="text/javascript">
+	function f1()
+	{
+		var c=document.getElementById("myCanvas");
+		var cxt=c.getContext("2d");
+		cxt.moveTo(10,10);
+		cxt.lineTo(150,50);
+		cxt.lineTo(10,50);
+		cxt.stroke();
+	}
+	function f2()
+	{
+		var c=document.getElementById("myCanvas");
+		var cxt=c.getContext("2d");
+		cxt.fillStyle="#FF0000";
+		cxt.beginPath();
+		cxt.arc(70,18,15,0,Math.PI*2,true);
+		cxt.closePath();
+		cxt.fill();
+	}
+	
+	function f3()
+	{
+		var c=document.getElementById("myCanvas");
+		var cxt=c.getContext("2d");
+		var grd=cxt.createLinearGradient(0,0,175,50);
+		grd.addColorStop(0,"#FF0000");
+		grd.addColorStop(1,"#00FF00");
+		cxt.fillStyle=grd;
+		cxt.fillRect(0,0,175,50);
+	}
+	
+	function f4()
+	{
+		var c=document.getElementById("myCanvas");
+		var cxt=c.getContext("2d");
+		var img=new Image()
+		img.src="333.jpg"
+		cxt.drawImage(img,0,0);
+	}
+</script>
+</head>
+
+<body>
+
+<div>
+<input name="lineBtn" type="button" value="line" onClick="f1()">
+<input name="cycleBtn" type="button" value="cycle" onClick="f2()">
+<input name="lineBtn" type="button" value="other" onClick="f3()">
+<input name="lineBtn" type="button" value="other" onClick="f4()">
+
+</div>
+    <p>
+      <canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3;">
+        Your browser does not support the canvas element.
+      </canvas>
+    </p>
+    <p>&nbsp;</p>
+
+</body>
+</html>
