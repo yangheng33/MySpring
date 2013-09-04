@@ -3,14 +3,24 @@ package com.amar.web.websocket;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.util.Date;
 
 import org.apache.catalina.websocket.MessageInbound;
 import org.apache.catalina.websocket.WsOutbound;
+
+import com.amar.util.TimeDateUtil;
 
 public class MyWebSocket extends MessageInbound
 {
 
 	private MyWebSocketServlet myWebSocketServlet;
+
+	private String username = null;
+
+	public MyWebSocket( String username )
+	{
+		this.username = username;
+	}
 
 	public MyWebSocketServlet getMyWebSocketServlet()
 	{
@@ -32,7 +42,7 @@ public class MyWebSocket extends MessageInbound
 			int i = 0;
 			while ( i < 1 )
 			{
-				CharBuffer buffer = CharBuffer.wrap( "hello,welcome to connect! " );
+				CharBuffer buffer = CharBuffer.wrap( "你好,"+username+" ! 欢迎光临，本程序使用websocket! " );
 				this.getWsOutbound().writeTextMessage( buffer );
 				Thread.sleep( 2000 );
 				i ++ ;
@@ -52,6 +62,7 @@ public class MyWebSocket extends MessageInbound
 	protected void onClose( int status )
 	{
 		System.out.println( "close....." );
+		myWebSocketServlet.close( username );
 	}
 
 	@Override
@@ -64,9 +75,8 @@ public class MyWebSocket extends MessageInbound
 	protected void onTextMessage( CharBuffer arg0 ) throws IOException
 	{
 		System.out.println( "onTextMessage....." + arg0.toString() );
-		// CharBuffer buffer = CharBuffer.wrap( arg0.toString() );
-		// this.getWsOutbound().writeTextMessage( buffer );
-		myWebSocketServlet.broadcast( arg0.toString() );
+		String datetime = TimeDateUtil.getDateTime( new Date().getTime() );
+		myWebSocketServlet.broadcast( ""+username+" "+datetime+"\n"+arg0.toString() );
 	}
 
 }

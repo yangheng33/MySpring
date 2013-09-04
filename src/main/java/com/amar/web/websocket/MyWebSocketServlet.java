@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WebSocketServlet;
 
+
 public class MyWebSocketServlet extends WebSocketServlet
 {
 	private static final long serialVersionUID = 221212838386689261L;
@@ -23,22 +24,25 @@ public class MyWebSocketServlet extends WebSocketServlet
 		String username = request.getParameter( "username" );
 		System.out.println( "username:" + username );
 
-		MyWebSocket myWebSocket = new MyWebSocket();
+		MyWebSocket myWebSocket = new MyWebSocket( username );
 		myWebSocket.setMyWebSocketServlet( this );
 
-		sessionMap.put( "username" , myWebSocket );
+		sessionMap.put( username , myWebSocket );
+
 		return myWebSocket;
 	}
 
 	public void broadcast( String message ) throws IOException
 	{
 		Iterator<String> iterator = sessionMap.keySet().iterator();
+
 		while ( iterator.hasNext() )
 		{
-			MyWebSocket myWebSocket = sessionMap.get( iterator.next() );
+			String key = iterator.next();
+			MyWebSocket myWebSocket = sessionMap.get( key );
 			CharBuffer buffer = CharBuffer.wrap( message );
 			myWebSocket.getWsOutbound().writeTextMessage( buffer );
-
+			System.out.println( key );
 		}
 	}
 

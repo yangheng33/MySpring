@@ -75,6 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                  <li><a href="remindplan.amar?method=list">提醒计划</a></li>
 	                  <li><a href="jsDemo.amar?method=list">jsDemo</a></li>
 	                  <li><a href="file.amar?method=init">文件管理</a></li>
+	                  <li><a href="chat.amar?method=init">聊天啦</a></li>
 	                  <li class="divider"></li>
 	                  <li class="nav-header">Nav header</li>
 	                </ul>
