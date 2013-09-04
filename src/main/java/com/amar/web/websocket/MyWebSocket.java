@@ -9,16 +9,40 @@ import org.apache.catalina.websocket.WsOutbound;
 
 public class MyWebSocket extends MessageInbound
 {
+
+	private MyWebSocketServlet myWebSocketServlet;
+
+	public MyWebSocketServlet getMyWebSocketServlet()
+	{
+		return myWebSocketServlet;
+	}
+
+	public void setMyWebSocketServlet( MyWebSocketServlet myWebSocketServlet )
+	{
+		this.myWebSocketServlet = myWebSocketServlet;
+	}
+
 	@Override
 	protected void onOpen( WsOutbound outbound )
 	{
 		System.out.println( "connect...." );
-		CharBuffer buffer = CharBuffer.wrap( "hello,welcome to connect!" );
+
 		try
 		{
-			this.getWsOutbound().writeTextMessage( buffer );
+			int i = 0;
+			while ( i < 1 )
+			{
+				CharBuffer buffer = CharBuffer.wrap( "hello,welcome to connect! " );
+				this.getWsOutbound().writeTextMessage( buffer );
+				Thread.sleep( 2000 );
+				i ++ ;
+			}
 		}
 		catch ( IOException e )
+		{
+			e.printStackTrace();
+		}
+		catch ( InterruptedException e )
 		{
 			e.printStackTrace();
 		}
@@ -33,12 +57,16 @@ public class MyWebSocket extends MessageInbound
 	@Override
 	protected void onBinaryMessage( ByteBuffer arg0 ) throws IOException
 	{
-		System.out.println( "onBinaryMessage....." );
+		System.out.println( "onBinaryMessage....." + arg0.toString() );
 	}
 
 	@Override
 	protected void onTextMessage( CharBuffer arg0 ) throws IOException
 	{
-		System.out.println( "onTextMessage....." );
+		System.out.println( "onTextMessage....." + arg0.toString() );
+		// CharBuffer buffer = CharBuffer.wrap( arg0.toString() );
+		// this.getWsOutbound().writeTextMessage( buffer );
+		myWebSocketServlet.broadcast( arg0.toString() );
 	}
+
 }

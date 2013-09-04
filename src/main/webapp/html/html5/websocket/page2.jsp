@@ -1,27 +1,19 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%> 
 <% 
     String path = request.getContextPath(); 
-    String basePath = request.getScheme() + "://" 
-            + request.getServerName() + ":" + request.getServerPort() 
-            + path + "/"; 
+    String basePath = request.getScheme() + "://"  + request.getServerName() + ":" + request.getServerPort() + path + "/"; 
 %> 
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
-<html> 
+<!DOCTYPE html>
+<html>
 <head> 
 <base href="<%=basePath%>"> 
-
 <title>My JSP 'index.jsp' starting page</title> 
-<meta http-equiv="pragma" content="no-cache"> 
-<meta http-equiv="cache-control" content="no-cache"> 
-<meta http-equiv="expires" content="0"> 
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3"> 
-<meta http-equiv="description" content="This is my page"> 
 <script type="text/javascript"> 
     var ws = null; 
-    function startServer() 
+    function startServer(username) 
     { 
-        var url = "ws:localhost:80/myspring/socket/MyWebSocketServlet"; 
+        var url = "ws:localhost:80/myspring/socket/MyWebSocketServlet?username="+username; 
         if ('WebSocket' in window) 
         { 
             ws = new WebSocket(url); 
@@ -31,27 +23,66 @@
             ws = new MozWebSocket(url); 
         } 
         else 
-        { 
-            alert('WebSocket is not supported by this browser.'); 
+        {
+        	showMessage("WebSocket is not supported by this browser."); 
             return; 
         } 
         ws.onopen = function() 
         { 
-            alert("connect success!"); 
+            showMessage("connect success!");
         }; 
         ws.onmessage = function(event) 
         { 
-            alert("revice mess:" + event.data); 
+        	showMessage("revice mess:" + event.data); 
         }; 
         ws.onclose = function() 
         { 
-            alert("close connect.."); 
+        	showMessage("close connect.."); 
         }; 
     } 
+    
+    function send()
+    {
+    	var content = document.getElementById("sendContent");
+    	ws.send(content.value);
+    	content.value="";
+    }
+    
+    function showMessage(message)
+    {
+    	var s = document.getElementById("messageArea").innerHTML;
+    	document.getElementById("messageArea").innerHTML=s+"\n"+message;
+    }
+    
+    function login()
+    {
+    	document.getElementById("logoutBtn").disabled = false;
+    	document.getElementById("loginBtn").disabled=true;
+    	var username = document.getElementById("username").value;
+    	document.getElementById("username").value="你好！"+username;
+    	startServer(username);
+    }
+    
+    function logout()
+    {
+    	document.getElementById("loginBtn").disabled=false;
+    	document.getElementById("logoutBtn").disabled = true;
+    	document.getElementById("username").value="";
+    	ws.onclose();
+    }
 </script> 
 </head> 
 
-<body onload="startServer()"> 
-
+<body > 
+	
+	<%--<div id="messageDiv" style="float:left;width:299px;height:199px;border:1px solid #c3c3c3"></div>--%>
+	
+	<input type="text" id="username" placeholder="请输入用户名"/> 
+	<button onclick="login()" id="loginBtn">登录</button> 
+	<button onclick="logout()" id="logoutBtn" disabled="disabled">退出</button>
+	<br/>
+	<textarea rows="10" cols="60" id="messageArea"></textarea>
+	<br/>
+	<textarea rows="5" cols="60" id="sendContent"></textarea> <button onclick="send()">发送</button>
 </body> 
 </html>
